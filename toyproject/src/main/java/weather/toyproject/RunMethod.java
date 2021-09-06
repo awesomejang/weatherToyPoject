@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -25,9 +26,10 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import weather.toyproject.Weather.header;
+import weather.toyproject.Weather.domain.ApiResponse_Total;
 
 @Component
 public class RunMethod {
@@ -53,7 +55,7 @@ public class RunMethod {
 				UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
 										.queryParam("serviceKey", serviceKey)
 										.queryParam("numOfRows", "10")
-										.queryParam("base_date", "20210831")
+										.queryParam("base_date", "20210906")
 										.queryParam("base_time", "0600")
 										.queryParam("nx", "55")
 										.queryParam("ny", "127")
@@ -61,11 +63,19 @@ public class RunMethod {
 										.queryParam("pageNo", "1")
 										.build(false); // 인코딩 false
 				
+				System.out.println("builder.toUriString() = " +  builder.toUriString());
 				ObjectMapper objectMapper = new ObjectMapper();
-				//objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-				header Header =  objectMapper.readValue(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody(), header.class);
-				System.out.println("ResultMsg = " + Header.getResultMsg());
-				System.out.println("ResultCode = " + Header.getResultCode());
+				
+				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				ApiResponse_Total total = objectMapper.readValue(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody(), ApiResponse_Total.class);
+				JsonNode responseNode = objectMapper.readTree(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody());
+				
+				System.out.println("responseNode" + responseNode.toString());
+				System.out.println("total.header = " + total.getResponse().getHeader().getResultMsg());
+				System.out.println("total.body.dataType = " + total.getResponse().getBody().getDataType());
+				//System.out.println("total.getItems = " + total.getBody().getItems());
+				System.out.println("total.body.Items = " + total.getBody().getItems().getItem());
+				//System.out.println("ResultMsg = " + jsonParse.getResponse().getHeader().getResultCode());
 				
 				System.out.println("uriBuildResult= " + builder.toUriString());
 				//restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<String>(headers), String.class);
@@ -74,7 +84,7 @@ public class RunMethod {
 				
 				//return builder.toUriString();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.getStackTrace();
 		}
 		
 	        
