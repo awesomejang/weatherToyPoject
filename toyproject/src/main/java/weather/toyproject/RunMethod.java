@@ -10,7 +10,9 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 
+import weather.toyproject.Weather.domain.ApiBody;
+import weather.toyproject.Weather.domain.ApiItem;
 import weather.toyproject.Weather.domain.ApiResponse_Total;
 
 @Component
@@ -55,7 +60,7 @@ public class RunMethod {
 				UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
 										.queryParam("serviceKey", serviceKey)
 										.queryParam("numOfRows", "10")
-										.queryParam("base_date", "20210906")
+										.queryParam("base_date", "20210907")
 										.queryParam("base_time", "0600")
 										.queryParam("nx", "55")
 										.queryParam("ny", "127")
@@ -68,13 +73,22 @@ public class RunMethod {
 				
 				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				ApiResponse_Total total = objectMapper.readValue(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody(), ApiResponse_Total.class);
-				JsonNode responseNode = objectMapper.readTree(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody());
+				JsonNode responseNode = objectMapper.readTree(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody()).findPath("item");
 				
-				System.out.println("responseNode" + responseNode.toString());
-				System.out.println("total.header = " + total.getResponse().getHeader().getResultMsg());
-				System.out.println("total.body.dataType = " + total.getResponse().getBody().getDataType());
+				CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
+				List<ApiItem> ApiItemList =  objectMapper.readValue(responseNode.toString(), collectionType);
+				
+				/*
+				 * for(ApiItem apiItem : ApiItemList) {
+				 * System.out.println(apiItem.getObsrValue()); }
+				 */
+				
+				System.out.println("ApiItemList = " + ApiItemList.toString());
+				
+				//System.out.println("responseNode" + responseNode.toString());
+				//System.out.println("total.body.dataType = " + total.getResponse().getBody().getDataType());
 				//System.out.println("total.getItems = " + total.getBody().getItems());
-				System.out.println("total.body.Items = " + total.getBody().getItems().getItem());
+				//System.out.println("total.body.Items = " + responseNode.get);
 				//System.out.println("ResultMsg = " + jsonParse.getResponse().getHeader().getResultCode());
 				
 				System.out.println("uriBuildResult= " + builder.toUriString());

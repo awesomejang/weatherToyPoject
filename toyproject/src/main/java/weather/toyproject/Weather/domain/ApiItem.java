@@ -15,7 +15,6 @@ public class ApiItem {
 	private String category;
 	@JsonProperty("nx")
 	private String nx;
-	
 	@JsonProperty("ny")
 	private String ny;
 	@JsonProperty("obsrValue")
