@@ -58,31 +58,30 @@ public class RunMethod {
 				HttpHeaders headers = new HttpHeaders();
 				headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 				UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
-										.queryParam("serviceKey", serviceKey)
+										.queryParam("serviceKey", "waSLmIW1sOFIRsbM4h70q0TF9c/tnyWEeeR3UI4W17a2H1HUt3Axc5o02pFUSiugbSXREvEa68kVjIPLTbjpRw==")
 										.queryParam("numOfRows", "10")
-										.queryParam("base_date", "20210907")
+										.queryParam("base_date", "20210908")
 										.queryParam("base_time", "0600")
 										.queryParam("nx", "55")
 										.queryParam("ny", "127")
 										.queryParam("dataType", "JSON")
 										.queryParam("pageNo", "1")
-										.build(false); // 인코딩 false
+										.build(); // 인코딩 false
 				
-				System.out.println("builder.toUriString() = " +  builder.toUriString());
-				ObjectMapper objectMapper = new ObjectMapper();
-				
+				ObjectMapper objectMapper = new ObjectMapper();				
 				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-				ApiResponse_Total total = objectMapper.readValue(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody(), ApiResponse_Total.class);
-				JsonNode responseNode = objectMapper.readTree(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody()).findPath("item");
+				
+				String ApiResult = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody();
+				
+				System.out.println("ApiResult = " + ApiResult.toString());
+				ApiResponse_Total apiReponse_total = objectMapper.readValue(ApiResult, ApiResponse_Total.class);
+				JsonNode responseNode = objectMapper.readTree(ApiResult).findPath("item");
 				
 				CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
 				List<ApiItem> ApiItemList =  objectMapper.readValue(responseNode.toString(), collectionType);
-				
-				/*
-				 * for(ApiItem apiItem : ApiItemList) {
-				 * System.out.println(apiItem.getObsrValue()); }
-				 */
-				
+				for(ApiItem item : ApiItemList) {
+					System.out.println("item = " + item.getBaseData() + '_' + item.getCategory());
+				}
 				System.out.println("ApiItemList = " + ApiItemList.toString());
 				
 				//System.out.println("responseNode" + responseNode.toString());
@@ -99,39 +98,14 @@ public class RunMethod {
 				//return builder.toUriString();
 		} catch (Exception e) {
 			e.getStackTrace();
-		}
-		
-	        
-	        /**
-	        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+		} finally {
 			
-			RestTemplate restTemplate = applicationContext.getBean("restTemplate", RestTemplate.class);
-			String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
-			String serviceKey = null;
-			try {
-				 serviceKey = URLDecoder.decode("waSLmIW1sOFIRsbM4h70q0TF9c%2FtnyWEeeR3UI4W17a2H1HUt3Axc5o02pFUSiugbSXREvEa68kVjIPLTbjpRw%3D%3D", "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-			UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
-					.queryParam("serviceKey", serviceKey)
-					.queryParam("numOfRows", "10")
-					.queryParam("base_date", "20210830")
-					.queryParam("base_time", "0600")
-					.queryParam("nx", "55")
-					.queryParam("ny", "127")
-					.queryParam("dataType", "JSON")
-					.queryParam("pageNo", "1")
-					.build(false);
-			System.out.println("uriBuildResult= " + builder.toUriString());
-			//String url =  "&ny=127&dataType=JSON";
-			//restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<String>(headers), String.class);
-			System.out.println(restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<String>(headers), String.class));
-			//return builder.toUriString();
-			 */
+		}
+	}
+	
+	public static void main(String[] args) {
+		RunMethod test = new RunMethod();
+		test.WeatherInfoRequest();
 	}
 	
 }

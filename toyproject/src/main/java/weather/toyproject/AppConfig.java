@@ -12,13 +12,13 @@ import org.springframework.web.client.RestTemplate;
 public class AppConfig {
 	
 	@Bean
-	public RestTemplate restTemplate() {
+	public RestTemplate restTemplate() throws Exception {
 		//HttpClient
 		HttpComponentsClientHttpRequestFactory httpRequestfactory = new HttpComponentsClientHttpRequestFactory();
 		httpRequestfactory.setReadTimeout(5000);
 		httpRequestfactory.setConnectionRequestTimeout(3000);
 		HttpClient httpClient = HttpClientBuilder.create()
-								.setMaxConnTotal(200)
+								.setMaxConnTotal(50) //200
 								.setMaxConnPerRoute(20)
 								.build();
 		httpRequestfactory.setHttpClient(httpClient);
