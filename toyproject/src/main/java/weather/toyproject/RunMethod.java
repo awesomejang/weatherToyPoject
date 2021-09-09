@@ -52,13 +52,14 @@ public class RunMethod {
 				String serviceKey = null;
 				try {
 					 serviceKey = URLDecoder.decode("waSLmIW1sOFIRsbM4h70q0TF9c%2FtnyWEeeR3UI4W17a2H1HUt3Axc5o02pFUSiugbSXREvEa68kVjIPLTbjpRw%3D%3D", "UTF-8");
+					 //waSLmIW1sOFIRsbM4h70q0TF9c/tnyWEeeR3UI4W17a2H1HUt3Axc5o02pFUSiugbSXREvEa68kVjIPLTbjpRw==
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
 				HttpHeaders headers = new HttpHeaders();
 				headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 				UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
-										.queryParam("serviceKey", "waSLmIW1sOFIRsbM4h70q0TF9c/tnyWEeeR3UI4W17a2H1HUt3Axc5o02pFUSiugbSXREvEa68kVjIPLTbjpRw==")
+										.queryParam("serviceKey", serviceKey)
 										.queryParam("numOfRows", "10")
 										.queryParam("base_date", "20210908")
 										.queryParam("base_time", "0600")
@@ -66,7 +67,7 @@ public class RunMethod {
 										.queryParam("ny", "127")
 										.queryParam("dataType", "JSON")
 										.queryParam("pageNo", "1")
-										.build(); // 인코딩 false
+										.build(false); // 인코딩 false
 				
 				ObjectMapper objectMapper = new ObjectMapper();				
 				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
