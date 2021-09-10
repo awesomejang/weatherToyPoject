@@ -11,8 +11,7 @@ import weather.toyproject.httpRequest.RequestFactory;
 //@PropertySource("classpath:/com/ApiRequestInfo.properties")
 public class RequestService implements RequestFactory {
 	
-	//@Value("key.api")
-	@Value("#{ApiResource['key.api']}")
+	@Value("#{ApiResource['weather.api.key']}")
 	private String url;
 
 	@Override
