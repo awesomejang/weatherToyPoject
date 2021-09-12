@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -43,7 +46,9 @@ public class RunMethod {
 	 * @Autowired RestTemplate restTemplate;
 	 */
 	
-	public void WeatherInfoRequest() {
+	public String WeatherInfoRequest() {
+		
+		ResponseEntity<Map> ResultMap = null;
 		try {
 			 ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
 				
@@ -61,7 +66,7 @@ public class RunMethod {
 				UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
 										.queryParam("serviceKey", serviceKey)
 										.queryParam("numOfRows", "10")
-										.queryParam("base_date", "20210908")
+										.queryParam("base_date", "20210912")
 										.queryParam("base_time", "0600")
 										.queryParam("nx", "55")
 										.queryParam("ny", "127")
@@ -72,18 +77,20 @@ public class RunMethod {
 				ObjectMapper objectMapper = new ObjectMapper();				
 				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				
-				String ApiResult = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody();
-				
-				System.out.println("ApiResult = " + ApiResult.toString());
-				ApiResponse_Total apiReponse_total = objectMapper.readValue(ApiResult, ApiResponse_Total.class);
-				JsonNode responseNode = objectMapper.readTree(ApiResult).findPath("item");
+				ResultMap = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), Map.class);
+				System.out.println(builder.toUriString());
+				System.out.println("statusCodeValue =" + ResultMap.getStatusCodeValue());
+				System.out.println("Header =" + ResultMap.getHeaders());
+				System.out.println("statusCode =" + ResultMap.getStatusCode());
+				System.out.println("Body =" + ResultMap.getBody());
+				System.out.println("class =" + ResultMap.getClass());
+				//System.out.println("ApiResult = " + ApiResult.toString());
+				//ApiResponse_Total apiReponse_total = objectMapper.readValue(ApiResult, ApiResponse_Total.class);
+				//JsonNode responseNode = objectMapper.readTree(ApiResult).findPath("item");
 				
 				CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
-				List<ApiItem> ApiItemList =  objectMapper.readValue(responseNode.toString(), collectionType);
-				for(ApiItem item : ApiItemList) {
-					System.out.println("item = " + item.getBaseData() + '_' + item.getCategory());
-				}
-				System.out.println("ApiItemList = " + ApiItemList.toString());
+				//List<ApiItem> ApiItemList =  objectMapper.readValue(responseNode.toString(), collectionType);
+				
 				
 				//System.out.println("responseNode" + responseNode.toString());
 				//System.out.println("total.body.dataType = " + total.getResponse().getBody().getDataType());
@@ -91,22 +98,25 @@ public class RunMethod {
 				//System.out.println("total.body.Items = " + responseNode.get);
 				//System.out.println("ResultMsg = " + jsonParse.getResponse().getHeader().getResultCode());
 				
-				System.out.println("uriBuildResult= " + builder.toUriString());
+				//System.out.println("uriBuildResult= " + builder.toUriString());
 				//restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<String>(headers), String.class);
-				System.out.println(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody());
+				//System.out.println(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody());
 				
 				
 				//return builder.toUriString();
-		} catch (Exception e) {
+		} catch (RestClientException e) {
 			e.getStackTrace();
 		} finally {
 			
 		}
+		return "qwtqf";
+		//return ResultMap.getStatusCode().toString();
 	}
 	
 	public static void main(String[] args) {
 		RunMethod test = new RunMethod();
 		test.WeatherInfoRequest();
 	}
+	
 	
 }

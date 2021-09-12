@@ -1,5 +1,6 @@
 package weather.toyproject;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,6 @@ public class WeatherRequestTest {
 	
 	@Test
 	void 기상청API() {
-		runMethod.WeatherInfoRequest();
+		Assertions.assertEquals(runMethod.WeatherInfoRequest(), "200");
 	}
 }

@@ -26,7 +26,7 @@ public class AppConfig {
 	public RestTemplate restTemplate() throws Exception {
 		//HttpClient
 		HttpComponentsClientHttpRequestFactory httpRequestfactory = new HttpComponentsClientHttpRequestFactory();
-		httpRequestfactory.setReadTimeout(5000);
+		httpRequestfactory.setReadTimeout(2000);
 		httpRequestfactory.setConnectionRequestTimeout(3000);
 		HttpClient httpClient = HttpClientBuilder.create()
 								.setMaxConnTotal(50) //200
