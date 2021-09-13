@@ -3,12 +3,16 @@ package weather.toyproject.Weather.service;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -38,21 +42,15 @@ public class WeatherRequestService implements RequestFactory {
 	 * 날씨 데이터 요청을 보낸 후 결과를 파싱하여 
 	 */
 	@Override
-	public String ApiRequestResult() throws Exception {
-		String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
-		String serviceKey = null;
+	public ResponseEntity ApiRequestResult() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		
-		try {
-			 serviceKey = URLDecoder.decode("waSLmIW1sOFIRsbM4h70q0TF9c%2FtnyWEeeR3UI4W17a2H1HUt3Axc5o02pFUSiugbSXREvEa68kVjIPLTbjpRw%3D%3D", "UTF-8");
-			 //waSLmIW1sOFIRsbM4h70q0TF9c/tnyWEeeR3UI4W17a2H1HUt3Axc5o02pFUSiugbSXREvEa68kVjIPLTbjpRw==
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		UriComponents requestURI = this.uriComponentsBuilder();
 		
-		 //restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody();
+		ResponseEntity<Map> RequestMap = this.restTemplate.exchange(requestURI.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), Map.class);
 		
-		// TODO Auto-generated method stub
-		return null;
+		return RequestMap;
 	}
 	
 	@Override
@@ -69,7 +67,4 @@ public class WeatherRequestService implements RequestFactory {
 								.build(false); // 인코딩 false
 		return builder;
 	}
-	
-
-	
 }

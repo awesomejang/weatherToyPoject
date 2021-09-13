@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 @SpringBootTest
 public class WeatherRequestTest {
 	
@@ -13,6 +16,12 @@ public class WeatherRequestTest {
 	
 	@Test
 	void 기상청API() {
-		Assertions.assertEquals(runMethod.WeatherInfoRequest(), "200");
+		try {
+			runMethod.WeatherInfoRequest();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 }
