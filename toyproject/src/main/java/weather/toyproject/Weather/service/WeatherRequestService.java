@@ -1,8 +1,10 @@
 package weather.toyproject.Weather.service;
 
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import weather.toyproject.Weather.domain.ApiItem;
 import weather.toyproject.Weather.domain.ApiResponse_Total;
 import weather.toyproject.httpRequest.RequestFactory;
 
@@ -42,23 +47,25 @@ public class WeatherRequestService implements RequestFactory {
 	 * 날씨 데이터 요청을 보낸 후 결과를 파싱하여 
 	 */
 	@Override
-	public ResponseEntity ApiRequestResult() throws Exception {
+	public ResponseEntity ApiRequestResult() throws  SocketTimeoutException {
 		HttpHeaders headers = new HttpHeaders();
+		ResponseEntity<String> requestResult;
+		
 		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		
 		UriComponents requestURI = this.uriComponentsBuilder();
 		
-		ResponseEntity<Map> RequestMap = this.restTemplate.exchange(requestURI.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), Map.class);
-		
-		return RequestMap;
+	    requestResult = this.restTemplate.exchange(requestURI.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class);
+	    return requestResult;
+	    
 	}
 	
 	@Override
-	public UriComponents uriComponentsBuilder() throws Exception {
+	public UriComponents uriComponentsBuilder()  {
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(this.url)
 								.queryParam("serviceKey", this.ServiceKey)
 								.queryParam("numOfRows", "10")
-								.queryParam("base_date", "20210908")
+								.queryParam("base_date", "20210914")
 								.queryParam("base_time", "0600")
 								.queryParam("nx", "55")
 								.queryParam("ny", "127")
@@ -67,4 +74,11 @@ public class WeatherRequestService implements RequestFactory {
 								.build(false); // 인코딩 false
 		return builder;
 	}
+	/**
+	public List JsonToList(ResponseEntity requestResult) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		//List<ApiItem> ApiItemList =  objectMapper.readValue(responseNode.toString(), collectionType);
+		
+	}
+	*/
 }
