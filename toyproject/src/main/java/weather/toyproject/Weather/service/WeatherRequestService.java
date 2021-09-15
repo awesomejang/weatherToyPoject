@@ -20,8 +20,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 
+import weather.toyproject.Weather.domain.ApiBody;
 import weather.toyproject.Weather.domain.ApiItem;
 import weather.toyproject.Weather.domain.ApiResponse_Total;
 import weather.toyproject.httpRequest.RequestFactory;
@@ -44,7 +50,7 @@ public class WeatherRequestService implements RequestFactory {
 	}
 
 	/**
-	 * 날씨 데이터 요청을 보낸 후 결과를 파싱하여 
+	 * 날씨 데이터 요청을 보낸 후 ReponseEntity를 리턴한다.  
 	 */
 	@Override
 	public ResponseEntity ApiRequestResult() throws  SocketTimeoutException {
@@ -57,7 +63,6 @@ public class WeatherRequestService implements RequestFactory {
 		
 	    requestResult = this.restTemplate.exchange(requestURI.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class);
 	    return requestResult;
-	    
 	}
 	
 	@Override
@@ -74,11 +79,22 @@ public class WeatherRequestService implements RequestFactory {
 								.build(false); // 인코딩 false
 		return builder;
 	}
+	
 	/**
-	public List JsonToList(ResponseEntity requestResult) {
+	 * 
+	 * @param requestResult
+	 * @return List<ApiItem>
+	 * @throws JsonMappingException
+	 * @throws JsonProcessingException
+	 */
+	public List JsonToList(ResponseEntity<String> requestResult) throws JsonMappingException, JsonProcessingException  {
 		ObjectMapper objectMapper = new ObjectMapper();
-		//List<ApiItem> ApiItemList =  objectMapper.readValue(responseNode.toString(), collectionType);
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
+		JsonNode responseNode = objectMapper.readTree(requestResult.getBody()).findPath("item");
+		CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
+		List<ApiItem> ApiItemList = objectMapper.readValue(responseNode.toString(), collectionType);
+		return ApiItemList;
 	}
-	*/
+	
 }
