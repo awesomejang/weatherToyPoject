@@ -87,7 +87,8 @@ public class WeatherRequestService implements RequestFactory {
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
 	 */
-	public List JsonToList(ResponseEntity<String> requestResult) throws JsonMappingException, JsonProcessingException  {
+	@Override
+	public List JsonToList(ResponseEntity<String> requestResult) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
@@ -96,5 +97,13 @@ public class WeatherRequestService implements RequestFactory {
 		List<ApiItem> ApiItemList = objectMapper.readValue(responseNode.toString(), collectionType);
 		return ApiItemList;
 	}
+
+	@Override
+	public Object JsonToObject(ResponseEntity<String> responseEntity) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		ApiResponse_Total apiResponse_Total = mapper.readValue(responseEntity.getBody(), ApiResponse_Total.class);
+		return apiResponse_Total;
+	}
+
 	
 }
