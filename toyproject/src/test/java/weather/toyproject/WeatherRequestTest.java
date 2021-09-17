@@ -22,6 +22,7 @@ public class WeatherRequestTest {
 	@Test
 	void test() {
 		try {
+			weatherApiRequest.WheatherRequest();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

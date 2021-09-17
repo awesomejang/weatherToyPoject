@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 
 import weather.toyproject.Weather.domain.ApiItem;
+import weather.toyproject.Weather.domain.ApiResponse_Total;
 import weather.toyproject.httpRequest.RequestFactory;
 
 @Component
@@ -28,8 +29,17 @@ private final RequestFactory requestFactory;
 		
 		try {
 			requestResult = requestFactory.ApiRequestResult();
+			
 			if(requestResult.getStatusCodeValue() == 200) {
-				apiItemList = requestFactory.JsonToList(requestResult);
+				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)requestFactory.JsonToObject(requestResult);
+				
+				if(apiResponse_Total.getResponse().getHeader().getResultCode().equals("00")) {
+					apiItemList = requestFactory.JsonToList(requestResult);
+				} else {
+					throw new IllegalStateException("데이터 요청이 실패하였습니다.");
+				}
+			} else {
+				throw new IllegalStateException("서버의 상태가 원활하지 않습니다.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

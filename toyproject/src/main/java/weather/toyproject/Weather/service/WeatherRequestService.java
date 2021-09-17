@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -60,17 +61,24 @@ public class WeatherRequestService implements RequestFactory {
 		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		
 		UriComponents requestURI = this.uriComponentsBuilder();
-		
+		System.out.println(requestURI.toUriString());
 	    requestResult = this.restTemplate.exchange(requestURI.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class);
 	    return requestResult;
 	}
 	
 	@Override
 	public UriComponents uriComponentsBuilder()  {
+		String serviceKey = null;
+		try {
+			serviceKey = URLDecoder.decode(this.ServiceKey, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(this.url)
-								.queryParam("serviceKey", this.ServiceKey)
+								.queryParam("serviceKey", serviceKey)
 								.queryParam("numOfRows", "10")
-								.queryParam("base_date", "20210914")
+								.queryParam("base_date", "20210917")
 								.queryParam("base_time", "0600")
 								.queryParam("nx", "55")
 								.queryParam("ny", "127")
@@ -95,12 +103,16 @@ public class WeatherRequestService implements RequestFactory {
 		JsonNode responseNode = objectMapper.readTree(requestResult.getBody()).findPath("item");
 		CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
 		List<ApiItem> ApiItemList = objectMapper.readValue(responseNode.toString(), collectionType);
+		for(ApiItem item : ApiItemList) {
+			System.out.println(item);
+		}
 		return ApiItemList;
 	}
 
 	@Override
 	public Object JsonToObject(ResponseEntity<String> responseEntity) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ApiResponse_Total apiResponse_Total = mapper.readValue(responseEntity.getBody(), ApiResponse_Total.class);
 		return apiResponse_Total;
 	}
