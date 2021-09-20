@@ -17,6 +17,14 @@ public class ApiItem {
 	private String nx;
 	@JsonProperty("ny")
 	private String ny;
+	@JsonProperty("fcstDate")
+	private String fcstDate;
+	@JsonProperty("fcstTime")
+	private String fcstTime;
+	@JsonProperty("fcstValue")
+	private String fcstValue;
+	/**
 	@JsonProperty("obsrValue")
 	private String obsrValue;
+	*/
 }

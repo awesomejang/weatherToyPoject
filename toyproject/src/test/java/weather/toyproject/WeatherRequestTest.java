@@ -24,7 +24,6 @@ public class WeatherRequestTest {
 		try {
 			weatherApiRequest.WheatherRequest();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

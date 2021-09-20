@@ -36,7 +36,7 @@ private final RequestFactory requestFactory;
 				if(apiResponse_Total.getResponse().getHeader().getResultCode().equals("00")) {
 					apiItemList = requestFactory.JsonToList(requestResult);
 				} else {
-					throw new IllegalStateException("데이터 요청이 실패하였습니다.");
+					throw new IllegalStateException("날씨 데이터 요청결과가 정확하지 않습니다.");
 				}
 			} else {
 				throw new IllegalStateException("서버의 상태가 원활하지 않습니다.");

@@ -77,9 +77,9 @@ public class WeatherRequestService implements RequestFactory {
 		
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(this.url)
 								.queryParam("serviceKey", serviceKey)
-								.queryParam("numOfRows", "10")
-								.queryParam("base_date", "20210917")
-								.queryParam("base_time", "0600")
+								.queryParam("numOfRows", "153")
+								.queryParam("base_date", "20210920")
+								.queryParam("base_time", "0200")
 								.queryParam("nx", "55")
 								.queryParam("ny", "127")
 								.queryParam("dataType", "JSON")
