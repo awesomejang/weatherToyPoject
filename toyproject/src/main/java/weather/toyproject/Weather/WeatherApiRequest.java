@@ -1,25 +1,23 @@
 package weather.toyproject.Weather;
 
-import java.net.SocketTimeoutException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 
 import weather.toyproject.Weather.domain.ApiItem;
 import weather.toyproject.Weather.domain.ApiResponse_Total;
-import weather.toyproject.httpRequest.RequestFactory;
+import weather.toyproject.Weather.service.WeatherRequestService;
 
 @Component
 public class WeatherApiRequest {
 	
-private final RequestFactory requestFactory;
+private final WeatherRequestService weatherRequestService;
 	
 	@Autowired
-	public WeatherApiRequest(RequestFactory weatherRequestService) {
-		this.requestFactory = weatherRequestService;
+	public WeatherApiRequest(WeatherRequestService weatherRequestService) {
+		this.weatherRequestService = weatherRequestService;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -28,13 +26,14 @@ private final RequestFactory requestFactory;
 		List<ApiItem> apiItemList;
 		
 		try {
-			requestResult = requestFactory.ApiRequestResult();
+			requestResult = weatherRequestService.ApiRequestResult();
 			
 			if(requestResult.getStatusCodeValue() == 200) {
-				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)requestFactory.JsonToObject(requestResult);
+				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)weatherRequestService.JsonToObject(requestResult);
 				
 				if(apiResponse_Total.getResponse().getHeader().getResultCode().equals("00")) {
-					apiItemList = requestFactory.JsonToList(requestResult);
+					//apiItemList = weatherRequestService.JsonToList(requestResult);
+					weatherRequestService.JsonDataAnaly(weatherRequestService.JsonToList(requestResult));
 				} else {
 					throw new IllegalStateException("날씨 데이터 요청결과가 정확하지 않습니다.");
 				}

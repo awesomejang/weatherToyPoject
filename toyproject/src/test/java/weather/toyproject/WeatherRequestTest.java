@@ -1,6 +1,8 @@
 package weather.toyproject;
 
 import java.net.SocketTimeoutException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,7 @@ public class WeatherRequestTest {
 	@Autowired
 	WeatherApiRequest weatherApiRequest;
 	
+	
 	@Test
 	void test() {
 		try {
@@ -26,6 +29,12 @@ public class WeatherRequestTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	void LocalDateTest() {
+		String todayDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+		System.out.println(todayDate);
 	}
 	
 }

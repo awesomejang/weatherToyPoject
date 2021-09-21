@@ -5,6 +5,8 @@ import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -77,8 +79,8 @@ public class WeatherRequestService implements RequestFactory {
 		
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(this.url)
 								.queryParam("serviceKey", serviceKey)
-								.queryParam("numOfRows", "153")
-								.queryParam("base_date", "20210920")
+								.queryParam("numOfRows", "233") // 776(오늘포함3일), 233(요청일하루)
+								.queryParam("base_date", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)) // format(yyyymmdd)
 								.queryParam("base_time", "0200")
 								.queryParam("nx", "55")
 								.queryParam("ny", "127")
@@ -103,9 +105,14 @@ public class WeatherRequestService implements RequestFactory {
 		JsonNode responseNode = objectMapper.readTree(requestResult.getBody()).findPath("item");
 		CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
 		List<ApiItem> ApiItemList = objectMapper.readValue(responseNode.toString(), collectionType);
+		int count = 0;
 		for(ApiItem item : ApiItemList) {
+			if(item.getFcstDate().equals("20210921")) {
+				count++;
+			}
 			System.out.println(item);
 		}
+		System.out.println("count = " + count);
 		return ApiItemList;
 	}
 
@@ -117,5 +124,20 @@ public class WeatherRequestService implements RequestFactory {
 		return apiResponse_Total;
 	}
 
+	
+	public String JsonDataAnaly(List<ApiItem> ApiItemList) {
+		StringBuffer sb =  new StringBuffer();
+		for(ApiItem item : ApiItemList) {
+			if(item.getCategory().equals("TMN")) {
+				sb.append("오늘의 최저기온은 " + item.getFcstValue() + "도 로 예상됩니다."); 
+				sb.append(System.getProperty("line.separator"));
+			}
+			if(item.getCategory().equals("TMX")) {
+				sb.append("오늘의 최고기온은 " + item.getFcstValue() + "도 로 예상됩니다.");
+			}
+		}
+		System.out.println("JSONDATA_ANALY_RESULT = " + sb);
+		return sb.toString();
+	}
 	
 }
