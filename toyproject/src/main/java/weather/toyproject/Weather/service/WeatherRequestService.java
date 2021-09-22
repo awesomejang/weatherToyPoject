@@ -128,6 +128,7 @@ public class WeatherRequestService implements RequestFactory {
 	public String JsonDataAnaly(List<ApiItem> ApiItemList) {
 		StringBuffer sb =  new StringBuffer();
 		for(ApiItem item : ApiItemList) {
+			//==최저, 최고 기온==//
 			if(item.getCategory().equals("TMN")) {
 				sb.append("오늘의 최저기온은 " + item.getFcstValue() + "도 로 예상됩니다."); 
 				sb.append(System.getProperty("line.separator"));
@@ -135,6 +136,7 @@ public class WeatherRequestService implements RequestFactory {
 			if(item.getCategory().equals("TMX")) {
 				sb.append("오늘의 최고기온은 " + item.getFcstValue() + "도 로 예상됩니다.");
 			}
+			
 		}
 		System.out.println("JSONDATA_ANALY_RESULT = " + sb);
 		return sb.toString();
