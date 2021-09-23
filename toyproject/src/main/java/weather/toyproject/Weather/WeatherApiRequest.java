@@ -32,8 +32,8 @@ private final WeatherRequestService weatherRequestService;
 				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)weatherRequestService.JsonToObject(requestResult);
 				
 				if(apiResponse_Total.getResponse().getHeader().getResultCode().equals("00")) {
-					//apiItemList = weatherRequestService.JsonToList(requestResult);
-					weatherRequestService.JsonDataAnaly(weatherRequestService.JsonToList(requestResult));
+					apiItemList = weatherRequestService.JsonToList(requestResult);
+					weatherRequestService.JsonDataAnaly(apiItemList);
 				} else {
 					throw new IllegalStateException("날씨 데이터 요청결과가 정확하지 않습니다.");
 				}

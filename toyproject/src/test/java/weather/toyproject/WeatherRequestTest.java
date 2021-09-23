@@ -35,6 +35,15 @@ public class WeatherRequestTest {
 	void LocalDateTest() {
 		String todayDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
 		System.out.println(todayDate);
+		
+		StringBuffer sb = new StringBuffer();
+		StringBuffer sb2 = new StringBuffer();
+		
+		sb.append("sbsb");
+		sb2.append("sb2sb2sb");
+		
+		sb.append(sb2);
+		System.out.println(sb.toString());
 	}
 	
 }
