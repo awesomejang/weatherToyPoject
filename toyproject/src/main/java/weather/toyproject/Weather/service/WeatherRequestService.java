@@ -7,6 +7,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +82,7 @@ public class WeatherRequestService implements RequestFactory {
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(this.url)
 								.queryParam("serviceKey", serviceKey)
 								.queryParam("numOfRows", "233") // 776(오늘포함3일), 233(요청일하루)
-								.queryParam("base_date", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)) // format(yyyymmdd)
+								.queryParam("base_date", "20210925") // format(yyyymmdd) //LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE
 								.queryParam("base_time", "0200")
 								.queryParam("nx", "55")
 								.queryParam("ny", "127")
@@ -105,14 +107,11 @@ public class WeatherRequestService implements RequestFactory {
 		JsonNode responseNode = objectMapper.readTree(requestResult.getBody()).findPath("item");
 		CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
 		List<ApiItem> ApiItemList = objectMapper.readValue(responseNode.toString(), collectionType);
-		int count = 0;
+		/*
 		for(ApiItem item : ApiItemList) {
-			if(item.getFcstDate().equals("20210921")) {
-				count++;
-			}
 			System.out.println(item);
 		}
-		System.out.println("count = " + count);
+		*/
 		return ApiItemList;
 	}
 
@@ -127,22 +126,30 @@ public class WeatherRequestService implements RequestFactory {
 	
 	public String JsonDataAnaly(List<ApiItem> ApiItemList) {
 		StringBuffer sb =  new StringBuffer();
+		Map<String, List<ApiItem>> timeSplitMap = new HashMap<String, List<ApiItem>>();
+		List<ApiItem> DamList = new ArrayList<ApiItem>();
+		List<ApiItem> AmList = new ArrayList<ApiItem>();
+		List<ApiItem> PmList = new ArrayList<ApiItem>();
+		
 		int WeatherTime = 0;
+		
 		for(ApiItem item : ApiItemList) {
 			//==최저, 최고 기온==//
 			if(item.getCategory().equals("TMN")) {
 				sb.append("오늘의 최저기온은 " + item.getFcstValue() + "도 " + "최고기온은 " + item.getFcstValue() + "도 로 예상됩니다." ); 
 				sb.append(System.getProperty("line.separator"));
 			}
-			//==비, 눈 소식==//
-			if(item.getCategory().equals("PTY")) {
-				if(item.getFcstValue().equals("0")) {
-					sb.append("비 소식은 없습니다.");
+			
+			//==시간대별 날씨 처리를 위한 로직==//
+			if( Integer.parseInt(item.getFcstTime()) <= 0700) {
+				DamList.add(item);
 				}
 			}
+		for (int i = 0; i < DamList.size(); i++) {
+			System.out.println(DamList.get(i));
 		}
-		System.out.println("JSONDATA_ANALY_RESULT = " + sb);
 		return sb.toString();
+		}
 	}
 	
-}
+

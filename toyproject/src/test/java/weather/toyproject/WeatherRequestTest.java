@@ -46,4 +46,8 @@ public class WeatherRequestTest {
 		System.out.println(sb.toString());
 	}
 	
+	@Test
+	void run() {
+		System.out.println(0500 < 0700);
+	}
 }
