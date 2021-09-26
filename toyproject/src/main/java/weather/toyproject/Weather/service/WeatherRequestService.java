@@ -82,7 +82,7 @@ public class WeatherRequestService implements RequestFactory {
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(this.url)
 								.queryParam("serviceKey", serviceKey)
 								.queryParam("numOfRows", "233") // 776(오늘포함3일), 233(요청일하루)
-								.queryParam("base_date", "20210925") // format(yyyymmdd) //LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE
+								.queryParam("base_date", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)) // format(yyyymmdd) //LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE
 								.queryParam("base_time", "0200")
 								.queryParam("nx", "55")
 								.queryParam("ny", "127")
@@ -131,7 +131,6 @@ public class WeatherRequestService implements RequestFactory {
 		List<ApiItem> AmList = new ArrayList<ApiItem>();
 		List<ApiItem> PmList = new ArrayList<ApiItem>();
 		
-		int WeatherTime = 0;
 		
 		for(ApiItem item : ApiItemList) {
 			//==최저, 최고 기온==//
@@ -141,15 +140,57 @@ public class WeatherRequestService implements RequestFactory {
 			}
 			
 			//==시간대별 날씨 처리를 위한 로직==//
-			if( Integer.parseInt(item.getFcstTime()) <= 0700) {
+			if( Integer.parseInt(item.getFcstTime()) >= 300 && Integer.parseInt(item.getFcstTime()) <= 700) {
 				DamList.add(item);
 				}
+			if( Integer.parseInt(item.getFcstTime()) >= 800 && Integer.parseInt(item.getFcstTime()) <= 700) {
+				AmList.add(item);
+				}
+			if( Integer.parseInt(item.getFcstTime()) >= 1600 && Integer.parseInt(item.getFcstTime()) <= 2300) {
+				PmList.add(item);
+				}
 			}
+		
+		//==시간대별 처리==//
+		timeSplitMap.put("Dam", DamList);
+		timeSplitMap.put("Am", AmList);
+		timeSplitMap.put("Pm", PmList);
+		
+		JsonTimeAnaly(timeSplitMap);
+		
 		for (int i = 0; i < DamList.size(); i++) {
 			System.out.println(DamList.get(i));
 		}
 		return sb.toString();
 		}
+	
+	public StringBuffer JsonTimeAnaly(Map<String, List<ApiItem>> timeSplitMap) {
+		
+		StringBuffer DamSb = new StringBuffer();
+		int raincount = 0, snowcount = 0;
+		Float totalrain = null , totalsnow = null; 
+		
+		for(ApiItem item : timeSplitMap.get("Dam")) {
+			totalrain += 3.14F;
+			if(item.getCategory().equals("PTY") && item.getFcstValue().equals("1")) {
+				if(item.getCategory().equals("PCP")) {
+					raincount++;
+					totalrain += Float.parseFloat(item.getFcstValue());
+				}
+			}
+			if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
+				if(item.getCategory().equals("PCP")) {
+					snowcount++;
+					totalsnow += Float.parseFloat(item.getFcstValue());
+				}
+			}
+		}
+		System.out.println("raincount = " + raincount + " , " + "totalrain = " + totalrain);
+		System.out.println("raincount = " + snowcount + " , " + "totalrain = " + totalsnow);
+		return DamSb;
 	}
 	
-
+	
+	
+}
+	

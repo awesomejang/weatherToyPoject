@@ -48,6 +48,8 @@ public class WeatherRequestTest {
 	
 	@Test
 	void run() {
-		System.out.println(0500 < 0700);
+		String rain = "1.29";
+		Float.parseFloat(rain);
+		System.out.println("float = " + Float.parseFloat(rain));
 	}
 }
