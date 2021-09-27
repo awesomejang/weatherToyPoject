@@ -168,10 +168,9 @@ public class WeatherRequestService implements RequestFactory {
 		
 		StringBuffer DamSb = new StringBuffer();
 		int raincount = 0, snowcount = 0;
-		Float totalrain = null , totalsnow = null; 
+		float totalrain = 0, totalsnow = 0; // 정확한 소수점 연산을 위해서는 BigDecimal사용해야함
 		
 		for(ApiItem item : timeSplitMap.get("Dam")) {
-			totalrain += 3.14F;
 			if(item.getCategory().equals("PTY") && item.getFcstValue().equals("1")) {
 				if(item.getCategory().equals("PCP")) {
 					raincount++;
