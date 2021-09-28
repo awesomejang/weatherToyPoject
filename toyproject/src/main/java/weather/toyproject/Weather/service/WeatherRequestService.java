@@ -135,11 +135,12 @@ public class WeatherRequestService implements RequestFactory {
 		for(ApiItem item : ApiItemList) {
 			//==최저, 최고 기온==//
 			if(item.getCategory().equals("TMN")) {
-				sb.append("오늘의 최저기온은 " + item.getFcstValue() + "도 " + "최고기온은 " + item.getFcstValue() + "도 로 예상됩니다." ); 
+				sb.append("오늘의 최저기온은 " + item.getFcstValue() + "도 " + "최고기온은 " + item.getFcstValue() + "도 로 예상되며" ); 
 				sb.append(System.getProperty("line.separator"));
 			}
 			
 			//==시간대별 날씨 처리를 위한 로직==//
+			// 눈, 비 소식이 하나라도 있을 경우 입력으로 하면 불필요한 반복문 방지 가능 --> 추후 변경예정 
 			if( Integer.parseInt(item.getFcstTime()) >= 300 && Integer.parseInt(item.getFcstTime()) <= 700) {
 				DamList.add(item);
 				}
@@ -178,17 +179,31 @@ public class WeatherRequestService implements RequestFactory {
 				}
 			}
 			if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
-				if(item.getCategory().equals("PCP")) {
+				if(item.getCategory().equals("SNO")) {
 					snowcount++;
 					totalsnow += Float.parseFloat(item.getFcstValue());
 				}
 			}
+		}
+		
+		//==비, 눈 텍스트생성==//
+		if(raincount > 0 && snowcount == 0) {
+			DamSb.append("새벽에 비 소식이 예상됩니다.");
+			DamSb.append(System.getProperty("line.separator"));
+			DamSb.append("시간당 평균 예상 강수량은 " + totalrain + "mm" + "입니다.");
+		} else if (raincount == 0 && snowcount > 0) {
+			DamSb.append("새벽에 비 혹은 눈 소식이 예상됩니다.");
+			DamSb.append(System.getProperty("line.separator"));
+			DamSb.append("예상 강수량은 " + totalrain + "mm" + "입니다.");
 		}
 		System.out.println("raincount = " + raincount + " , " + "totalrain = " + totalrain);
 		System.out.println("raincount = " + snowcount + " , " + "totalrain = " + totalsnow);
 		return DamSb;
 	}
 	
+	public StringBuffer CreateTimeBuffer(String time, int raincount, int totalrain, int snowcount, int totalsnow) {
+		return new StringBuffer();
+	}
 	
 	
 }
