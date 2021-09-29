@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -151,60 +152,73 @@ public class WeatherRequestService implements RequestFactory {
 				PmList.add(item);
 				}
 			}
-		
 		//==시간대별 처리==//
 		timeSplitMap.put("Dam", DamList);
 		timeSplitMap.put("Am", AmList);
 		timeSplitMap.put("Pm", PmList);
-		
-		JsonTimeAnaly(timeSplitMap);
-		
-		for (int i = 0; i < DamList.size(); i++) {
-			System.out.println(DamList.get(i));
-		}
+		sb.append(this.JsonTimeAnaly(timeSplitMap));
+		System.out.println(sb.toString());
 		return sb.toString();
-		}
+	}
 	
 	public StringBuffer JsonTimeAnaly(Map<String, List<ApiItem>> timeSplitMap) {
 		
-		StringBuffer DamSb = new StringBuffer();
-		int raincount = 0, snowcount = 0;
-		float totalrain = 0, totalsnow = 0; // 정확한 소수점 연산을 위해서는 BigDecimal사용해야함
+		StringBuffer sb = new StringBuffer();
 		
-		for(ApiItem item : timeSplitMap.get("Dam")) {
-			if(item.getCategory().equals("PTY") && item.getFcstValue().equals("1")) {
-				if(item.getCategory().equals("PCP")) {
-					raincount++;
-					totalrain += Float.parseFloat(item.getFcstValue());
+		for(String keys : timeSplitMap.keySet()) {
+			int raincount = 0, snowcount = 0;
+			float totalrain = 0, totalsnow = 0; // 정확한 소수점 연산을 위해서는 BigDecimal사용해야함
+			
+			for(ApiItem item : timeSplitMap.get(keys)) {
+				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("1")) {
+					if(item.getCategory().equals("PCP")) {
+						raincount++;
+						totalrain += Float.parseFloat(item.getFcstValue());
+					}
+				}
+				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
+					if(item.getCategory().equals("SNO")) {
+						snowcount++;
+						totalsnow += Float.parseFloat(item.getFcstValue());
+					}
 				}
 			}
-			if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
-				if(item.getCategory().equals("SNO")) {
-					snowcount++;
-					totalsnow += Float.parseFloat(item.getFcstValue());
-				}
-			}
+			sb.append(CreateTimeBuffer(keys, raincount, totalrain, snowcount, totalsnow)); 
 		}
+		return sb;
+	}
+	
+	public StringBuffer CreateTimeBuffer(String time, int raincount, float totalrain, int snowcount, float totalsnow) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(System.getProperty("line.separator"));
 		
-		//==비, 눈 텍스트생성==//
-		if(raincount > 0 && snowcount == 0) {
-			DamSb.append("새벽에 비 소식이 예상됩니다.");
-			DamSb.append(System.getProperty("line.separator"));
-			DamSb.append("시간당 평균 예상 강수량은 " + totalrain + "mm" + "입니다.");
-		} else if (raincount == 0 && snowcount > 0) {
-			DamSb.append("새벽에 비 혹은 눈 소식이 예상됩니다.");
-			DamSb.append(System.getProperty("line.separator"));
-			DamSb.append("예상 강수량은 " + totalrain + "mm" + "입니다.");
+		if(raincount + snowcount > 0) {
+			if(time.equals("Dam")) {
+				sb.append("새벽에 ");
+			} else if(time.equals("Am")) {
+				sb.append("오전에 ");
+			} else {
+				sb.append("오후에 ");
+			}
+			
+			if(raincount > 0 && snowcount == 0) {
+				sb.append("비 소식이 예상됩니다.");
+				sb.append(System.getProperty("line.separator"));
+				sb.append("시간당 평균 예상 강수량은 " + (totalrain / raincount) + "mm" + "입니다.");
+			} else if (raincount > 0 && snowcount > 0) {
+				sb.append("눈 소식이 예상됩니다.");
+				sb.append(System.getProperty("line.separator"));
+				sb.append("예상 적설량은 " + (totalsnow / snowcount) + "mm" + "입니다.");
+			} else if (raincount > 0 && snowcount > 0) { 
+				sb.append("비 혹은 눈 소식이 예상됩니다.");
+				sb.append(System.getProperty("line.separator"));
+				sb.append("예상 강수량은 " + (totalrain / raincount) + "mm" + "입니다.");
+				sb.append("예상 적설량은 " + (totalsnow / snowcount) + "mm" + "입니다.");
+			}
+		} else {
+			sb.append("비 혹은 눈소식은 없습니다.");
 		}
-		System.out.println("raincount = " + raincount + " , " + "totalrain = " + totalrain);
-		System.out.println("raincount = " + snowcount + " , " + "totalrain = " + totalsnow);
-		return DamSb;
+		return sb;
 	}
-	
-	public StringBuffer CreateTimeBuffer(String time, int raincount, int totalrain, int snowcount, int totalsnow) {
-		return new StringBuffer();
-	}
-	
-	
 }
 	
