@@ -83,7 +83,7 @@ public class WeatherRequestService implements RequestFactory {
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(this.url)
 								.queryParam("serviceKey", serviceKey)
 								.queryParam("numOfRows", "233") // 776(오늘포함3일), 233(요청일하루)
-								.queryParam("base_date", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)) // format(yyyymmdd) //LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE
+								.queryParam("base_date", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)) // format(yyyymmdd) //LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
 								.queryParam("base_time", "0200")
 								.queryParam("nx", "55")
 								.queryParam("ny", "127")
@@ -136,7 +136,11 @@ public class WeatherRequestService implements RequestFactory {
 		for(ApiItem item : ApiItemList) {
 			//==최저, 최고 기온==//
 			if(item.getCategory().equals("TMN")) {
-				sb.append("오늘의 최저기온은 " + item.getFcstValue() + "도 " + "최고기온은 " + item.getFcstValue() + "도 로 예상되며" ); 
+				sb.append("오늘의 최저기온은 " + item.getFcstValue() + "도 "); 
+			}
+			
+			if(item.getCategory().equals("TMX")) {
+				sb.append("최고기온은 " + item.getFcstValue() + "도 로 예상되며");
 				sb.append(System.getProperty("line.separator"));
 			}
 			
@@ -145,7 +149,7 @@ public class WeatherRequestService implements RequestFactory {
 			if( Integer.parseInt(item.getFcstTime()) >= 300 && Integer.parseInt(item.getFcstTime()) <= 700) {
 				DamList.add(item);
 				}
-			if( Integer.parseInt(item.getFcstTime()) >= 800 && Integer.parseInt(item.getFcstTime()) <= 700) {
+			if( Integer.parseInt(item.getFcstTime()) >= 800 && Integer.parseInt(item.getFcstTime()) <= 1500) {
 				AmList.add(item);
 				}
 			if( Integer.parseInt(item.getFcstTime()) >= 1600 && Integer.parseInt(item.getFcstTime()) <= 2300) {
@@ -170,14 +174,19 @@ public class WeatherRequestService implements RequestFactory {
 			float totalrain = 0, totalsnow = 0; // 정확한 소수점 연산을 위해서는 BigDecimal사용해야함
 			
 			for(ApiItem item : timeSplitMap.get(keys)) {
+				System.out.println("keys= " + keys);
 				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("1")) {
+					System.out.println("PTY1 IN");
 					if(item.getCategory().equals("PCP")) {
+						System.out.println("raincount IN");
 						raincount++;
 						totalrain += Float.parseFloat(item.getFcstValue());
 					}
 				}
 				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
+					System.out.println("PTY3 IN");
 					if(item.getCategory().equals("SNO")) {
+						System.out.println("snowcount IN");
 						snowcount++;
 						totalsnow += Float.parseFloat(item.getFcstValue());
 					}
@@ -191,6 +200,7 @@ public class WeatherRequestService implements RequestFactory {
 	public StringBuffer CreateTimeBuffer(String time, int raincount, float totalrain, int snowcount, float totalsnow) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(System.getProperty("line.separator"));
+		System.out.println("time= " + time + " " + "raincount= " + raincount + " " + "totalrain= " + totalrain + " " + "snowcount= " + snowcount + " " + "totalsnow= " + totalsnow);
 		
 		if(raincount + snowcount > 0) {
 			if(time.equals("Dam")) {
@@ -205,7 +215,7 @@ public class WeatherRequestService implements RequestFactory {
 				sb.append("비 소식이 예상됩니다.");
 				sb.append(System.getProperty("line.separator"));
 				sb.append("시간당 평균 예상 강수량은 " + (totalrain / raincount) + "mm" + "입니다.");
-			} else if (raincount > 0 && snowcount > 0) {
+			} else if (raincount == 0 && snowcount > 0) {
 				sb.append("눈 소식이 예상됩니다.");
 				sb.append(System.getProperty("line.separator"));
 				sb.append("예상 적설량은 " + (totalsnow / snowcount) + "mm" + "입니다.");
