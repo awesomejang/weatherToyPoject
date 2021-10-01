@@ -29,7 +29,7 @@ private final WeatherRequestService weatherRequestService;
 			requestResult = weatherRequestService.ApiRequestResult();
 			
 			if(requestResult.getStatusCodeValue() == 200) {
-				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)weatherRequestService.JsonToObject(requestResult);
+				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)weatherRequestService.JsonToObject(requestResult) ;
 				
 				if(apiResponse_Total.getResponse().getHeader().getResultCode().equals("00")) {
 					apiItemList = weatherRequestService.JsonToList(requestResult);
