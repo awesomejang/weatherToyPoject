@@ -35,7 +35,7 @@ private final WeatherRequestService weatherRequestService;
 					apiItemList = weatherRequestService.JsonToList(requestResult);
 					weatherRequestService.JsonDataAnaly(apiItemList);
 				} else {
-					throw new IllegalStateException("날씨 데이터 요청결과가 정확하지 않습니다 올바른 데이터 안내.");
+					throw new IllegalStateException("날씨 데이터 요청결과가 정확하지 않습니다.");
 				}
 			} else {
 				throw new IllegalStateException("서버의 상태가 원활하지 않습니다.");

@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class AppConfig {
 	
-	
 	@Bean(name = "ApiResource")
 	public PropertiesFactoryBean propertiesFactoryBean() throws Exception {
 		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
