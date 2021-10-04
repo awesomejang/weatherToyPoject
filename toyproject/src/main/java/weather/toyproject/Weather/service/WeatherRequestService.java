@@ -157,9 +157,9 @@ public class WeatherRequestService implements RequestFactory {
 				}
 			}
 		//==시간대별 처리==//
-		timeSplitMap.put("Dam", DamList);
-		timeSplitMap.put("Am", AmList);
-		timeSplitMap.put("Pm", PmList);
+		timeSplitMap.put("DAM", DamList);
+		timeSplitMap.put("AM", AmList);
+		timeSplitMap.put("PM", PmList);
 		sb.append(this.JsonTimeAnaly(timeSplitMap));
 		System.out.println(sb.toString());
 		return sb.toString();
@@ -174,15 +174,11 @@ public class WeatherRequestService implements RequestFactory {
 			float totalrain = 0, totalsnow = 0; // 정확한 소수점 연산을 위해서는 BigDecimal사용해야함
 			
 			for(ApiItem item : timeSplitMap.get(keys)) {
-				System.out.println("keys= " + keys);
-				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("1")) {
-					System.out.println("PTY1 IN");
 					if(item.getCategory().equals("PCP")) {
 						System.out.println("raincount IN");
 						raincount++;
 						totalrain += Float.parseFloat(item.getFcstValue());
 					}
-				}
 				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
 					System.out.println("PTY3 IN");
 					if(item.getCategory().equals("SNO")) {
@@ -203,9 +199,9 @@ public class WeatherRequestService implements RequestFactory {
 		System.out.println("time= " + time + " " + "raincount= " + raincount + " " + "totalrain= " + totalrain + " " + "snowcount= " + snowcount + " " + "totalsnow= " + totalsnow);
 		
 		if(raincount + snowcount > 0) {
-			if(time.equals("Dam")) {
+			if(time.equals("DAM")) {
 				sb.append("새벽에 ");
-			} else if(time.equals("Am")) {
+			} else if(time.equals("AM")) {
 				sb.append("오전에 ");
 			} else {
 				sb.append("오후에 ");
@@ -230,5 +226,7 @@ public class WeatherRequestService implements RequestFactory {
 		}
 		return sb;
 	}
+	
+	
 }
 	
