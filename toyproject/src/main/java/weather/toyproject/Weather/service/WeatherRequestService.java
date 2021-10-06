@@ -36,6 +36,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import weather.toyproject.Weather.domain.ApiBody;
 import weather.toyproject.Weather.domain.ApiItem;
 import weather.toyproject.Weather.domain.ApiResponse_Total;
+import weather.toyproject.com.ComUtil;
 import weather.toyproject.httpRequest.RequestFactory;
 
 //@PropertySource("classpath:/com/ApiRequestInfo.properties")
@@ -174,10 +175,10 @@ public class WeatherRequestService implements RequestFactory {
 			float totalrain = 0, totalsnow = 0; // 정확한 소수점 연산을 위해서는 BigDecimal사용해야함
 			
 			for(ApiItem item : timeSplitMap.get(keys)) {
-					if(item.getCategory().equals("PCP")) {
-						System.out.println("raincount IN");
-						raincount++;
-						totalrain += Float.parseFloat(item.getFcstValue());
+					if(item.getCategory().equals("PCP") && item.getFcstValue().contains("mm")) {
+						int rainIndex = item.getFcstValue().indexOf("mm");
+							raincount++;
+							totalrain += Float.parseFloat(item.getFcstValue().substring(0, rainIndex));
 					}
 				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
 					System.out.println("PTY3 IN");
@@ -188,12 +189,12 @@ public class WeatherRequestService implements RequestFactory {
 					}
 				}
 			}
-			sb.append(CreateTimeBuffer(keys, raincount, totalrain, snowcount, totalsnow)); 
+			sb.append(createTimeBuffer(keys, raincount, totalrain, snowcount, totalsnow)); 
 		}
 		return sb;
 	}
 	
-	public StringBuffer CreateTimeBuffer(String time, int raincount, float totalrain, int snowcount, float totalsnow) {
+	public StringBuffer createTimeBuffer(String time, int raincount, float totalrain, int snowcount, float totalsnow) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(System.getProperty("line.separator"));
 		System.out.println("time= " + time + " " + "raincount= " + raincount + " " + "totalrain= " + totalrain + " " + "snowcount= " + snowcount + " " + "totalsnow= " + totalsnow);
@@ -210,23 +211,22 @@ public class WeatherRequestService implements RequestFactory {
 			if(raincount > 0 && snowcount == 0) {
 				sb.append("비 소식이 예상됩니다.");
 				sb.append(System.getProperty("line.separator"));
-				sb.append("시간당 평균 예상 강수량은 " + (totalrain / raincount) + "mm" + "입니다.");
+				sb.append("예상 강수량은 " + totalrain + "mm" + "입니다.");
 			} else if (raincount == 0 && snowcount > 0) {
 				sb.append("눈 소식이 예상됩니다.");
 				sb.append(System.getProperty("line.separator"));
-				sb.append("예상 적설량은 " + (totalsnow / snowcount) + "mm" + "입니다.");
+				sb.append("예상 적설량은 " + totalsnow + "mm" + "입니다.");
 			} else if (raincount > 0 && snowcount > 0) { 
 				sb.append("비 혹은 눈 소식이 예상됩니다.");
 				sb.append(System.getProperty("line.separator"));
-				sb.append("예상 강수량은 " + (totalrain / raincount) + "mm" + "입니다.");
-				sb.append("예상 적설량은 " + (totalsnow / snowcount) + "mm" + "입니다.");
+				sb.append("예상 강수량은 " + totalrain + "mm" + "입니다.");
+				sb.append("예상 적설량은 " + totalsnow + "mm" + "입니다.");
 			}
-		} else {
-			sb.append("비 혹은 눈소식은 없습니다.");
-		}
+		} 
+		System.out.println("sb.length? = " + sb.length());
+		System.out.println("sb.tostring? = " + sb.toString());
 		return sb;
 	}
-	
 	
 }
 	

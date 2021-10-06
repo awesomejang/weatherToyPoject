@@ -6,13 +6,12 @@ public class ComUtil {
 		if(s == null || s.equals("")) {
 			return false;
 		}
+		
 		try {
 			Integer.parseInt(s);
 			return true;
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
-
 }
