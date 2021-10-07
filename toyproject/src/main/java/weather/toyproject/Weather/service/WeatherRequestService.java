@@ -169,6 +169,7 @@ public class WeatherRequestService implements RequestFactory {
 	public StringBuffer JsonTimeAnaly(Map<String, List<ApiItem>> timeSplitMap) {
 		
 		StringBuffer sb = new StringBuffer();
+		sb.append(System.getProperty("line.separator"));
 		
 		for(String keys : timeSplitMap.keySet()) {
 			int raincount = 0, snowcount = 0;
@@ -180,24 +181,29 @@ public class WeatherRequestService implements RequestFactory {
 							raincount++;
 							totalrain += Float.parseFloat(item.getFcstValue().substring(0, rainIndex));
 					}
-				if(item.getCategory().equals("PTY") && item.getFcstValue().equals("3")) {
-					System.out.println("PTY3 IN");
-					if(item.getCategory().equals("SNO")) {
-						System.out.println("snowcount IN");
+				if(item.getCategory().equals("PTY") && item.getFcstValue().contains("mm")) {
+					int snowIndex = item.getFcstValue().indexOf("mm");
 						snowcount++;
-						totalsnow += Float.parseFloat(item.getFcstValue());
-					}
+						totalsnow += Float.parseFloat(item.getFcstValue().substring(0, snowIndex));
 				}
+			}
+			
+			if(!sb.toString().trim().equals("")) {
+				sb.append(System.getProperty("line.separator"));
 			}
 			sb.append(createTimeBuffer(keys, raincount, totalrain, snowcount, totalsnow)); 
 		}
+		
+		//이런 상황 만들지말자
+		if(sb.toString().trim().equals("")) {
+			sb.append("비 혹은 눈소식은 없습니다.");
+		}
+		
 		return sb;
 	}
 	
 	public StringBuffer createTimeBuffer(String time, int raincount, float totalrain, int snowcount, float totalsnow) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(System.getProperty("line.separator"));
-		System.out.println("time= " + time + " " + "raincount= " + raincount + " " + "totalrain= " + totalrain + " " + "snowcount= " + snowcount + " " + "totalsnow= " + totalsnow);
 		
 		if(raincount + snowcount > 0) {
 			if(time.equals("DAM")) {
@@ -223,8 +229,6 @@ public class WeatherRequestService implements RequestFactory {
 				sb.append("예상 적설량은 " + totalsnow + "mm" + "입니다.");
 			}
 		} 
-		System.out.println("sb.length? = " + sb.length());
-		System.out.println("sb.tostring? = " + sb.toString());
 		return sb;
 	}
 	
