@@ -162,7 +162,6 @@ public class WeatherRequestService implements RequestFactory {
 		timeSplitMap.put("AM", AmList);
 		timeSplitMap.put("PM", PmList);
 		sb.append(this.JsonTimeAnaly(timeSplitMap));
-		System.out.println(sb.toString());
 		return sb.toString();
 	}
 	
