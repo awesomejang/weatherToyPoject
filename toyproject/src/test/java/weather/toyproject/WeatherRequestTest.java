@@ -25,7 +25,7 @@ public class WeatherRequestTest {
 	@Test
 	void test() {
 		try {
-			weatherApiRequest.WheatherRequest();
+			weatherApiRequest.WeatherRequest();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

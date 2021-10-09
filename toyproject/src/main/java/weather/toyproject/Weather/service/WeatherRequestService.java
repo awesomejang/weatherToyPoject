@@ -60,7 +60,7 @@ public class WeatherRequestService implements RequestFactory {
 	 * 날씨 데이터 요청을 보낸 후 ReponseEntity를 리턴한다.  
 	 */
 	@Override
-	public ResponseEntity ApiRequestResult() throws  SocketTimeoutException {
+	public ResponseEntity ApiRequestResult() throws SocketTimeoutException {
 		HttpHeaders headers = new HttpHeaders();
 		ResponseEntity<String> requestResult;
 		
@@ -109,11 +109,6 @@ public class WeatherRequestService implements RequestFactory {
 		JsonNode responseNode = objectMapper.readTree(requestResult.getBody()).findPath("item");
 		CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, ApiItem.class);
 		List<ApiItem> ApiItemList = objectMapper.readValue(responseNode.toString(), collectionType);
-		/*
-		for(ApiItem item : ApiItemList) {
-			System.out.println(item);
-		}
-		*/
 		return ApiItemList;
 	}
 
@@ -126,7 +121,7 @@ public class WeatherRequestService implements RequestFactory {
 	}
 
 	
-	public String JsonDataAnaly(List<ApiItem> ApiItemList) {
+	public StringBuffer JsonDataAnaly(List<ApiItem> ApiItemList) {
 		StringBuffer sb =  new StringBuffer();
 		Map<String, List<ApiItem>> timeSplitMap = new HashMap<String, List<ApiItem>>();
 		List<ApiItem> DamList = new ArrayList<ApiItem>();
@@ -162,7 +157,7 @@ public class WeatherRequestService implements RequestFactory {
 		timeSplitMap.put("AM", AmList);
 		timeSplitMap.put("PM", PmList);
 		sb.append(this.JsonTimeAnaly(timeSplitMap));
-		return sb.toString();
+		return sb;
 	}
 	
 	public StringBuffer JsonTimeAnaly(Map<String, List<ApiItem>> timeSplitMap) {

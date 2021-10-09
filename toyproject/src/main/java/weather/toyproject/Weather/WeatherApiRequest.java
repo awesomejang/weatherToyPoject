@@ -21,19 +21,20 @@ private final WeatherRequestService weatherRequestService;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void WheatherRequest() {
+	public void WeatherRequest() {
 		ResponseEntity<String> requestResult;
 		List<ApiItem> apiItemList;
-		
+		StringBuffer sb = new StringBuffer();
 		try {
 			requestResult = weatherRequestService.ApiRequestResult();
 			
 			if(requestResult.getStatusCodeValue() == 200) {
-				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)weatherRequestService.JsonToObject(requestResult) ;
+				ApiResponse_Total apiResponse_Total = (ApiResponse_Total)weatherRequestService.JsonToObject(requestResult);
 				
 				if(apiResponse_Total.getResponse().getHeader().getResultCode().equals("00")) {
 					apiItemList = weatherRequestService.JsonToList(requestResult);
-					weatherRequestService.JsonDataAnaly(apiItemList);
+					sb =  weatherRequestService.JsonDataAnaly(apiItemList);
+					System.out.println(sb.toString());
 				} else {
 					throw new IllegalStateException("날씨 데이터 요청결과가 정확하지 않습니다.");
 				}
