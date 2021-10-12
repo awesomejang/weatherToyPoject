@@ -58,6 +58,7 @@ public class WeatherRequestService implements RequestFactory {
 
 	/**
 	 * 날씨 데이터 요청을 보낸 후 ReponseEntity를 리턴한다.  
+	 * @throws SocketTimeoutException
 	 */
 	@Override
 	public ResponseEntity ApiRequestResult() throws SocketTimeoutException {

@@ -3,8 +3,10 @@ package weather.toyproject.com;
 /**
  * 
  * @author jang
+ * @Param int mode, double lat_X, double lng_Y
+ * @Description 위도, 경도 -> 격자 / 격자 -> 위도, 경도로 변환 
  */
-public class GridGpshelper {
+public class GridGpsHelper {
 	
 	public static final int TO_GRID = 0;
 	public static final int TO_GPS = 1;

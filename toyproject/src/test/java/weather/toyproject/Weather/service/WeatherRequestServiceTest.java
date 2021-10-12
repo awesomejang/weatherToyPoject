@@ -1,16 +1,29 @@
 package weather.toyproject.Weather.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.client.RestTemplate;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @SpringBootTest
 public class WeatherRequestServiceTest {
 	
-	@Autowired
+	ApplicationContext ac = new AnnotationConfigApplicationContext();
 	WeatherRequestService weatherRequestService;
+	
+	
+	@BeforeEach
+	public void beforeEach() {
+		weatherRequestService = new WeatherRequestService(new RestTemplate());
+	}
 	
 	
 	@Test
@@ -20,7 +33,7 @@ public class WeatherRequestServiceTest {
 		int raincount = 0 , snowcount = 0;
 		float totalrain = 0, totalsnow = 0;
 		StringBuffer sb =  weatherRequestService.createTimeBuffer(time, raincount, totalrain, snowcount, totalsnow);
-		Assertions.assertEquals(sb.toString().trim().equals(""), true); 
+		assertTrue(sb.toString().trim().equals(""));
 	}
 
 }
