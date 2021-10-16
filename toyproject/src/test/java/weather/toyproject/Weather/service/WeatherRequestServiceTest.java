@@ -34,6 +34,7 @@ public class WeatherRequestServiceTest {
 	}
 	*/
 	@Test
+	@DisplayName("날씨 데이터 요청 URI를 생성한다.")
 	void uriComponentsBuilderTest() {
 		UriComponents build =  weatherRequestService.uriComponentsBuilder();
 		System.out.println(build.toString());
