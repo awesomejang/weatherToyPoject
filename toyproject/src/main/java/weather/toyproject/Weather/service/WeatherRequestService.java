@@ -129,7 +129,6 @@ public class WeatherRequestService implements RequestFactory {
 		List<ApiItem> AmList = new ArrayList<ApiItem>();
 		List<ApiItem> PmList = new ArrayList<ApiItem>();
 		
-		
 		for(ApiItem item : ApiItemList) {
 			//==최저, 최고 기온==//
 			if(item.getCategory().equals("TMN")) {
