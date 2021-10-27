@@ -10,7 +10,7 @@ sourceCompatibility = '11'
 
 configurations {
  compileOnly {
- extendsFrom annotationProcessor
+	 extendsFrom annotationProcessor
  }
 }
 
@@ -25,16 +25,15 @@ dependencies {
 	implementation 'org.apache.httpcomponents:httpclient:4.5'
 	
 	// Sprint Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security' 
     // OAuth2
     implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.5.RELEASE'
     // MyBatis
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
     //==compileOnly : 컴파일 시점에 꼭 필요한 라이브러리(컴파일 이후 실제 실행할 떄는 해당 라이브러리 없어도 무관), runtimeOnly : 컴파일 시점에는 필요없지만 실행시점에는 꼭 필요한 라이브러리==//
      // MySQL
-    //runtimeOnly 'mysql:mysql-connector-java'
- 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
+ 	compileOnly 'org.projectlombok:lombok'
 	
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
