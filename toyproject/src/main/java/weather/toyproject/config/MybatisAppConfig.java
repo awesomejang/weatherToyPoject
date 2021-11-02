@@ -1,6 +1,6 @@
 package weather.toyproject.config;
 
-@Mapper
+//@Mapper
 public class MybatisAppConfig {
 
 }

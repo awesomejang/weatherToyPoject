@@ -3,7 +3,8 @@
 
 <mapper namespace="weather.toyproject.haru.user.UserMapper">
 
-	<select id="getMember" parameterType="weather.toyproject.haru.user.domain.CustomUserDetails">
-		
+	<select id="getMember" parameterType="weather.toyproject.haru.user.domain.CustomUserDetails" resultType="weather.toyproject.haru.user.domain.CustomUserDetails">
+			SELECT *
+			FROM 
 	</select>
 </mapper>
