@@ -1,32 +1,37 @@
 package weather.toyproject.haru.user.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
 
 import lombok.Getter;
+
 @Getter
-public class CustomUserDetails implements UserDetails{
+public class CustomUserDetails extends UserVO implements UserDetails{
 		
-		private String id;
+		UserVO userVO;
 		
-		private String password;
+		private List<GrantedAuthority> authorities; // 권한 목록
 		
-		private String auth;
-		
-		private String email;
-		
-		private boolean emailVerified;
-		
-		private boolean locked;
-		
-		private String nickname;
-		
-		
-		
-		private Collection<GrantedAuthority> authorities; // 권한 목록
+		public CustomUserDetails(UserVO userVO) {
+			this.userVO = userVO;
+		}
+
+		//==권한 setter ==//
+		public void setAuthorities(List<AuthVO> AuthList) {
+			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			
+			for(AuthVO authVO : AuthList) {
+				authorities.add(new SimpleGrantedAuthority(authVO.getAuth()));
+			}
+			
+			this.authorities = authorities;
+		}
 
 		/**
 		 * 해당 사용자의 권한 목록
@@ -41,7 +46,7 @@ public class CustomUserDetails implements UserDetails{
 		 */
 		@Override
 		public String getPassword() {
-			return password;
+			return userVO.getPassword();
 		}
 
 		/**
@@ -49,7 +54,7 @@ public class CustomUserDetails implements UserDetails{
 		 */
 		@Override
 		public String getUsername() {
-			return id;
+			return userVO.getUserId();
 		}
 
 		/**
@@ -69,7 +74,7 @@ public class CustomUserDetails implements UserDetails{
 		 */
 		@Override
 		public boolean isAccountNonLocked() {
-			return locked;
+			return true;
 		}
 
 		/**
