@@ -1,5 +1,7 @@
 package weather.toyproject.haru.user.domain;
 
+import java.sql.Timestamp;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +9,14 @@ import lombok.Setter;
 @Setter
 public class AuthVO {
 
-	private String UserId;
+	private String authId;
 	
-	private String auth;
+	private String authName;
+	
+	private Timestamp regDate;
+	
+	private Timestamp modDate;
+	
+	private String del_yn;
+	
 }

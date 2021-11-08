@@ -15,11 +15,11 @@ public class UserVO {
 
 	private Long userNo; 
 	
-	private String UserId;
+	private String userId;
 	
-	private String Password;
+	private String password;
 	
-	private String UserName;
+	private String userName;
 	
 	private String email;
 	
@@ -29,6 +29,8 @@ public class UserVO {
 	
 	private List<AuthVO> AuthList;
 	
-	private Timestamp Regdate;
+	private Timestamp regdate;
+	
+	private Timestamp moddate;
 	
 }

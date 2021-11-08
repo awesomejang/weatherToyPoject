@@ -27,7 +27,7 @@ public class CustomUserDetails extends UserVO implements UserDetails{
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 			
 			for(AuthVO authVO : AuthList) {
-				authorities.add(new SimpleGrantedAuthority(authVO.getAuth()));
+				authorities.add(new SimpleGrantedAuthority(authVO.getAuthName()));
 			}
 			
 			this.authorities = authorities;
