@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 
-//@Component
 @Getter
 @Setter
+@Component
 public class UserVO {
 
 	private Long userNo; 

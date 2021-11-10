@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/index.html", "/login", "/signup", "/user").permitAll() // 누구나 접근가능 
 			.antMatchers("/").hasAnyRole("USER") // ADMIN의 auth는 ROLE_ADMIN, ROLE_USER의 형태 
-			.antMatchers("/admin").hasRole("ADMIN")
+			.antMatchers("/admin").hasRole("ADMIN") // hasRole함수는 자동으로 주어진 인자에 'ROLE_ 접두어를 붙이고 검사를 시작한다. 
 			//.anyRequest().authenticated(); // 위의 설정 외 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 
 		.and()
 		 	.formLogin() // 로그인 관련 설정 시작

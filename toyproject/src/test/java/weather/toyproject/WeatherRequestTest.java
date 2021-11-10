@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,7 +18,7 @@ import weather.toyproject.Weather.WeatherApiRequest;
 import weather.toyproject.Weather.service.WeatherRequestService;
 
 @SpringBootTest
-public class WeatherRequestTest {
+public class WeatherRequestTest  implements ApplicationRunner{
 	
 	@Autowired
 	WeatherApiRequest weatherApiRequest;
@@ -52,4 +54,12 @@ public class WeatherRequestTest {
 		Float.parseFloat(rain);
 		System.out.println("float = " + Float.parseFloat(rain));
 	}
+
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }

@@ -17,7 +17,7 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public CustomUserDetails getMember(String id, String password) {
-		return userRepository.getUser(id, password);
+	public CustomUserDetails getUserById(String id, String password) {
+		return userRepository.getUserById(id, password);
 	}
 }

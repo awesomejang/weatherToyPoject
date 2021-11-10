@@ -1,10 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- Mapper interface와 경로 맞춰줘야 mapping수행된다. -->
 <mapper namespace="weather.toyproject.haru.user.UserMapper">
 
-	<select id="getMember" parameterType="weather.toyproject.haru.user.domain.CustomUserDetails" resultType="weather.toyproject.haru.user.domain.CustomUserDetails">
-			SELECT *
-			FROM 
+	<resultMap type="weather.toyproject.haru.user.domain.AuthVO" id="AuthVO">
+		<id property="authId" column="auth_id"/>
+		<result property="authName" column="auth_name"/>
+		<result property="regDate" column="regdate"/>
+		<result property="modDate" column="moddate"/>
+		<result property="del_yn" column="del_yn"/>
+	</resultMap>
+
+	<resultMap type="weather.toyproject.haru.user.domain.UserVO" id="UserVO">
+		<id property="userNo" column="user_no"/>
+		<result property="userId" column="user_id"/>
+		<result property="password" column="password"/>
+		<result property="userName" column="username"/>
+		<result property="email" column="email"/>
+		<result property="verified" column="verified"/>
+		<result property="locked" column="locked"/>
+		<result property="regdate" column="regdate"/>
+		<result property="moddate" column="moddate"/>
+		<!-- ofType:collection안의 데이터타입 
+		     property : bean인에 맴버변수명 
+		     column : 파라미터값? 다수면 column="{key=value, key=value}" 형식으로 입력해야함
+		-->
+		<!-- 권한 List -->
+		<collection property="AuthList" ofType="weather.toyproject.haru.user.domain.AuthVO" column="userId" javaType="java.util.ArrayList" select="getMember_Auth"/>
+	</resultMap>
+	
+	
+
+	<select id="getUserById" parameterMap="UserVO" resultMap="UserVO">
+			SELECT
+			     USER_ID
+			    ,USERNAME
+			    ,USER_NO
+			FROM USER_T
+			WHERE USER_ID = #{userId} 
+	</select>
+	
+	<select id="getMember_Auth" resultType="weather.toyproject.haru.user.domain.AuthVO">
+		SELECT *
+		FROM AUTH_T
+		WHERE AUTH_ID IN (
+						  SELECT 
+		                       AUTH_ID
+						  FROM (
+						  		SELECT 
+						  		     USER_NO
+                                FROM USER_T
+                                WHERE USER_ID = #{userId}
+                                ) A
+                                
+                          INNER JOIN USER_AUTH_MAPPING
+                          ON A.USER_NO = USER_AUTH_MAPPING.USER_NO
+                          )
 	</select>
 </mapper>

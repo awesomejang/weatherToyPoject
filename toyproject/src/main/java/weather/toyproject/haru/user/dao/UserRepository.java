@@ -9,11 +9,11 @@ import weather.toyproject.haru.user.domain.CustomUserDetails;
 @Repository
 public class UserRepository {
 
-	@Autowired
+	//@Autowired
 	UserMapper userMapper;
 	
-	public CustomUserDetails getUser(String id, String password) {
-		return userMapper.getUser(id, password);
+	public CustomUserDetails getUserById(String id, String password) {
+		return userMapper.getUserById(id, password);
 	}
 	
 }
