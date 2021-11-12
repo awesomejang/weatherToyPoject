@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import weather.toyproject.haru.user.domain.AuthVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
 
-@Mapper
+//@Mapper
 public interface UserMapper {
 
 	CustomUserDetails getUserById(String id, String password);

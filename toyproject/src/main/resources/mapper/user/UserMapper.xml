@@ -3,7 +3,7 @@
 
 <!-- Mapper interface와 경로 맞춰줘야 mapping수행된다. -->
 <mapper namespace="weather.toyproject.haru.user.UserMapper">
-
+	<!-- ResultMap, ResultType이 존재한다. -->
 	<resultMap type="weather.toyproject.haru.user.domain.AuthVO" id="AuthVO">
 		<id property="authId" column="auth_id"/>
 		<result property="authName" column="auth_name"/>
