@@ -18,6 +18,6 @@ public class UserService {
 	}
 
 	public CustomUserDetails getUserById(String id, String password) {
-		return userRepository.getUserById(id, password);
+		return userRepository.getUserById(id);
 	}
 }

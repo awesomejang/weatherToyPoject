@@ -34,9 +34,7 @@
 
 	<select id="getUserById" parameterMap="UserVO" resultMap="UserVO">
 			SELECT
-			     USER_ID
-			    ,USERNAME
-			    ,USER_NO
+			     *
 			FROM USER_T
 			WHERE USER_ID = #{userId} 
 	</select>

@@ -1,78 +1,28 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<head th:fragment="mainHeader">  
-		<title>나색: 나만의 색상을 찾기</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="/css/main.css" />
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>나색</strong> '나만의 색상 찾기'</a>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-									</ul>
-								</header>
-								<div layout:fragment="content">  
-								</div>
-						</div>
-					</div>
-					
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
+    <!-- 공통 헤더-->
+    <th:block th:replace="layout/head :: headFragment"></th:block>
 
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>메뉴</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">홈페이지</a></li>
-										<li><a href="generic.html">회사 소개</a></li>
-										<li><a href="elements.html">상품 소개</a></li>
-										<li>
-											<span class="opener">오늘의 추천</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">디자인 예시</a></li>
-										<li><a href="#">나만의 색상 분석</a></li>
-									</ul>
-								</nav>
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-						</div>
-					</div>
-			</div>
-		<!-- Scripts -->
-		<script src="/script/jquery.min.js"></script>
-		<script src="/script/browser.min.js"></script>
-		<script src="/script/breakpoints.min.js"></script>
-		<script src="/script/util.js"></script>
-		<script src="/script/main.js"></script>
-	</body>
+    <body id="page-top">
+        <div id="wrapper">
+            <!-- 사이드바-->
+            <th:block th:replace="layout/sidebar :: sidebarFragment"></th:block>
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- 상단바-->
+                    <th:block th:replace="layout/topbar :: topbarFragment"></th:block>
+                    <!-- 본문-->
+                    <th:block layout:fragment="content">
+                    </th:block>
+                </div>
+                <!-- 공통 하단-->
+                <th:block th:replace="layout/footer :: footerFragment"></th:block>
+            </div>
+        </div>
+
+        <!-- 공통 스크립트-->
+        <th:block th:replace="layout/script :: scriptFragment"></th:block>
+    </body>
 </html>

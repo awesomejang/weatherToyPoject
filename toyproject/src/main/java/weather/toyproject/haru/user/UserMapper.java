@@ -10,7 +10,7 @@ import weather.toyproject.haru.user.domain.CustomUserDetails;
 //@Mapper
 public interface UserMapper {
 
-	CustomUserDetails getUserById(String id, String password);
+	CustomUserDetails getUserById(String id);
 	
 
 }

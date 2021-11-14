@@ -12,8 +12,8 @@ public class UserRepository {
 	//@Autowired
 	UserMapper userMapper;
 	
-	public CustomUserDetails getUserById(String id, String password) {
-		return userMapper.getUserById(id, password);
+	public CustomUserDetails getUserById(String id) {
+		return userMapper.getUserById(id);
 	}
 	
 }

@@ -22,7 +22,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.4.1'
 	implementation 'org.apache.httpcomponents:httpclient:4.5'
 	
 	// Sprint Security
