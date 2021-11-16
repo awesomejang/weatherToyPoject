@@ -20,8 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-		CustomUserDetails userVO = userRepository.getUserById(id);
-		return userVO;
+		UserVO userVO = userRepository.getUserById(id);
+		return new CustomUserDetails(userVO);
 		
 	}
 
