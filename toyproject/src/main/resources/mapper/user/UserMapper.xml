@@ -32,11 +32,16 @@
 	
 	
 
-	<select id="getUserById" parameterMap="UserVO" resultMap="UserVO">
+	<select id="getUserById" parameterType="weather.toyproject.haru.user.domain.UserVO" resultMap="UserVO">
 			SELECT
 			     *
 			FROM USER_T
 			WHERE USER_ID = #{userId} 
+	</select>
+	
+	<select id="getUserTest" resultMap="UserVO">
+		SELECT *
+		FROM USER_T
 	</select>
 	
 	<select id="getMember_Auth" resultType="weather.toyproject.haru.user.domain.AuthVO">

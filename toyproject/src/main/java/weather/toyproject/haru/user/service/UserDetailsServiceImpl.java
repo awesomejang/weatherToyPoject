@@ -21,6 +21,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		UserVO userVO = userRepository.getUserById(id);
+		if (userVO == null) {
+			throw new UsernameNotFoundException("계정이 없어요");
+		}
 		return new CustomUserDetails(userVO);
 		
 	}

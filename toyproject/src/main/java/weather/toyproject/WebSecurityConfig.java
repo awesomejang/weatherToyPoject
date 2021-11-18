@@ -37,7 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/admin").hasRole("ADMIN") // hasRole함수는 자동으로 주어진 인자에 'ROLE_ 접두어를 붙이고 검사를 시작한다. 
 			//.anyRequest().authenticated(); // 위의 설정 외 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 
 		.and()
-		.csrf().ignoringAntMatchers("/h2-console/**").disable()
+		  .csrf().disable() // CSRF토큰 인증 해제  
+		//.csrf().ignoringAntMatchers("/h2-console/**").disable()
 		 	 .formLogin() // 로그인 관련 설정 시작
 			 	 .loginPage("/login") // 로그인 페이지 URL
 			 	 //.usernameParameter("userId")

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import weather.toyproject.haru.user.UserMapper;
 import weather.toyproject.haru.user.dao.UserRepository;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
+import weather.toyproject.haru.user.domain.UserVO;
 
 @Service
 public class UserService {
@@ -20,4 +21,9 @@ public class UserService {
 	public CustomUserDetails getUserById(String id, String password) {
 		return userRepository.getUserById(id);
 	}
+	
+	public UserVO getUserTest() {
+		return userRepository.getUserTest();
+	}
+	
 }
