@@ -22,29 +22,28 @@
 		<result property="locked" column="locked"/>
 		<result property="regdate" column="regdate"/>
 		<result property="moddate" column="moddate"/>
+		<!--<collection property="AuthList" ofType="weather.toyproject.haru.user.domain.AuthVO" column="userId" javaType="ArrayList" select="getMember_Auth"/>  -->
+		<!-- column은 상위의 resultMap의 column을 넣어줘야 한다.(안그러면 쿼리실행자체가 안된다.) -->
+		<collection property="AuthList" ofType="weather.toyproject.haru.user.domain.AuthVO" select="getMember_Auth" column="user_id" javaType="java.util.ArrayList" />
+		
 		<!-- ofType:collection안의 데이터타입 
 		     property : bean인에 맴버변수명 
 		     column : 파라미터값? 다수면 column="{key=value, key=value}" 형식으로 입력해야함
 		-->
 		<!-- 권한 List -->
-		<collection property="AuthList" ofType="weather.toyproject.haru.user.domain.AuthVO" column="userId" javaType="java.util.ArrayList" select="getMember_Auth"/>
 	</resultMap>
 	
-	
 
-	<select id="getUserById" parameterType="weather.toyproject.haru.user.domain.UserVO" resultMap="UserVO">
+	<select id="getUserById" parameterType="String" resultMap="UserVO">
+			/** getUserById */
 			SELECT
 			     *
 			FROM USER_T
 			WHERE USER_ID = #{userId} 
 	</select>
 	
-	<select id="getUserTest" resultMap="UserVO">
-		SELECT *
-		FROM USER_T
-	</select>
-	
-	<select id="getMember_Auth" resultType="weather.toyproject.haru.user.domain.AuthVO">
+	<select id="getMember_Auth" resultMap="AuthVO">
+		/** getMember_Auth */
 		SELECT *
 		FROM AUTH_T
 		WHERE AUTH_ID IN (
@@ -61,4 +60,32 @@
                           ON A.USER_NO = USER_AUTH_MAPPING.USER_NO
                           )
 	</select>
+	
+	<insert id="InsertUser" parameterType="weather.toyproject.haru.user.domain.UserVO">
+		INSERT INTO USER_T
+		VALUES ( AUTH_T_SEQUENCE.NEXTVAL
+		        ,#{userId}
+		        ,#{password}
+		        ,null
+		        ,'관리자2'
+		        ,'Y'
+		        ,'N'
+		        ,sysdate
+		        ,sysdate
+		      )
+	</insert>
+	
+	<insert id="InsertAuth">
+		INSERT INTO USER_T
+		VALUES ( AUTH_T_SEQUENCE.NEXTVAL
+		        ,#{userId}
+		        ,#{password}
+		        ,null
+		        ,'관리자2'
+		        ,'Y'
+		        ,'N'
+		        ,sysdate
+		        ,sysdate
+		      )
+	</insert>
 </mapper>

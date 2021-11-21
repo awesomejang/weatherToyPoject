@@ -11,7 +11,9 @@ import weather.toyproject.haru.user.domain.UserVO;
 @Mapper
 public interface UserMapper {
 
-	CustomUserDetails getUserById(String id);
+	UserVO getUserById(String userId);
 	
-	UserVO getUserTest();
+	List<AuthVO> getMember_Auth(String userId);
+	
+	int InsertUser(UserVO userVO);
 }
