@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import lombok.AllArgsConstructor;
 import weather.toyproject.haru.user.service.UserDetailsServiceImpl;
@@ -63,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			 	 .loginProcessingUrl("/loginProcess")
 			 	 .usernameParameter("userId")
 			 	 .passwordParameter("password")
-			 	 .defaultSuccessUrl("/", true) // 로그인 성공시 default redirect url
+			 	 .defaultSuccessUrl("/login", true) // 로그인 성공시 default redirect url
 			 	 .failureUrl("/auth/fail")
 			 .permitAll()
 		.and()
@@ -74,6 +75,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    	.exceptionHandling() // 에러 처리
 	    	.accessDeniedPage("/error"); // 에러 시 이동할 페이지
 	}
+	
+	/**
+	@Bean
+	public AuthenticationFailureHandler failureHandler() {
+		return new failureHandler();
+	}
+	*/
 	
 	//@Override
 	/**
