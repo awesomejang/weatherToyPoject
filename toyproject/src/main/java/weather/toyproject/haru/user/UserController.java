@@ -1,11 +1,16 @@
 package weather.toyproject.haru.user;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import weather.toyproject.haru.user.domain.CustomUserDetails;
 import weather.toyproject.haru.user.domain.UserVO;
@@ -23,7 +28,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/login")
-	public String loginProcess(Model model) {
+	public String loginProcess(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+ 		//System.out.println("redirect = " + request.getAttribute("message").toString());
+		
 		return "user/join/loginPage";
 	}
+	
 }

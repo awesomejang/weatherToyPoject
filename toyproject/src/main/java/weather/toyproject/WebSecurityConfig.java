@@ -11,9 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import lombok.AllArgsConstructor;
 import weather.toyproject.haru.user.service.UserDetailsServiceImpl;
+import weather.toyproject.security.CustomAuthFailureHandler;
+import weather.toyproject.security.CustomAuthSuccessHandler;
 
 //== 인증, 권한이 스프링시큐리티의 핵심==//
 @EnableWebSecurity //SpringSecurityFilterChain 추가 레거시에서 web.xml에 DelegatingFilterProxy라는 springSecurityFilterChain을 등록하는걸로 시작하는것과 같은 이치 
@@ -65,7 +68,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			 	 .usernameParameter("userId")
 			 	 .passwordParameter("password")
 			 	 .defaultSuccessUrl("/login", true) // 로그인 성공시 default redirect url
-			 	 .failureUrl("/auth/fail")
+			 	 // 하단에 선언한 FailHandler 등록 
+			 	 .successHandler(successHandler())
+			 	 .failureHandler(failureHandler())
+			 	 //.failureUrl("/login?error=true")
 			 .permitAll()
 		.and()
 			.logout() // 로그아웃 관련 설정 시
@@ -76,12 +82,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    	.accessDeniedPage("/error"); // 에러 시 이동할 페이지
 	}
 	
-	/**
+	
 	@Bean
 	public AuthenticationFailureHandler failureHandler() {
-		return new failureHandler();
+		return new CustomAuthFailureHandler();
 	}
-	*/
+	
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+		return new CustomAuthSuccessHandler();
+	}
+	
 	
 	//@Override
 	/**

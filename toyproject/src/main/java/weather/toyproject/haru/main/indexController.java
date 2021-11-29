@@ -10,4 +10,9 @@ public class indexController {
 	public String index() {
 		return "index";
 	}
+	
+	@GetMapping("/index.html")
+	public String static_index() {
+		return "index";
+	}
 }

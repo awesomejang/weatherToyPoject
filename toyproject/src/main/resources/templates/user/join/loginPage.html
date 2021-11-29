@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,6 +50,11 @@
 								-->
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="비밀번호"/>
+								</div>
+								<div class="status-div" style="word-break:break-all;">
+									<span th:text="${#request.getAttribute('message')}" >message here</span>
+									<span th:text="${message}"></span>
+									<span th:text="${param.error}"></span>
 								</div>
 								<!--
 								<div class="form-group row">
