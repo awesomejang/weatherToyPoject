@@ -62,21 +62,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  //.csrf().ignoringAntMatchers("/h2-console/**").disable()
 		 	 .formLogin() // 로그인 관련 설정 시작
 			 	 .loginPage("/login") // 로그인 페이지 URL
-			 	 //.usernameParameter("userId")
-			 	 //.passwordParameter("password")
 			 	 .loginProcessingUrl("/loginProcess")
 			 	 .usernameParameter("userId")
 			 	 .passwordParameter("password")
-			 	 .defaultSuccessUrl("/login", true) // 로그인 성공시 default redirect url
+			 	 //.defaultSuccessUrl("/login", true) // 로그인 성공시 default redirect url
 			 	 // 하단에 선언한 FailHandler 등록 
 			 	 .successHandler(successHandler())
 			 	 .failureHandler(failureHandler())
 			 	 //.failureUrl("/login?error=true")
-			 .permitAll()
+			 .permitAll() // 파악 필요 
 		.and()
 			.logout() // 로그아웃 관련 설정 시
-			 .logoutSuccessUrl("/login") // 로그아웃 성공시 default redirect url
-			 .invalidateHttpSession(true) // 기존 세션날리기
+	        	.logoutSuccessUrl("/login") // 로그아웃 성공시 default redirect url
+	        	.invalidateHttpSession(true) // 기존 세션날리기
 	    .and()
 	    	.exceptionHandling() // 에러 처리
 	    	.accessDeniedPage("/error"); // 에러 시 이동할 페이지

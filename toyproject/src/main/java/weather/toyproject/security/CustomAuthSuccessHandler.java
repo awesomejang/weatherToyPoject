@@ -36,15 +36,15 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler{
 		
 		if(session == null) return;
 		
-		// 로그인 실패 시 세션에 실패에 대한 내용이 저장된다
-		// 이를 제거한다. 
+		// 로그인 실패 시 세션에 실패에 대한 내용이 저장된 세션을 제거한다. 
 		session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+		
+		
 	}
 	
 	private void redirectStrategy(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		// 
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
-		System.out.println("redirect URL = " + savedRequest.getRedirectUrl());
 		if(savedRequest == null) {
 			redirectStrategy.sendRedirect(request, response, "/");
 		}

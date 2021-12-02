@@ -28,19 +28,22 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) {
+		
 		UserVO userVO = userRepository.getUserById(userId);
+		CustomUserDetails customUserDetails = new CustomUserDetails(userVO);
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
 		if (userVO == null) {
 			log.info("계정 정보가 없습니다.");
 			throw new UsernameNotFoundException(userId); // 시큐리티 내부로직에서 해당 exception catch수행 시 BadCredentialsException을 throw
 		}
-		
+		/**
 		//==한 개 이상의 권한 입력==//
 		for(AuthVO authVO : userVO.getAuthList()) {
 			authorities.add(new SimpleGrantedAuthority(authVO.getAuthName()));
 		}
-		return new User(userVO.getUserId(), userVO.getPassword(), authorities);
+		*/
+		return customUserDetails;
 	}
 	
 }
