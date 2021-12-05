@@ -29,10 +29,12 @@ public class UserController {
 	
 	@GetMapping("/login")
 	public String loginProcess(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
  		//System.out.println("redirect = " + request.getAttribute("message").toString());
-		
-		return "user/join/loginPage";
+		return "user/loginPage";
 	}
 	
+	@GetMapping("/user/new") 
+	public String UserRegistForm() {
+		return "user/userRegistForm";
+	}
 }

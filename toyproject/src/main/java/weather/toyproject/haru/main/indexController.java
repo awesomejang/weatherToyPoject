@@ -1,5 +1,7 @@
 package weather.toyproject.haru.main;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,14 +20,7 @@ public class indexController {
 	}
 	
 	@RequestMapping("/index.html")
-	public String static_index() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Object principal = auth.getPrincipal();
-		String name = "";
-		if(principal != null && principal instanceof CustomUserDetails) {
-			name = ((CustomUserDetails)principal).getUsername();
-		}
-		System.out.println("user name =" + name);
+	public String static_index(HttpServletRequest request) {
 		return "index";
 	}
 }
