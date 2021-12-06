@@ -37,4 +37,10 @@ public class UserController {
 	public String UserRegistForm() {
 		return "user/userRegistForm";
 	}
+	
+	@PostMapping("/user/new") 
+	public String UserRegistProcess(@ModelAttribute UserVO userVO) {
+		System.out.println("user id = " + userVO.getUserId());
+		return "user/userRegistForm";
+	}
 }

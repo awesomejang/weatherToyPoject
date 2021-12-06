@@ -31,7 +31,7 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">회원가입</h1>
 							</div>
-							<form id="userForm" method="post" th:action="@{/loginProcess}">
+							<form id="userForm" method="post" th:action="@{/user/new}">
 								<!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="userId" name="userId" placeholder="아이디"/>
@@ -53,7 +53,7 @@
 									<span th:text="${message}"></span>
 									<span th:text="${param.error}"></span>
 								</div>
-								<a href="javascript:void(0)" class="btn btn-primary btn-user btn-block" onclick="goLogin()">
+								<a href="javascript:void(0)" class="btn btn-primary btn-user btn-block" id="btn-create">
 									회원가입
 								</a>
 							</form>
@@ -74,10 +74,20 @@
 	<!-- Custom scripts for all pages-->
 	<script src="/js/sb-admin-2.min.js"></script>
 	<script>
-		function goLogin() {
-			var form = document.getElementById("userForm");
-			form.submit();
-		}
+		var index = {
+			init : function() {
+				var _this = this;
+				$("#btn-create").on('click', function() {
+					_this.createUser();
+				})	
+			},
+			
+			createUser : function() {
+				var form = $("#userForm");
+				form.submit();
+			}
+		};
+		index.init();
 	</script>
 </body>
 
