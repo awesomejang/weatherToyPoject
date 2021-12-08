@@ -16,4 +16,6 @@ public interface UserMapper {
 	List<AuthVO> getMember_Auth(String userId);
 	
 	int InsertUser(UserVO userVO);
+	
+	int InsertUserAuthMapping(Long userNo);
 }

@@ -19,8 +19,11 @@ import weather.toyproject.haru.user.service.UserService;
 @Controller
 public class UserController {
 	
-	@Autowired
-	UserService userService;
+	private final UserService userService;
+	
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 	
 	@GetMapping("/user")
 	public String awta() {
@@ -39,7 +42,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/user/new") 
-	public String UserRegistProcess(@ModelAttribute UserVO userVO) {
+	public String UserRegistProcess(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
+		//로그인 성공  -> main페이지로
+		//로그인 실패 OR validation -> 메세지와 함께 로그인페이지로 
+		userService.InsertUser(userVO);
 		System.out.println("user id = " + userVO.getUserId());
 		return "user/userRegistForm";
 	}

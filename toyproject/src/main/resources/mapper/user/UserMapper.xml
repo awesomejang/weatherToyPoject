@@ -63,29 +63,25 @@
 	
 	<insert id="InsertUser" parameterType="weather.toyproject.haru.user.domain.UserVO">
 		INSERT INTO USER_T
-		VALUES ( AUTH_T_SEQUENCE.NEXTVAL
+		VALUES ( USER_SEQUENCE.NEXTVAL
 		        ,#{userId}
 		        ,#{password}
-		        ,null
-		        ,'관리자2'
+		        ,#{email}
+		        ,#{userName}
 		        ,'Y'
 		        ,'N'
 		        ,sysdate
 		        ,sysdate
 		      )
+		<selectKey resultType="Long" keyProperty="userNo"  order="AFTER">
+			select USER_SEQUENCE.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	
-	<insert id="InsertAuth">
-		INSERT INTO USER_T
-		VALUES ( AUTH_T_SEQUENCE.NEXTVAL
-		        ,#{userId}
-		        ,#{password}
-		        ,null
-		        ,'관리자2'
-		        ,'Y'
-		        ,'N'
-		        ,sysdate
-		        ,sysdate
-		      )
+	<insert id="InsertUserAuthMapping" parameterType="Long">
+		INSERT INTO USER_AUTH_MAPPING
+		VALUES (select AUTH_ID from AUTH_T where AUTH_NAME = 'ROLE_USER' 
+		       ,#{userNo}
+		       )
 	</insert>
 </mapper>

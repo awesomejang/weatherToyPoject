@@ -25,7 +25,13 @@ public class UserRepository {
 	}
 	
 	public int InsertUser(UserVO userVO) {
-		return userMapper.InsertUser(userVO);
+		int userNo = userMapper.InsertUser(userVO);
+		System.out.println("userNO = " + userVO.getUserNo());
+		return userMapper.InsertUserAuthMapping(userVO.getUserNo());
+	}
+	
+	public int InsertAuth_Mapping(Long userNo) {
+		return userMapper.InsertUserAuthMapping(userNo);
 	}
 	
 }

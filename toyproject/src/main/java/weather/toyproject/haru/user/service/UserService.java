@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import weather.toyproject.haru.user.UserMapper;
 import weather.toyproject.haru.user.dao.UserRepository;
@@ -15,9 +16,9 @@ import weather.toyproject.haru.user.domain.UserVO;
 @Service
 public class UserService {
 
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
 	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -34,8 +35,10 @@ public class UserService {
 		return userRepository.getMember_Auth(userId);
 	}
 	
+	@Transactional //선언안해주니까 예외 발생해도 데이터 들어간다;; 
 	public int InsertUser(UserVO userVO) {
 		userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
+		
 		return userRepository.InsertUser(userVO);
 	}
 }
