@@ -1,6 +1,7 @@
 package weather.toyproject.haru.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,10 +36,19 @@ public class UserService {
 		return userRepository.getMember_Auth(userId);
 	}
 	
-	@Transactional //선언안해주니까 예외 발생해도 데이터 들어간다;; 
-	public int InsertUser(UserVO userVO) {
+	@Transactional //선언안해주니까 예외 발생해도 데이터 들어간다;
+	/**
+	 * 
+	 * @param userVO
+	 * @return boolean
+	 * 회원가입 결과를 리턴한다.회원가입결과가 1 이상일 경우 true, 아닐경우 false
+	 */
+	public boolean InsertUser(UserVO userVO) {
+		boolean result = false;
 		userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
 		
-		return userRepository.InsertUser(userVO);
+		int resultCount = userRepository.InsertUser(userVO);
+		if(resultCount > 0) result = true;  
+		return result;
 	}
 }

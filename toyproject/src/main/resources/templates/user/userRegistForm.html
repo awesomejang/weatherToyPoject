@@ -31,11 +31,26 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">회원가입</h1>
 							</div>
-							<form id="userForm" method="post" th:action="@{/user/new}">
+							<form id="userForm" th:object="${userVO}" method="post" th:action="@{/user/new}"> <!--th:action사용시 csrf토큰 자동 생성해서 전달 -->
 								<!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-								<div class="form-group">
-									<input type="text" class="form-control form-control-user" id="userId" name="userId" placeholder="아이디"/>
-								</div>
+								<div class="form-group" >
+									
+									<div class="form-group">
+										<input type="text" class="form-control form-control-user" id="userId" name="userId"  placeholder="아이디"/>
+									</div>
+									<span th:if="${not #strings.isEmpty(errors)}" th:text="${errors['id']}"  style="color: red;"></span>
+									<!--
+									<div th:if="${#fields.hasGlobalErrors()}">
+									    <p class="field-error" 
+													th:each="err : ${#fields.globalErrors()}" 
+													th:text="${err}">
+												글로벌 오류 메시지
+										</p> 
+                                    </div>
+                                    -->
+									<div th:errors="*{userId}" class="field-error">
+										
+									</div>
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="비밀번호"/>
 								</div>
