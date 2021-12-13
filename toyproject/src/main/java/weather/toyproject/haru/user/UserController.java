@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,27 +52,36 @@ public class UserController {
 		return "user/userRegistForm";
 	}
 	
-	@PostMapping("/user/new") 
-	public String UserRegistProcess(@ModelAttribute("userVO") UserVO userVO, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
+	
+	@PostMapping("/user/new")
+	public String UserRegistProcess(@ModelAttribute("userVO") @Valid UserVO userVO, Errors errors, HttpServletRequest request,HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
+		//@valid : 클라이언트의 입력 데이터가 dto클래스로 캡슐화되어 넘어올 때, 유효성을 체크하라는 어노테이션
+		//Errors : vo에 binding된 필드의 유효성 검사 오류에 대한 정보를 저장하고 노출합니다.
 		String viewPath = "";
 		//로그인 성공  -> main페이지로
 		//로그인 실패 OR validation -> 메세지와 함께 로그인페이지로
 		//ObjectUtils
+		/**
 		Map<String, String> errors = new HashMap<String, String>();
 		if(ObjectUtils.isEmpty(userVO.getUserId())) {
 			errors.put("id", "아이디를 입력해주세요");
 		}
+		*/
 		
-		if(errors.isEmpty() == false) {
-			// String == addAttribute, Object(VO, Map,List) == addFlashAttribute
-			log.info("Errors = {}", "아이디 입력이 누락되었습니다.");
-			redirectAttributes.addFlashAttribute("errors", errors);
-			return "redirect:/user/new";
+		if(errors.hasErrors()) {
+			//== 유효성 검사 통과 못한 필드와 메세지 핸들링 
+			Map<String, String> validatorResult = userService.validateHandling(errors);
+			for(String key : validatorResult.keySet()) {
+				log.info("Errors = {}", validatorResult.get(key));
+				model.addAttribute(key, validatorResult.get(key));
+			}
+			//redirectAttributes.addFlashAttribute("errors", errors);
+			return "user/userRegistForm";
 		}
 		
 		boolean result = userService.InsertUser(userVO);
 		if(result) {
-			viewPath = "/";
+			viewPath = "index.html";
 			return viewPath;
 		}
 		return "user/userRegistForm";

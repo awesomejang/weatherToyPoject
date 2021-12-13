@@ -8,7 +8,7 @@ import weather.toyproject.haru.user.domain.AuthVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
 import weather.toyproject.haru.user.domain.UserVO;
 
-@Mapper
+//@Mapper //Mybatis intterface선언
 public interface UserMapper {
 
 	UserVO getUserById(String userId);
