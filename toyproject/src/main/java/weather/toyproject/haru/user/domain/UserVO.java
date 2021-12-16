@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import groovy.transform.ToString;
 import lombok.Getter;
 import lombok.Setter;
+import weather.toyproject.haru.user.validate.Password;
 
 @Getter@Setter
 @Component
@@ -23,6 +24,9 @@ public class UserVO {
 	
 	private String password;
 	
+	//@Password
+	private String secondPassword;
+	
 	@NotBlank(message = "닉네임을 입력해주세요.")
 	private String userName;
 	
@@ -35,6 +39,7 @@ public class UserVO {
 	
 	private List<AuthVO> AuthList;
 	
+	// Date컬럼을 위한 속성
 	private Timestamp regdate;
 	
 	private Timestamp moddate;

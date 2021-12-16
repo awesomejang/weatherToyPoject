@@ -59,9 +59,10 @@ public class UserService {
 	public Map<String, String> validateHandling(Errors errors) {
 		Map<String, String> validatorResult = new HashMap<String, String>();
 		
-		for(FieldError error : errors.getFieldErrors()) {
-			String validkeyName = String.format("valid_%s", error.getField());
-			validatorResult.put(validkeyName, error.getDefaultMessage());
+		for(FieldError error : errors.getFieldErrors()) { // 캡슐화된 Error객체
+			String validkeyName = String.format("valid_%s", error.getField()); //공통적인 메시지 처리에 유리
+			System.out.println("validkeyName = " + validkeyName);
+			validatorResult.put(validkeyName, error.getDefaultMessage()); //VO에 선언한 메세지
 		}
 		return validatorResult;
 	}

@@ -48,26 +48,25 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/new") 
-	public String UserRegistForm(HttpServletRequest request,UserVO userVO, HttpServletResponse response, Model model) {
+	public String UserRegistForm(HttpServletRequest request, UserVO userVO, HttpServletResponse response, Model model) {
 		return "user/userRegistForm";
 	}
 	
 	
 	@PostMapping("/user/new")
-	public String UserRegistProcess(@ModelAttribute("userVO") @Valid UserVO userVO, Errors errors, HttpServletRequest request,HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
+	public String UserRegistProcess(@ModelAttribute("userVO") @Valid UserVO userVO, Errors errors, HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
 		//@valid : 클라이언트의 입력 데이터가 dto클래스로 캡슐화되어 넘어올 때, 유효성을 체크하라는 어노테이션
 		//Errors : vo에 binding된 필드의 유효성 검사 오류에 대한 정보를 저장하고 노출합니다.
 		String viewPath = "";
-		//로그인 성공  -> main페이지로
-		//로그인 실패 OR validation -> 메세지와 함께 로그인페이지로
-		//ObjectUtils
 		/**
 		Map<String, String> errors = new HashMap<String, String>();
 		if(ObjectUtils.isEmpty(userVO.getUserId())) {
 			errors.put("id", "아이디를 입력해주세요");
 		}
 		*/
-		
+		if(!userVO.getPassword().equals(userVO.getSecondPassword())) {
+			errors.rejectValue("secondPassword","nomatch", "비밀번호가 동일하지 않습니다."); // Error추가
+		}
 		if(errors.hasErrors()) {
 			//== 유효성 검사 통과 못한 필드와 메세지 핸들링 
 			Map<String, String> validatorResult = userService.validateHandling(errors);
