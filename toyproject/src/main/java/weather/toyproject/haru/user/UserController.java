@@ -37,11 +37,6 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/user")
-	public String awta() {
-		return "user/join/user_join";
-	}
-	
 	@GetMapping("/login")
 	public String loginProcess(HttpServletRequest request, HttpServletResponse response, Model model) {
 		return "user/loginPage";
@@ -58,29 +53,20 @@ public class UserController {
 		//@valid : 클라이언트의 입력 데이터가 dto클래스로 캡슐화되어 넘어올 때, 유효성을 체크하라는 어노테이션
 		//Errors : vo에 binding된 필드의 유효성 검사 오류에 대한 정보를 저장하고 노출합니다.
 		String viewPath = "";
-		/**
-		Map<String, String> errors = new HashMap<String, String>();
-		if(ObjectUtils.isEmpty(userVO.getUserId())) {
-			errors.put("id", "아이디를 입력해주세요");
-		}
-		*/
-		if(!userVO.getPassword().equals(userVO.getSecondPassword())) {
-			errors.rejectValue("secondPassword","nomatch", "비밀번호가 동일하지 않습니다."); // Error추가
-		}
-		if(errors.hasErrors()) {
-			//== 유효성 검사 통과 못한 필드와 메세지 핸들링 
-			Map<String, String> validatorResult = userService.validateHandling(errors);
-			for(String key : validatorResult.keySet()) {
-				log.info("Errors = {}", validatorResult.get(key));
-				model.addAttribute(key, validatorResult.get(key));
-			}
-			//redirectAttributes.addFlashAttribute("errors", errors);
-			return "user/userRegistForm";
-		}
+		String msg;
+		Map<String, String> validatorResult = userService.UserValidateHandling(userVO, errors);
 		
+		if(validatorResult.isEmpty() != true) {
+			for(String key : validatorResult.keySet()) {
+				redirectAttributes.addAttribute(key, validatorResult.get(key));
+			}
+			//return "redirect:user/userRegistForm";
+			return "redirect:/user/new";
+		}
 		boolean result = userService.InsertUser(userVO);
-		if(result) {
-			viewPath = "index.html";
+		
+		if(result != true) {
+			msg = "회원가입에 실패했습니다.";
 			return viewPath;
 		}
 		return "user/userRegistForm";
