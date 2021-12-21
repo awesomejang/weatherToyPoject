@@ -24,7 +24,7 @@ public class UserRepository {
 		return userMapper.getMember_Auth(userId);
 	}
 	
-	public int InsertUser(UserVO userVO) {
+	public int InsertUser(UserVO userVO){
 		userMapper.InsertUser(userVO);
 		return InsertAuth_Mapping(userVO.getUserNo());
 		//return userMapper.InsertUserAuthMapping(userVO.getUserNo());
@@ -33,5 +33,4 @@ public class UserRepository {
 	public int InsertAuth_Mapping(Long userNo) {
 		return userMapper.InsertUserAuthMapping(userNo);
 	}
-	
 }

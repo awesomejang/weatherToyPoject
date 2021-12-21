@@ -1,5 +1,6 @@
 package weather.toyproject.haru.user;
 
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,32 +44,44 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/new") 
-	public String UserRegistForm(HttpServletRequest request, UserVO userVO, HttpServletResponse response, Model model) {
+	public String userNew(HttpServletRequest request, UserVO userVO, HttpServletResponse response, Model model) {
 		return "user/userRegistForm";
 	}
 	
 	
 	@PostMapping("/user/new")
-	public String UserRegistProcess(@ModelAttribute("userVO") @Valid UserVO userVO, Errors errors, HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
+	public String UserRegistProcess(@ModelAttribute("userVO") @Valid UserVO userVO, Errors errors, HttpServletRequest request
+			, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
 		//@valid : 클라이언트의 입력 데이터가 dto클래스로 캡슐화되어 넘어올 때, 유효성을 체크하라는 어노테이션
 		//Errors : vo에 binding된 필드의 유효성 검사 오류에 대한 정보를 저장하고 노출합니다.
 		String viewPath = "";
-		String msg;
+		String userRegistMsg;
+		boolean result = false;
 		Map<String, String> validatorResult = userService.UserValidateHandling(userVO, errors);
 		
 		if(validatorResult.isEmpty() != true) {
 			for(String key : validatorResult.keySet()) {
-				redirectAttributes.addAttribute(key, validatorResult.get(key));
+				//addattribute할경우 url파라미터로 전달되는데 html에서 받을때 url파라미터에서 가져오는게 아니기때문에 보이지않는다.
+				// redirectAttribute.addAttribute -> get/url파라미터에 전달 / addFlashAttribute -> POST
+				redirectAttributes.addFlashAttribute(key, validatorResult.get(key)); // Object 전달할때 사용 
 			}
-			//return "redirect:user/userRegistForm";
 			return "redirect:/user/new";
 		}
-		boolean result = userService.InsertUser(userVO);
+		
+		try {
+			result = userService.InsertUser(userVO);
+		}catch(Exception e) {
+			log.info("socket Exception occurred");
+			e.printStackTrace();
+			userRegistMsg = "회원가입에 실패했습니다.다시 시도해주세요";
+			return "redirect:/user/new";
+		}
 		
 		if(result != true) {
-			msg = "회원가입에 실패했습니다.";
+			userRegistMsg = "회원가입에 실패했습니다. 다시 시도해주세요";
 			return viewPath;
 		}
+		
 		return "user/userRegistForm";
 	}
 }

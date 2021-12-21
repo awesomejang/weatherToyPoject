@@ -1,5 +1,6 @@
 package weather.toyproject.haru.user.service;
 
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,11 +50,14 @@ public class UserService {
 	 * @  회원가입 결과를 리턴한다.회원가입결과가 1 이상일 경우 true, 아닐경우 false
 	 */
 	//@Transactional //선언안해주니까 예외 발생해도 데이터 들어간다;
-	public boolean InsertUser(UserVO userVO) {
+	public boolean InsertUser(UserVO userVO) throws Exception{
+		
 		boolean result = false;
 		userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
 		
 		int resultCount = userRepository.InsertUser(userVO);
+		log.info("InserUser-resultCount = {}", resultCount);
+		
 		if(resultCount > 0) result = true;  
 		return result;
 	}
