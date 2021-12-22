@@ -47,10 +47,10 @@ public class UserService {
 	 * 
 	 * @param userVO
 	 * @return boolean
-	 * @  회원가입 결과를 리턴한다.회원가입결과가 1 이상일 경우 true, 아닐경우 false
+	 * @ 회원가입 결과를 리턴한다.회원가입결과가 1 이상일 경우 true, 아닐경우 false
 	 */
 	//@Transactional //선언안해주니까 예외 발생해도 데이터 들어간다;
-	public boolean InsertUser(UserVO userVO) throws Exception{
+	public boolean InsertUser(UserVO userVO) {
 		
 		boolean result = false;
 		userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
@@ -58,8 +58,9 @@ public class UserService {
 		int resultCount = userRepository.InsertUser(userVO);
 		log.info("InserUser-resultCount = {}", resultCount);
 		
-		if(resultCount > 0) result = true;  
-		return result;
+		if(resultCount > 0) result = true;
+		return false;
+		//return result;
 	}
 	
 	/**

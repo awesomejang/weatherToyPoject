@@ -54,8 +54,7 @@ public class UserController {
 			, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
 		//@valid : 클라이언트의 입력 데이터가 dto클래스로 캡슐화되어 넘어올 때, 유효성을 체크하라는 어노테이션
 		//Errors : vo에 binding된 필드의 유효성 검사 오류에 대한 정보를 저장하고 노출합니다.
-		String viewPath = "";
-		String userRegistMsg;
+		String userRegistMsg = null;
 		boolean result = false;
 		Map<String, String> validatorResult = userService.UserValidateHandling(userVO, errors);
 		
@@ -68,20 +67,14 @@ public class UserController {
 			return "redirect:/user/new";
 		}
 		
-		try {
-			result = userService.InsertUser(userVO);
-		}catch(Exception e) {
-			log.info("socket Exception occurred");
-			e.printStackTrace();
-			userRegistMsg = "회원가입에 실패했습니다.다시 시도해주세요";
+		result = userService.InsertUser(userVO);
+		if(result != true) {
+			redirectAttributes.addFlashAttribute("msg", "회원가입에 실패했습니다. 다시 시도해주세요");
+			userRegistMsg = "회원가입에 실패했습니다. 다시 시도해주세요";
 			return "redirect:/user/new";
 		}
 		
-		if(result != true) {
-			userRegistMsg = "회원가입에 실패했습니다. 다시 시도해주세요";
-			return viewPath;
-		}
-		
-		return "user/userRegistForm";
+		userRegistMsg = "가입해주셔서 감사합니다!";
+		return "redirect:/";
 	}
 }
