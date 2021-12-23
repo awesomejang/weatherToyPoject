@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class AppConfig {
 	
+	
 	@Bean(name = "ApiResource")
 	public PropertiesFactoryBean propertiesFactoryBean() throws Exception {
 		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
@@ -19,6 +20,15 @@ public class AppConfig {
 		propertiesFactoryBean.setLocation(classPathResource);
 		return propertiesFactoryBean;
 	}
+	
+	@Bean(name = "messageConfig")
+	public PropertiesFactoryBean messagePropertiesFactoryBean() throws Exception {
+		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+		ClassPathResource classPathResource = new ClassPathResource("com/message.properties");
+		propertiesFactoryBean.setLocation(classPathResource);
+		return propertiesFactoryBean;
+	}
+	
 	
 	@Bean
 	public RestTemplate restTemplate() throws Exception {

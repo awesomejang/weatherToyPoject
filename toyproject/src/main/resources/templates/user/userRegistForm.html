@@ -43,6 +43,7 @@
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="비밀번호"/>
+									<span th:text="${valid_password}"  style="color: red;"></span>
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="secondPassword" name="secondPassword" placeholder="비밀번호_확인"/>
@@ -50,9 +51,11 @@
 								</div>
 								<div class="form-group">
 									<input type="email" class="form-control form-control-user" id="email" name="email" placeholder="이메일" th:value="${userVO.email}"/>
+									<span th:text="${valid_email}"  style="color: red;"></span>
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="userName" name="userName" placeholder="닉네임" th:value="${userVO.userName}"/>
+									<span th:text="${valid_userName}"  style="color: red;"></span>
 								</div>
 								<div class="status-div" style="word-break:break-all;">
 									<span th:text="${#request.getAttribute('message')}" >message here</span>
@@ -80,6 +83,10 @@
 	<!-- Custom scripts for all pages-->
 	<script src="/js/sb-admin-2.min.js"></script>
 	<script>
+		window.onload = function() {
+			eventBind();
+		}
+		
 		var index = {
 			init : function() {
 				var _this = this;
@@ -93,16 +100,18 @@
 				form.submit();
 			}
 		};
-		
 		index.init();
 		
+		function eventBind() {
+			alertProcess("[[${userRegistMsg}]]"); //CDATA 타임리프의 jstl같은놈인듯 
+		} 
 		
-		window.onload = function() {
-			//==회원가입 결과 메시지 리턴==//
-			console.log("window onload");
-			var result = "[[${msg}]]";
-			alert(result);
-		};
+		function alertProcess(msg) {
+			if(msg != null && msg != "") {
+				alert(msg);
+			}
+		}
+		
 	</script>
 </body>
 

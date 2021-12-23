@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +33,20 @@ import weather.toyproject.haru.user.service.UserService;
 
 @Controller
 @Slf4j
+@PropertySource(value = "classpath:/com/message.properties", encoding = "UTF-8")
 public class UserController {
+	
+	//@Value("#{ApiResource['weather.api.url']}")
+	//private String url;
+	
+	private Environment environment;
 	
 	private final UserService userService;
 	
-	public UserController(UserService userService) {
+	@Autowired
+	public UserController(UserService userService, Environment environment) {
 		this.userService = userService;
+		this.environment = environment;
 	}
 	
 	@GetMapping("/login")
@@ -52,6 +63,7 @@ public class UserController {
 	@PostMapping("/user/new")
 	public String UserRegistProcess(@ModelAttribute("userVO") @Valid UserVO userVO, Errors errors, HttpServletRequest request
 			, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
+		
 		//@valid : 클라이언트의 입력 데이터가 dto클래스로 캡슐화되어 넘어올 때, 유효성을 체크하라는 어노테이션
 		//Errors : vo에 binding된 필드의 유효성 검사 오류에 대한 정보를 저장하고 노출합니다.
 		String userRegistMsg = null;
@@ -62,19 +74,21 @@ public class UserController {
 			for(String key : validatorResult.keySet()) {
 				//addattribute할경우 url파라미터로 전달되는데 html에서 받을때 url파라미터에서 가져오는게 아니기때문에 보이지않는다.
 				// redirectAttribute.addAttribute -> get/url파라미터에 전달 / addFlashAttribute -> POST
-				redirectAttributes.addFlashAttribute(key, validatorResult.get(key)); // Object 전달할때 사용 
+				redirectAttributes.addFlashAttribute(key, validatorResult.get(key)); // Object 전달할때 사용(일반 문자열도 가능한다. 큰 특징은 URL에 노출이 안된다는점)
 			}
 			return "redirect:/user/new";
 		}
 		
 		result = userService.InsertUser(userVO);
 		if(result != true) {
-			redirectAttributes.addFlashAttribute("msg", "회원가입에 실패했습니다. 다시 시도해주세요");
-			userRegistMsg = "회원가입에 실패했습니다. 다시 시도해주세요";
+			//"회원가입에 실패했습니다. 다시 시도해주세요"
+			log.info("userRegist_fail_message = {}", environment.getProperty("user.regist.fail.msg"));
+			redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.fail.msg"));
+			//userRegistMsg = "회원가입에 실패했습니다. 다시 시도해주세요";
 			return "redirect:/user/new";
 		}
 		
-		userRegistMsg = "가입해주셔서 감사합니다!";
+		userRegistMsg = "회원가입이 완료되었습니다.";
 		return "redirect:/";
 	}
 }
