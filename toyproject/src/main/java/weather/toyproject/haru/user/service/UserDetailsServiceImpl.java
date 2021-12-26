@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
 		if (userVO == null) {
-			log.info("계정 정보가 없습니다.");
+			log.info("계정 정보가 없습니다. = {}", userId);
 			throw new UsernameNotFoundException(userId); // 시큐리티 내부로직에서 해당 exception catch수행 시 BadCredentialsException을 throw
 		}
 		/**

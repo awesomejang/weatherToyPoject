@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.haru.user.UserMapper;
@@ -72,10 +75,16 @@ public class UserService {
 	public Map<String, String> UserValidateHandling(UserVO userVO, Errors errors) {
 		Map<String, String> validatorResult = new HashMap<String, String>();
 		
-		//==VO에 선언하지 않은 validation 체크==//
-		if(!Objects.equals(userVO.getPassword(), userVO.getSecondPassword())) {
-			errors.rejectValue("secondPassword","nomatch", "비밀번호가 동일하지 않습니다."); 
+		//==VO에 validation 체크 선언하지 않은 항목확인==//
+		
+		if(!StringEmptyCheck(userVO.getPassword()) && StringEmptyCheck(userVO.getSecondPassword())) {
+			errors.rejectValue("secondPassword","nomatch", "비밀번호 확인을 입력해주세요"); 
 		}
+		
+		if(!Objects.equals(userVO.getPassword(), userVO.getSecondPassword())) {
+			errors.rejectValue("secondPassword","passwordNoMatch", "비밀번호가 동일하지 않습니다."); 
+		}
+		
 		//=====================================//
 		
 		for(FieldError error : errors.getFieldErrors()) { // 캡슐화된 Error객체
@@ -83,6 +92,20 @@ public class UserService {
 			log.info("validation check = {}", validkeyName);
 			validatorResult.put(validkeyName, error.getDefaultMessage()); //VO에 선언한 메세지
 		}
+		
 		return validatorResult;
 	}
+	
+	public void addValidAttribute(Map<String, String> validatorResult, RedirectAttributes redirectAttributes) {
+		for(String key : validatorResult.keySet()) {
+			//addattribute할경우 url파라미터로 전달되는데 html에서 받을때 url파라미터에서 가져오는게 아니기때문에 보이지않는다.
+			// redirectAttribute.addAttribute -> get/url파라미터에 전달 / addFlashAttribute -> POST
+			redirectAttributes.addFlashAttribute(key, validatorResult.get(key)); // Object 전달할때 사용(일반 문자열도 가능한다. 큰 특징은 URL에 노출이 안된다는점)
+		}
+	}
+	
+	public boolean StringEmptyCheck(String str) {
+		return str == null || str.trim().isEmpty();
+	}
+	
 }

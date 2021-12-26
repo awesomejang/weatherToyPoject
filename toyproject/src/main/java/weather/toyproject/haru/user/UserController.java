@@ -55,7 +55,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/new") 
-	public String userNew(HttpServletRequest request, UserVO userVO, HttpServletResponse response, Model model) {
+	public String userNew(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpServletResponse response, Model model) {
 		return "user/userRegistForm";
 	}
 	
@@ -71,20 +71,18 @@ public class UserController {
 		Map<String, String> validatorResult = userService.UserValidateHandling(userVO, errors);
 		
 		if(validatorResult.isEmpty() != true) {
-			for(String key : validatorResult.keySet()) {
-				//addattribute할경우 url파라미터로 전달되는데 html에서 받을때 url파라미터에서 가져오는게 아니기때문에 보이지않는다.
-				// redirectAttribute.addAttribute -> get/url파라미터에 전달 / addFlashAttribute -> POST
-				redirectAttributes.addFlashAttribute(key, validatorResult.get(key)); // Object 전달할때 사용(일반 문자열도 가능한다. 큰 특징은 URL에 노출이 안된다는점)
-			}
+			userService.addValidAttribute(validatorResult, redirectAttributes);
+			
+			redirectAttributes.addFlashAttribute("userVO", userVO);
 			return "redirect:/user/new";
 		}
 		
 		result = userService.InsertUser(userVO);
 		if(result != true) {
-			//"회원가입에 실패했습니다. 다시 시도해주세요"
 			log.info("userRegist_fail_message = {}", environment.getProperty("user.regist.fail.msg"));
+			
 			redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.fail.msg"));
-			//userRegistMsg = "회원가입에 실패했습니다. 다시 시도해주세요";
+			redirectAttributes.addFlashAttribute("userVO", userVO);
 			return "redirect:/user/new";
 		}
 		
