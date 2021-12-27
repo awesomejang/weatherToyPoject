@@ -66,8 +66,6 @@ public class UserController {
 		
 		//@valid : 클라이언트의 입력 데이터가 dto클래스로 캡슐화되어 넘어올 때, 유효성을 체크하라는 어노테이션
 		//Errors : vo에 binding된 필드의 유효성 검사 오류에 대한 정보를 저장하고 노출합니다.
-		String userRegistMsg = null;
-		boolean result = false;
 		Map<String, String> validatorResult = userService.UserValidateHandling(userVO, errors);
 		
 		if(validatorResult.isEmpty() != true) {
@@ -77,16 +75,16 @@ public class UserController {
 			return "redirect:/user/new";
 		}
 		
-		result = userService.InsertUser(userVO);
+		boolean result = userService.InsertUser(userVO);
 		if(result != true) {
-			log.info("userRegist_fail_message = {}", environment.getProperty("user.regist.fail.msg"));
+			log.info("userRegist_fail = {}", userService.InsertUser(userVO));
 			
 			redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.fail.msg"));
 			redirectAttributes.addFlashAttribute("userVO", userVO);
 			return "redirect:/user/new";
 		}
 		
-		userRegistMsg = "회원가입이 완료되었습니다.";
+		redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.success.msg"));
 		return "redirect:/";
 	}
 }
