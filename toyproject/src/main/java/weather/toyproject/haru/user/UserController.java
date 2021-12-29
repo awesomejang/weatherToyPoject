@@ -31,9 +31,9 @@ import weather.toyproject.haru.user.domain.CustomUserDetails;
 import weather.toyproject.haru.user.domain.UserVO;
 import weather.toyproject.haru.user.service.UserService;
 
-@Controller
-@Slf4j
 @PropertySource(value = "classpath:/com/message.properties", encoding = "UTF-8")
+@Slf4j
+@Controller
 public class UserController {
 	
 	//@Value("#{ApiResource['weather.api.url']}")
@@ -59,7 +59,6 @@ public class UserController {
 		return "user/userRegistForm";
 	}
 	
-	
 	@PostMapping("/user/new")
 	public String UserRegistProcess(@ModelAttribute("userVO") @Valid UserVO userVO, Errors errors, HttpServletRequest request
 			, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
@@ -78,7 +77,7 @@ public class UserController {
 		boolean result = userService.InsertUser(userVO);
 		if(result != true) {
 			log.info("userRegist_fail = {}", userService.InsertUser(userVO));
-			
+			 
 			redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.fail.msg"));
 			redirectAttributes.addFlashAttribute("userVO", userVO);
 			return "redirect:/user/new";

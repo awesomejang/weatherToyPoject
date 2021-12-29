@@ -95,6 +95,7 @@ public class UserService {
 		return validatorResult;
 	}
 	
+	
 	public void addValidAttribute(Map<String, String> validatorResult, RedirectAttributes redirectAttributes) {
 		for(String key : validatorResult.keySet()) {
 			//addattribute할경우 url파라미터로 전달되는데 html에서 받을때 url파라미터에서 가져오는게 아니기때문에 보이지않는다.
