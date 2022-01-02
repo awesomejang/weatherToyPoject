@@ -28,7 +28,6 @@ import weather.toyproject.haru.user.domain.UserVO;
 public class UserService {
 
 	private final UserRepository userRepository;
-	
 	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
