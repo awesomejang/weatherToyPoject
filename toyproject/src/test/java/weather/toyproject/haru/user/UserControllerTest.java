@@ -27,7 +27,7 @@ import weather.toyproject.haru.user.service.UserService;
 //@WebMvcTest(UserControllerTest.class) // 테스트 대상 컨트롤러 명시
 @RunWith(SpringRunner.class) // SpringRunner.class(@SpringBootTest를 위함), SpringJUnit4ClassRunner
 @PropertySource(value = "classpath:/com/message.properties", encoding = "UTF-8")
-//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT) //default -> 임의의 포트 사용이유 -> 테스트 시 충돌방지를 위함 //SpringBootTest.WebEnvironment.MOCK
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK) //default -> 임의의 포트 사용이유 -> 테스트 시 충돌방지를 위함 //SpringBootTest.WebEnvironment.MOCK, webEnvironment = WebEnvironment.RANDOM_PORT
 @AutoConfigureMockMvc //MockMvc제공 -> @webMvcTest와 충돌 
 //@AutoconfigureMy
 public class UserControllerTest {
