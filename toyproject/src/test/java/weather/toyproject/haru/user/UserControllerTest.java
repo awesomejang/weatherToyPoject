@@ -17,8 +17,17 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import weather.toyproject.haru.user.service.UserService;
 
@@ -29,23 +38,49 @@ import weather.toyproject.haru.user.service.UserService;
 @PropertySource(value = "classpath:/com/message.properties", encoding = "UTF-8")
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK) //default -> 임의의 포트 사용이유 -> 테스트 시 충돌방지를 위함 //SpringBootTest.WebEnvironment.MOCK, webEnvironment = WebEnvironment.RANDOM_PORT
 @AutoConfigureMockMvc //MockMvc제공 -> @webMvcTest와 충돌 
-//@AutoconfigureMy
 public class UserControllerTest {
 
 	// ==테스트는 다른곳에서 가져다 쓸게 아니기 때문에 다 주입해서 사용하는게 편리 ==//
-
+	// TestRestTemplate로 요청해도 무관 -> 비용이 크다.
 	@Autowired // 주입을 @WebMvcTest에서
 	MockMvc mvc;
 	
-	@MockBean
-	private UserService userSerivce;
 	
+	@MockBean(name = "userSerivce") // name지정안하면 spring에서 어느것인지 판단이 안나서 오류발생
+	private UserService userSerivce;
+	/**
 	@Mock //@MockBean으로 인식안됨 
 	private Environment environment;
-
+	*/
+	
 	@Test
 	public void userNew() throws Exception {
 		mvc.perform(get("/user/new"))
 		   .andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	@Transactional // rollback
+	public void loginProcess() throws Exception{
+		//given
+		// 중복되는 키값을 위하 MultiValueMap사용
+		MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<String, String>();
+		multiValueMap.add("userId", "TEST");
+		multiValueMap.add("password", "1q2w3e4r!");
+		multiValueMap.add("secondPassword", "1q2w3e4r!");
+		multiValueMap.add("userName", "TestName");
+		multiValueMap.add("email", "test@test.com");
+		
+		
+		
+		//when
+		mvc.perform(post("/user/new").params(multiValueMap))
+		 .andExpect(status().is3xxRedirection())
+		 //.andExpect(model().attributeExists("userRegistMsg"));
+		 .andExpect(flash().attributeExists("userRegistMsg"))
+		 .andExpect(view().name("redirect:/"))
+		 .andDo(print());
+		 
+		//then
 	}
 }

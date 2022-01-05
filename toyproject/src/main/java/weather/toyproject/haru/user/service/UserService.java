@@ -61,8 +61,7 @@ public class UserService {
 		log.info("InserUser-resultCount = {}", resultCount);
 		
 		if(resultCount > 0) result = true;
-		return false;
-		//return result;
+		return result;
 	}
 	
 	/**
