@@ -14,8 +14,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -45,6 +46,8 @@ public class UserControllerTest {
 	@Autowired // 주입을 @WebMvcTest에서
 	MockMvc mvc;
 	
+	//@MockBean -> springContainer가 테스트시 사용되고 Bean이 Container에 존재하면 사용
+	//@Mock -> 단순한 Mock을 위한다면 @Mock
 	
 	@MockBean(name = "userSerivce") // name지정안하면 spring에서 어느것인지 판단이 안나서 오류발생
 	private UserService userSerivce;
@@ -71,16 +74,15 @@ public class UserControllerTest {
 		multiValueMap.add("userName", "TestName");
 		multiValueMap.add("email", "test@test.com");
 		
-		
-		
 		//when
-		mvc.perform(post("/user/new").params(multiValueMap))
-		 .andExpect(status().is3xxRedirection())
-		 //.andExpect(model().attributeExists("userRegistMsg"));
-		 .andExpect(flash().attributeExists("userRegistMsg"))
-		 .andExpect(view().name("redirect:/"))
-		 .andDo(print());
-		 
+		ResultActions resultActions =  mvc.perform(post("/user/new")
+				                          .params(multiValueMap))
+										  .andDo(print());
 		//then
+		resultActions
+			.andExpect(status().is3xxRedirection())
+		    //.andExpect(model().attributeExists("userRegistMsg"));
+			.andExpect(flash().attributeExists("userRegistMsg"))
+		    .andExpect(view().name("redirect:/"));
 	}
 }
