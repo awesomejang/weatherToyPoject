@@ -65,9 +65,9 @@ public class UserService {
 	}
 	
 	/**
-	 * 사용자정보 validation을 위한 메소드
+	 * 입력된 가입신청 항목의 validation확인 후 메세지를 리턴한다.  
 	 * @param userVO
-	 * @return boolean
+	 * @return Map
 	 * 
 	 */
 	public Map<String, String> UserValidateHandling(UserVO userVO, Errors errors) {

@@ -3,6 +3,8 @@ package weather.toyproject.haru.user;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.internal.matchers.Contains;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -64,7 +67,7 @@ public class UserControllerTest {
 	
 	@Test
 	@Transactional // rollback
-	public void loginProcess() throws Exception{
+	public void userRegistProcess() throws Exception{
 		//given
 		// 중복되는 키값을 위하 MultiValueMap사용
 		MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<String, String>();
@@ -79,10 +82,33 @@ public class UserControllerTest {
 				                          .params(multiValueMap))
 										  .andDo(print());
 		//then
-		resultActions
-			.andExpect(status().is3xxRedirection())
-		    //.andExpect(model().attributeExists("userRegistMsg"));
-			.andExpect(flash().attributeExists("userRegistMsg"))
-		    .andExpect(view().name("redirect:/"));
+		resultActions.andExpect(status().is3xxRedirection())
+		           //.andExpect(model().attributeExists("userRegistMsg"));
+			         .andExpect(flash().attributeExists("userRegistMsg"))
+		             .andExpect(view().name("redirect:/"));
 	}
+	
+	
+	@Test
+	@Transactional
+	public void userRegistValid() throws Exception {
+		//given 
+		MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<String, String>();
+		//multiValueMap.add("userId", "TEST");
+		multiValueMap.add("password", "1q2w3e4r!");
+		multiValueMap.add("secondPassword", "1q2w3e4r!");
+		multiValueMap.add("userName", "TestName");
+		multiValueMap.add("email", "test@test.com");
+		
+		//when
+		ResultActions resultActions =  mvc.perform(post("/user/new")
+										  .params(multiValueMap))
+									      .andDo(print());
+		
+		//then
+		resultActions.andExpect(status().is3xxRedirection())
+		             .andExpect(flash().attributeExists("valid_userId"));
+	}
+	
+	
 }
