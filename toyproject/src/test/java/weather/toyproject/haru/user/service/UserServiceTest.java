@@ -48,5 +48,14 @@ public class UserServiceTest {
 		Assertions.assertThat(result).isTrue();
 	}
 	
+	@Test
+	@DisplayName("userId로 계정정보 조회")
+	public void getUserById() {
+		//given
+		//when(userRepository.getUserById("TEST")).thenReturn(new UserVO().setUserId("TEST"));
+		
+	}
+	
+	
 
 }
