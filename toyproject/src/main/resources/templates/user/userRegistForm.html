@@ -36,7 +36,8 @@
 								<div class="form-group">
 									
 									<div class="form-group">
-										<input type="text" class="form-control form-control-user" id="userId" name="userId"  placeholder="아이디" th:value="${userVO.userId}"/>
+										<input type="text" class="form-control form-control-user" id="userId" name="userId"  placeholder="아이디" th:value="${userVO.userId}" style="width: 70%; float: left; margin-right: 22px;"/>
+										<a href="javascript:void(0)" class="btn btn-primary btn-user btn-block" id="btn-CheckDupId" onclick="useridDupliCheck()" style="width: 25%; display: inline-block;">중복확인</a>
 									</div>
 									<!--<span th:if="${not #strings.isEmpty(errors)}" th:text="${errors['id']}"  style="color: red;"></span> -->
 									<span th:text="${valid_userId}" style="color: red;"></span>
@@ -103,13 +104,28 @@
 		index.init();
 		
 		function eventBind() {
-			alertProcess("[[${userRegistMsg}]]"); //CDATA 타임리프의 jstl같은놈인듯 
+			alertProcess("[[${userRegistMsg}]]"); //CDATA 타임리프의 jstl같은놈인듯
+			
 		} 
 		
 		function alertProcess(msg) {
 			if(msg != null && msg != "") {
 				alert(msg);
 			}
+		}
+		
+		function useridDupliCheck(e) {
+			$.ajax({
+				type : "GET",
+				url : "/userId/DupCheck",
+				//datType : 'json',
+				data : 'userId='+'test',
+				success : function(data) {
+					alert(data);
+				}
+				
+					
+			});	
 		}
 		
 	</script>

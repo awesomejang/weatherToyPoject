@@ -22,8 +22,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
@@ -85,5 +87,11 @@ public class UserController {
 		
 		redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.success.msg"));
 		return "redirect:/";
+	}
+	
+	@GetMapping("/userId/DupCheck/{userId}")
+	@ResponseBody
+	public String userIdDupCheck(@PathVariable String userId) {
+		return userId;
 	}
 }

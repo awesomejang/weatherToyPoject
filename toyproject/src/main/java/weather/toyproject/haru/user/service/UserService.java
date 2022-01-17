@@ -38,6 +38,7 @@ public class UserService {
 
 	
 	public UserVO getUserById(String userId) {
+		
 		return userRepository.getUserById(userId);
 	}
 	
@@ -77,7 +78,7 @@ public class UserService {
 		//==VO에 validation 체크 선언하지 않은 항목확인==//
 		
 		if(!StringEmptyCheck(userVO.getPassword()) && StringEmptyCheck(userVO.getSecondPassword())) {
-			errors.rejectValue("secondPassword","nomatch", "비밀번호 확인란을 입력해주세요"); 
+			errors.rejectValue("secondPassword","secondPasswordEmpty", "비밀번호 확인란을 입력해주세요"); 
 		}
 		
 		if(!Objects.equals(userVO.getPassword(), userVO.getSecondPassword())) {
