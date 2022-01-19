@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,31 +20,52 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
+import weather.toyproject.com.ComUtil;
 import weather.toyproject.haru.user.UserMapper;
 import weather.toyproject.haru.user.dao.UserRepository;
 import weather.toyproject.haru.user.domain.AuthVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
 import weather.toyproject.haru.user.domain.UserVO;
 
-@Service
 @Slf4j
+@Service
+@PropertySource("classpath:/com/ApiRequestInfo.properties")
 public class UserService {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final Environment enviroment;
 
 	@Autowired
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, Environment enviroment) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.enviroment = enviroment;
 	}
 
 	
 	public UserVO getUserById(String userId) {
-		
 		return userRepository.getUserById(userId);
 	}
 	
+	/**
+	 * 
+	 * @param userId
+	 * @return Map<String, String>
+	 * 아이디 중복확인의 결과코드, 메세지를 리턴한다.
+	 */
+	/**
+	public Map<String, String> userIdDupCheck(String userId) {
+		Map<String, String> resultMap = new HashMap<String, String>();
+		if(ComUtil.StringEmptyCheck(userId)) {
+			
+			resultMap.put("code", "EMPTY");
+			resultMap.put("msg", "아이디가 입력되지 않았습니다.");
+			return 
+		}
+		return userRepository.getUserById(userId);
+	}
+	*/
 	public List<AuthVO> getMember_Auth(String userId) {
 		return userRepository.getMember_Auth(userId);
 	}

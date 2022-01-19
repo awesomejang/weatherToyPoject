@@ -115,16 +115,20 @@
 		}
 		
 		function useridDupliCheck(e) {
+			//location.href("/user/DupCheck/" + "test");
 			$.ajax({
 				type : "GET",
-				url : "/userId/DupCheck",
+				//url : '${CONTEXT_PATH}/user/DupCheck/' + 'test',
+				url : '/user/DupCheck',
+				dataType : 'text',
 				//datType : 'json',
 				data : 'userId='+'test',
 				success : function(data) {
 					alert(data);
+				},error : function(data) {
+					console.log(data);
+					alert(data);
 				}
-				
-					
 			});	
 		}
 		

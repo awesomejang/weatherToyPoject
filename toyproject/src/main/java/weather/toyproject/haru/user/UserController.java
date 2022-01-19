@@ -42,7 +42,6 @@ public class UserController {
 	//private String url;
 	
 	private Environment environment;
-	
 	private final UserService userService;
 	
 	@Autowired
@@ -89,9 +88,10 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/userId/DupCheck/{userId}")
+	@GetMapping("/user/DupCheck/{userId}")
 	@ResponseBody
-	public String userIdDupCheck(@PathVariable String userId) {
+	public String userIdDupCheck(@PathVariable(required = false) String userId) {
+		userService.getUserById(userId);
 		return userId;
 	}
 }
