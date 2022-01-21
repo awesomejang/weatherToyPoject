@@ -120,9 +120,10 @@
 				type : "GET",
 				//url : '${CONTEXT_PATH}/user/DupCheck/' + 'test',
 				url : '/user/DupCheck',
-				dataType : 'text',
+				dataType : 'text', //서버에서 전송된 데이터의형식
+				//contentType : // 클라이언트에서 보내는 데이터의 형식(default : application/x-www-form-urlencoded; charset=utf-8)
 				//datType : 'json',
-				data : 'userId='+'test',
+				//data : 'userId='+'test',
 				success : function(data) {
 					alert(data);
 				},error : function(data) {
