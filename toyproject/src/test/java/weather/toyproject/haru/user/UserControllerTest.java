@@ -69,7 +69,7 @@ public class UserControllerTest {
 	@Transactional // rollback
 	public void userRegistProcess() throws Exception{
 		//given
-		// 중복되는 키값을 위하 MultiValueMap사용
+		// 중복되는 키값을 위한 MultiValueMap사용
 		MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<String, String>();
 		multiValueMap.add("userId", "TEST");
 		multiValueMap.add("password", "1q2w3e4r!");
