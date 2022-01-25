@@ -54,18 +54,25 @@ public class UserService {
 	 * @return Map<String, String>
 	 * 아이디 중복확인의 결과코드, 메세지를 리턴한다.
 	 */
-	/**
+	
 	public Map<String, String> userIdDupCheck(String userId) {
 		Map<String, String> resultMap = new HashMap<String, String>();
-		if(ComUtil.StringEmptyCheck(userId)) {
-			
+		if(ComUtil.StringEmptyCheck(userId)) {			
 			resultMap.put("code", "EMPTY");
 			resultMap.put("msg", "아이디가 입력되지 않았습니다.");
-			return 
+			return resultMap;
 		}
-		return userRepository.getUserById(userId);
+		UserVO userVO = userRepository.getUserById(userId);
+		if(userVO != null) {
+			resultMap.put("code", "DUP");
+			resultMap.put("msg", "이미 사용중인 아이디입니다.");
+			return resultMap;
+		}
+		resultMap.put("code", "OK");
+		resultMap.put("msg", "사용 가능한 아이디입니다.");
+		return resultMap;
 	}
-	*/
+	
 	public List<AuthVO> getMember_Auth(String userId) {
 		return userRepository.getMember_Auth(userId);
 	}

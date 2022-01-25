@@ -90,8 +90,8 @@ public class UserController {
 	
 	@GetMapping("/user/DupCheck/{userId}")
 	@ResponseBody
-	public String userIdDupCheck(@PathVariable(required = false) String userId) {
-		userService.getUserById(userId);
-		return userId;
+	public Map<String, String> userIdDupCheck(@PathVariable(required = false) String userId) {
+		Map<String, String> result = userService.userIdDupCheck(userId);
+		return result;
 	}
 }
