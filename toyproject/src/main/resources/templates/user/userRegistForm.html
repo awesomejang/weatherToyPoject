@@ -15,6 +15,16 @@
 
 	<!-- Custom styles for this template-->
 	<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap core JavaScript-->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="/js/sb-admin-2.min.js"></script>
 </head>
 
 <body class="bg-gradient-primary">
@@ -31,19 +41,19 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">회원가입</h1>
 							</div>
-							<form id="userForm" th:object="${userVO}" method="post" th:action="@{/user/new}"> <!--th:action사용시 csrf토큰 자동 생성해서 전달 -->
+							<form id="userForm" th:object="${userVO}" method="post" th:action="@{/user/new}" onchange="setDupValue_N()"> <!--th:action사용시 csrf토큰 자동 생성해서 전달 -->
 								<!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
 								<input type="hidden" id="userIdDupCheck" name="userIdDupCheck" value="N"/>
 								<div class="form-group">
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user" id="userId" name="userId" placeholder="아이디" th:value="${userVO.userId}" style="width: 70%; float: left; margin-right: 22px;"/>
 										<a href="javascript:void(0)" class="btn btn-primary btn-user btn-block" id="btn-CheckDupId" onclick="useridDupliCheck()" style="width: 25%; display: inline-block;">중복확인</a>
+										<span th:text="${valid_userId}" style="color: red;"></span>
 									</div>
 									<!--<span th:if="${not #strings.isEmpty(errors)}" th:text="${errors['id']}"  style="color: red;"></span> -->
-									<span th:text="${valid_userId}" style="color: red;"></span>
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="비밀번호"/>
+									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="비밀번호" th:value="${userVO.password}"/>
 									<span th:text="${valid_password}"  style="color: red;"></span>
 								</div>
 								<div class="form-group">
@@ -74,15 +84,6 @@
 		</div>
 	</div>
 
-	<!-- Bootstrap core JavaScript-->
-	<script src="/vendor/jquery/jquery.min.js"></script>
-	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Custom scripts for all pages-->
-	<script src="/js/sb-admin-2.min.js"></script>
 	<script>
 		window.onload = function() {
 			eventBind();
@@ -115,7 +116,7 @@
 		}
 		
 		function useridDupliCheck(e) {
-			var userId = document.getElementById('#userId');
+			var userId = document.getElementById('userId').value;
 			$.ajax({
 				type : "GET",
 				url : '/user/DupCheck/' + userId,
@@ -124,12 +125,24 @@
 				//datType : 'json',
 				//data : 'userId='+'test',
 				success : function(data) {
-					alert(data.result.msg);
+					resultCodeAction(data.code, data.msg);
 				},error : function(error) {
 					alert("아이디 중복확인에 실패했습니다.");
 				}
 			});	
 		}
+		
+		function resultCodeAction(code, msg) {
+			alert(msg);
+			if(code == 'OK') {
+				$("#userIdDupCheck").value('Y');
+			}
+		}
+		
+		function setDupValue_N() {
+			$("#userIdDupCheck").value('N');
+		}
+		
 		
 	</script>
 </body>
