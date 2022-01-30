@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomUserDetails extends UserVO  implements UserDetails{
+public class CustomUserDetails extends UserVO implements UserDetails{
 
 	private  UserVO userVO;
 	

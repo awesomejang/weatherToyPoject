@@ -5,6 +5,9 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,9 +73,33 @@ public class UserServiceTest {
 		
 		//then
 		Assertions.assertThat(uservo).isNotNull();
-		
 	}
 	
+	@Test
+	@DisplayName("userId 중복확인 시 userId valid")
+	public void userIdDupCheck_Empty() {
+		//given
+		String userId = null;
+		//when
+		Map<String, String> result = userService.userIdDupCheck(userId);
+		
+		//then
+		Assertions.assertThat(result.get("code")).isEqualTo("EMPTY");
+	}
 	
+	@Test
+	@DisplayName("userId 중복을 확인하여 중복값 존재 확인")
+	public void userIdDupCheck_Dup() {
+		//given
+		UserVO userVO = new UserVO();
+		userVO.setUserId("userId");
+		when(userRepository.getUserById("userId")).thenReturn(userVO);
+		
+		//when
+		Map<String, String> result = userService.userIdDupCheck("userId");
+		
+		//then
+		Assertions.assertThat(result.get("code")).isEqualTo("DUP");
+	}
 
 }
