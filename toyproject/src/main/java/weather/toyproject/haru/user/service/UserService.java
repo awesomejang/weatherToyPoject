@@ -94,6 +94,7 @@ public class UserService {
 		
 		if(resultCount > 0) result = true;
 		else throw new IllegalStateException("회원가입에 실패했습니다.");
+		
 		return result;
 	}
 	

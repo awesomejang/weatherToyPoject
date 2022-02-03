@@ -110,5 +110,16 @@ public class UserControllerTest {
 		             .andExpect(flash().attributeExists("valid_userId"));
 	}
 	
+	@Test
+	@Transactional
+	public void userIdDupCheck() throws Exception {
+		//given
+		mvc.perform(get("/user/DupCheck/test"))
+		   .andDo(print());
+		//when
+		
+		//then
+	}
+	
 	
 }
