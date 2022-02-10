@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
 	UserRepository userRepository;
 	
-	@Override
+	@Override //로그인 처리
 	public UserDetails loadUserByUsername(String userId) {
 		
 		UserVO userVO = userRepository.getUserById(userId);

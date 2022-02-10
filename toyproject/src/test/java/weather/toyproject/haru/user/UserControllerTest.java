@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import org.assertj.core.api.Assertions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -49,11 +50,16 @@ public class UserControllerTest {
 	@Autowired // 주입을 @WebMvcTest에서
 	MockMvc mvc;
 	
+	@Autowired
+	Environment environment;
 	//@MockBean -> springContainer가 테스트시 사용되고 Bean이 Container에 존재하면 사용
 	//@Mock -> 단순한 Mock을 위한다면 @Mock
 	
 	@MockBean(name = "userSerivce") // name지정안하면 spring에서 어느것인지 판단이 안나서 오류발생
 	private UserService userSerivce;
+	
+	
+	
 	/**
 	@Mock //@MockBean으로 인식안됨 
 	private Environment environment;
@@ -119,6 +125,12 @@ public class UserControllerTest {
 		//when
 		
 		//then
+	}
+	
+	@Test
+	public void messageCheck() {
+		String msg = environment.getProperty("user.regist.success.msg");
+		Assertions.assertThat(msg).isEqualTo("sd");
 	}
 	
 	

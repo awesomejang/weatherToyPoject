@@ -31,7 +31,7 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">환영합니다!</h1>
 							</div>
-							<form id="userForm" method="post" th:action="@{/loginProcess}">
+							<form id="userForm" method="POST" th:action="@{/loginProcess}">
 								<!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="userId" name="userId" placeholder="아이디"/>
@@ -51,11 +51,12 @@
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="비밀번호"/>
 								</div>
+								 <!-- 
 								<div class="status-div" style="word-break:break-all;">
 									<span th:text="${#request.getAttribute('message')}" >message here</span>
 									<span th:text="${message}"></span>
-									<span th:text="${param.error}"></span>
 								</div>
+								 -->
 								<!--
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
@@ -108,10 +109,26 @@
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
 	<script>
+		window.onload = function() {
+			eventBind();
+		};
+		
+		function eventBind() {
+			alertProcess("[[${message}]]"); //CDATA 타임리프의 jstl같은놈인듯
+			
+		}
+		
 		function goLogin() {
 			var form = document.getElementById("userForm");
 			form.submit();
+		};
+		
+		function alertProcess(msg) {
+			if(msg != null && msg != "") {
+				alert(msg);
+			}
 		}
+		
 	</script>
 </body>
 

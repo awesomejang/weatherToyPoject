@@ -51,7 +51,7 @@ public class UserController {
 		this.environment = environment;
 	}
 	
-	@GetMapping("/login")
+	@RequestMapping("/login")
 	public String loginProcess(HttpServletRequest request, HttpServletResponse response, Model model) {
 		return "user/loginPage";
 	}
@@ -92,7 +92,8 @@ public class UserController {
 			return "redirect:/user/new";
 		}
 		
-		redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.success.msg"));
+		
+		redirectAttributes.addFlashAttribute("message", environment.getProperty("user.regist.success.msg"));
 		return "redirect:/";
 	}
 	
