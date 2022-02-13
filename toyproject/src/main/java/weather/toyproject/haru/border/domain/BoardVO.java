@@ -20,4 +20,8 @@ public class BoardVO {
 	private int hit; // 조회수
 	private Timestamp regdate; // 등록일자
 	private Timestamp moddate; // 수정일자
+	private int page;
+	private int perPageNum;
+	private int rowStart;
+	private int rowEnd;
 }

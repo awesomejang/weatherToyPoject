@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class BorderController {
 	
-	@GetMapping(value = {"/game/{gameCode}", "/game", "/game/"})
+	@GetMapping(value = {"/game/{gameCode}", "/game"})
 	public String gameBorderList(@PathVariable(required = false) Long gameCode) {
-		log.info("gameCode ={}", gameCode);
+		log.debug("board selected gameCode ={}", gameCode);
 		return "board/gameBoard";
 	}
 }

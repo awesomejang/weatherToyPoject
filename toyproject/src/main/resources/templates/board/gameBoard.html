@@ -1,6 +1,51 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
 
 <th:block layout:fragment="content">
-	게임 목록페이지
+	<div class="container-fluid">
+		<!-- Page Heading -->
+		<h1 class="h3 mb-2 text-gray-800">에이펙스 레전드</h1>
+		<p class="mb-4">
+			DataTables is a third party plugin that is used to generate the demo
+			table below. For more information about DataTables, please visit the
+			<a target="_blank" href="https://datatables.net">official
+				DataTables documentation</a>.
+		</p>
+		<table class="table table-striped ">
+			<thead>
+				<tr style="color: black;">
+					<th>ID</th>
+					<th>제목</th>
+					<th>글쓴이</th>
+					<th>조회</th>
+					<th>날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>ID</td>
+					<td><a href="#" class="no-Atag" >제목</a></td>
+					<td>글쓴이</td>
+					<td>조회</td>
+					<td>날짜</td>
+				</tr>
+				<tr> 
+					<td>ID</td>
+					<td>제목</td>
+					<td>글쓴이</td>
+					<td>조회</td>
+					<td>날짜</td>
+				</tr>
+				<tr>
+					<td>ID</td>
+					<td>제목</td>
+					<td>글쓴이</td>
+					<td>조회</td>
+					<td>날짜</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </th:block>
