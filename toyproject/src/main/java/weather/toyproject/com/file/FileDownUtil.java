@@ -1,4 +1,4 @@
-package weather.toyproject.com;
+package weather.toyproject.com.file;
 
 import java.net.MalformedURLException;
 
