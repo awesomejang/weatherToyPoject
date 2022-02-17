@@ -16,5 +16,6 @@ public class gameListVO {
 	private String delYn; // 사용여부
 	private Timestamp regDate; //등록일 
 	private Timestamp modDate; //수정일
+	private String fileId; // 파일FK
 	
 }
