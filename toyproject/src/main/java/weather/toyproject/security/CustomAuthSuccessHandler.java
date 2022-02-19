@@ -16,9 +16,12 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler{
 
-	private RequestCache requestCache = new HttpSessionRequestCache(); // RequestCache : 로그인 화면을 보여주지 전에 사용자 요청을 저장하고 이를 관리하는 인터페이스
+	private RequestCache requestCache = new HttpSessionRequestCache(); // RequestCache : 로그인 화면을 보여주기 전에 사용자 요청을 저장하고 이를 관리하는 인터페이스
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy(); // RedirectStrategy : 시큐리티가 화면 이동에 대한 규칙을 정의하는 부분을 만든 인터페이스 -> 사용자가 임의의 로그인페이지 생성시 사용 불가 
 	
 	
@@ -49,7 +52,9 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler{
 			redirectStrategy.sendRedirect(request, response, "/");
 		}
 		else {
+			log.info("redirectStrategy");
 			String targetUrl = request.getHeader("REFERER");
+			
 			redirectStrategy.sendRedirect(request, response, targetUrl);
 		}
 	}

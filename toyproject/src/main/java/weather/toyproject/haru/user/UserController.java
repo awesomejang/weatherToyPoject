@@ -103,4 +103,15 @@ public class UserController {
 		Map<String, String> result = userService.userIdDupCheck(userId);
 		return result;
 	}
+	
+	@GetMapping("/admin")
+	public String adminPage() {
+		return "user/adminPage.html";
+	}
+	
+	@ResponseBody
+	@GetMapping("/error")
+	public String loging() {
+		return "no auth back off!";
+	}
 }
