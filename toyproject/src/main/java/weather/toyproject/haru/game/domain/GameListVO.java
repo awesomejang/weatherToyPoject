@@ -8,7 +8,7 @@ import lombok.Setter;
 
 //@Data
 @Getter @Setter
-public class gameListVO {
+public class GameListVO {
 
 	private Long gameCode; // PK
 	private String gameName; // 게임이름
@@ -17,5 +17,6 @@ public class gameListVO {
 	private Timestamp regDate; //등록일 
 	private Timestamp modDate; //수정일
 	private String fileId; // 파일FK
+	private String fileAttYn; // 파일 업로드 여부
 	
 }

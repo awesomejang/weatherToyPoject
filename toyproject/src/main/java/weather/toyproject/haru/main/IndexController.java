@@ -12,15 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
 
 @Controller
-public class indexController {
-
-	@RequestMapping("/")
+public class IndexController {
+	
+	@RequestMapping(value={"/", "/index.html"})
 	public String index() {
 		return "index";
 	}
 	
+	/**
 	@RequestMapping("/index.html")
 	public String static_index(HttpServletRequest request) {
 		return "index";
 	}
+	*/
 }
