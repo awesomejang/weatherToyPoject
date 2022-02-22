@@ -104,10 +104,11 @@ public class UserController {
 		return result;
 	}
 	
-	@GetMapping("/admin")
+	@GetMapping("/admin/game")
 	public String adminPage() {
 		return "user/adminPage.html";
 	}
+	
 	
 	@ResponseBody
 	@GetMapping("/error")

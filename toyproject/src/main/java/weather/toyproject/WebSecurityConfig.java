@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        	.invalidateHttpSession(true) // 기존 세션날리기
 	    .and()
 	    	.exceptionHandling() // 에러 처리
-	    	.accessDeniedPage("/error.html"); // 에러 시 이동할 페이지
+	    	.accessDeniedPage("/noAuthPage.html"); // 에러 시 이동할 페이지
 	}
 	
 	
