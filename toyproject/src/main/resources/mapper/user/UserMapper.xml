@@ -55,9 +55,8 @@
                                 FROM USER_T
                                 WHERE USER_ID = #{userId}
                                 ) A
-                                
                           INNER JOIN USER_AUTH_MAPPING
-                          ON A.USER_NO = USER_AUTH_MAPPING.USER_NO
+                          	ON A.USER_NO = USER_AUTH_MAPPING.USER_NO
                           )
 	</select>
 	

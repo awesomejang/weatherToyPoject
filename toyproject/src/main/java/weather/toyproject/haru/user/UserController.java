@@ -104,15 +104,9 @@ public class UserController {
 		return result;
 	}
 	
-	@GetMapping("/admin/game")
+	@GetMapping("/admin/gameList")
 	public String adminPage() {
-		return "user/adminPage.html";
+		return "admin/gameListAdmin";
 	}
 	
-	
-	@ResponseBody
-	@GetMapping("/error")
-	public String loging() {
-		return "no auth back off!";
-	}
 }

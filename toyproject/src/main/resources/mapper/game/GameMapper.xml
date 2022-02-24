@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="weather.toyproject.haru.game.GameMapper">
+	<resultMap type="weather.toyproject.haru.game.domain.GameListVO" id="GameListVO"> 
+		<result property="gameCode" column="game_code" />
+		<result property="gameName" column="game_name" />
+		<result property="userId" column="user_id" />
+		<result property="modUserId" column="mod_user_id" />
+		<result property="delYn" column="del_yn" />
+		<result property="regDate" column="regdate" />
+		<result property="modDate" column="moddate" />
+		<result property="fileId" column="file_id" />
+		<result property="fileAttYn" column="file_att_yn" />
+	</resultMap>
+</mapper>

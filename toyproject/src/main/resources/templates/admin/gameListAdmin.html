@@ -5,6 +5,53 @@
 
 <th:block layout:fragment="content">
 	<div class="container-fluid">
-		gameAdminPage1
+		<!-- Page Heading -->
+		<h1 class="h3 mb-2 text-gray-800" th:text = "게임목록관리"></h1>
+		<p class="mb-4">
+			DataTables is a third party plugin that is used to generate the demo
+			table below. For more information about DataTables, please visit the
+			<a target="_blank" href="https://datatables.net">official
+				DataTables documentation</a>.
+		</p>
+		<table class="table table-striped ">
+			<thead>
+				<a href="#">
+				<tr style="color: black;">
+					<th>ID</th>
+					<th>게임이름</th>
+					<th>등록자</th>
+					<th>사용여부</th>
+					<th>등록일</th>
+					<th>이미지등록여부</th>
+				</tr>
+				</a>
+			</thead>
+			<tbody>
+				<tr>
+					<td>ID</td>
+					<td><a href="#" class="no-Atag" >제목</a></td>
+					<td>글쓴이</td>
+					<td>조회</td>
+					<td>날짜</td>
+				</tr>
+				<tr> 
+					<td>ID</td>
+					<td>제목</td>
+					<td>글쓴이</td>
+					<td>조회</td>
+					<td>날짜</td>
+				</tr>
+				<tr>
+					<td>ID</td>
+					<td>제목</td>
+					<td>글쓴이</td>
+					<td>조회</td>
+					<td>날짜</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </th:block>
+<script>
+
+</script>
