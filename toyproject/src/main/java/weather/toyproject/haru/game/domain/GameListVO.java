@@ -1,7 +1,7 @@
 package weather.toyproject.haru.game.domain;
 
-import java.security.Timestamp;
-
+//import java.security.Timestamp;
+import java.sql.Timestamp;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

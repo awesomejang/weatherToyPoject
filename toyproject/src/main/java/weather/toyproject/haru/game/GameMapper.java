@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import weather.toyproject.haru.game.domain.GameListVO;
 
-@Mapper
+//@Mapper
 public interface GameMapper {
 	
-	List<GameListVO> gameList();
+	List<GameListVO> getGameList();
 	
 }
