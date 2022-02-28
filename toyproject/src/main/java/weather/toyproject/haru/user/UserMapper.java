@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import weather.toyproject.haru.user.domain.AuthVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
+import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
 
 //@Mapper //Mybatis intterface선언
@@ -18,4 +19,6 @@ public interface UserMapper {
 	int InsertUser(UserVO userVO);
 	
 	int InsertUserAuthMapping(Long userNo);
+	
+	List<GameListDto> selectGameList_admin();
 }

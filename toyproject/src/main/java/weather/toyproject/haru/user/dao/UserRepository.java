@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import weather.toyproject.haru.user.UserMapper;
 import weather.toyproject.haru.user.domain.AuthVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
+import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
 
 @Repository
@@ -32,5 +33,9 @@ public class UserRepository {
 	
 	public int InsertAuth_Mapping(Long userNo) {
 		return userMapper.InsertUserAuthMapping(userNo);
+	}
+	
+	public List<GameListDto> selectGameList_admin() {
+		return userMapper.selectGameList_admin();
 	}
 }

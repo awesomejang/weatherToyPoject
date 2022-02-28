@@ -25,6 +25,7 @@ import weather.toyproject.haru.user.UserMapper;
 import weather.toyproject.haru.user.dao.UserRepository;
 import weather.toyproject.haru.user.domain.AuthVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
+import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
 
 @Slf4j
@@ -134,6 +135,10 @@ public class UserService {
 			// redirectAttribute.addAttribute -> get/url파라미터에 전달 / addFlashAttribute -> POST
 			redirectAttributes.addFlashAttribute(key, validatorResult.get(key)); // Object 전달할때 사용(일반 문자열도 가능한다. 큰 특징은 URL에 노출이 안된다는점)
 		}
+	}
+	
+	public List<GameListDto> selectGameList_admin() {
+		return userRepository.selectGameList_admin();
 	}
 	
 	public boolean StringEmptyCheck(String str) {

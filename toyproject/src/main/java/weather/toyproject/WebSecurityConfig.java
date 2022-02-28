@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/", "/login/**", "/signup", "/user/**", "/h2-console/**").permitAll() // 누구나 접근가능 
 			//.antMatchers("/").hasAnyRole("USER") // ADMIN의 auth는 ROLE_ADMIN, ROLE_USER의 형태 
 			.antMatchers("/myService").hasAnyRole("USER") // ADMIN의 auth는 ROLE_ADMIN, ROLE_USER의 형태, hasAnyRole("auth", "auth"....) 이 중 하나만 있어도 접근가능 
-			.antMatchers("/admin").hasRole("ADMIN") // hasRole함수는 자동으로 주어진 인자에 'ROLE_ 접두어를 붙이고 검사를 시작한다. 
+			.antMatchers("/admin/**").hasRole("ADMIN") // hasRole함수는 자동으로 주어진 인자에 'ROLE_ 접두어를 붙이고 검사를 시작한다. 
 			//.anyRequest().authenticated(); // 위의 설정 외 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 
 		.and()
 		  	.csrf().disable() // CSRF토큰 인증 해제  

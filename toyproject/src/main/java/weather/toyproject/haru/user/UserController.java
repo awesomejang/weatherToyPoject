@@ -105,8 +105,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/admin/gameList")
-	public String adminPage() {
+	public String adminPage(Model model) {
+		model.addAttribute("games", userService.selectGameList_admin());
 		return "admin/gameListAdmin";
 	}
-	
 }

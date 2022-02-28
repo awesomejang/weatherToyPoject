@@ -12,6 +12,18 @@
 		<result property="del_yn" column="del_yn"/>
 	</resultMap>
 
+	<resultMap id="GameListDto" type="weather.toyproject.haru.user.domain.GameListDto">
+		<id property="gameCode" column="game_code" />
+		<result property="gameName" column="game_name" />
+		<result property="userId" column="user_id" />
+		<result property="modUserId" column="mod_user_id" />
+		<result property="delYn" column="del_yn" />
+		<result property="regDate" column="regdate" />
+		<result property="modDate" column="moddate" />
+		<result property="fileId" column="file_id" />
+		<result property="fileAttYn" column="file_att_yn" />
+	</resultMap>
+	
 	<resultMap type="weather.toyproject.haru.user.domain.UserVO" id="UserVO">
 		<id property="userNo" column="user_no"/>
 		<result property="userId" column="user_id"/>
@@ -83,4 +95,11 @@
 		       ,#{userNo}
 		       )
 	</insert>
+	
+	
+	<select id="selectGameList_admin" resultMap="GameListDto">
+		SELECT *
+		FROM GAME_LIST
+	
+	</select>
 </mapper>
