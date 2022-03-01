@@ -98,8 +98,17 @@
 	
 	
 	<select id="selectGameList_admin" resultMap="GameListDto">
-		SELECT *
+	/** selectGameList_admin */
+		SELECT 
+			  GAME_CODE
+			, USER_ID
+			, GAME_NAME
+			, DEL_YN
+			, TO_CHAR(REGDATE, 'YYYY-MM-DD HH24:MI:SS') AS REGDATE
+			, MODDATE
+			, MOD_USER_ID
+			, FILE_ID
+			, FILE_ATT_YN 
 		FROM GAME_LIST
-	
 	</select>
 </mapper>

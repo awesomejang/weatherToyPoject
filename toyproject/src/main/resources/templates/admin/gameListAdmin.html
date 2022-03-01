@@ -7,12 +7,10 @@
 	<div class="container-fluid">
 		<!-- Page Heading -->
 		<h1 class="h3 mb-2 text-gray-800" th:text = "게임목록관리"></h1>
-		<p class="mb-4">
-			DataTables is a third party plugin that is used to generate the demo
-			table below. For more information about DataTables, please visit the
-			<a target="_blank" href="https://datatables.net">official
-				DataTables documentation</a>.
-		</p>
+		
+		<div style="margin-top: 40px; padding-bottom: 2px;">
+			<button type="button" class="btn btn-primary">게임 등록</button>
+		</div>
 		<table class="table table-striped ">
 			<thead>
 				<tr style="color: black;">
@@ -26,26 +24,12 @@
 			</thead>
 			<tbody>
 				<tr th:each="game : ${games}">
-					
 					<td th:text="${game.gameCode}">ID</td>
 					<td><a href="#" class="no-Atag" th:text="${game.gameName}">제목</a></td>
 					<td th:text="${game.userId}">등록자</td>
-					<td th:text="${game.delYn == 'Y'} ? '사용' : '미사용'">조회</td>
-					<td >등록일</td>
-				</tr>
-				<tr> 
-					<td>ID</td>
-					<td>제목</td>
-					<td>글쓴이</td>
-					<td>조회</td>
-					<td>날짜</td>
-				</tr>
-				<tr>
-					<td>ID</td>
-					<td>제목</td>
-					<td>글쓴이</td>
-					<td>조회</td>
-					<td>날짜</td>
+					<td th:text="${game.delYn == 'Y'} ? '사용' : '미사용'">사용여부</td>
+					<td th:text="${game.regDate}">등록일</td>
+					<td th:text="${game.fileAttYn}">이미지등록여부</td>
 				</tr>
 			</tbody>
 		</table>
