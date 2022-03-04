@@ -24,4 +24,25 @@ public class FileVO {
 	private String fileExt; // 파일 확장자
 	private String filePath; // 파일 저장경로
 	
+	
+	public FileVO() {
+		
+	}
+	
+	public FileVO(String fileId, String attachTY, String register, String updater, Timestamp regDate, Timestamp modDate,
+			String attachId, String fileNm, String virFileNm, String fileSize, String fileExt, String filePath) {
+		super();
+		this.fileId = fileId;
+		this.attachTY = attachTY;
+		this.register = register;
+		this.updater = updater;
+		this.regDate = regDate;
+		this.modDate = modDate;
+		this.attachId = attachId;
+		this.fileNm = fileNm;
+		this.virFileNm = virFileNm;
+		this.fileSize = fileSize;
+		this.fileExt = fileExt;
+		this.filePath = filePath;
+	}
 }

@@ -109,4 +109,6 @@ public class UserController {
 		model.addAttribute("games", userService.selectGameList_admin());
 		return "admin/gameListAdmin";
 	}
+	
+	//@
 }
