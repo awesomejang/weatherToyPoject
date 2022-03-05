@@ -23,10 +23,12 @@ public class FileUtil {
 	@Value("${service.file.uploadPath}")
 	private String fileUploadPath;
 	
+	
+	
 	/**
-	 * 파일 업로드 
+	 * 다중 파일 업로드 
 	 */
-	public void store(List<MultipartFile> file) throws IOException {
+	public void store(List<MultipartFile> files) throws IOException {
 		/**
         ///"경로/.." 및 내부 단순 점과 같은 시퀀스를 억제하여 경로를 정규화합니다.
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -35,6 +37,13 @@ public class FileUtil {
 				StandardCopyOption.REPLACE_EXISTING);
 		*/
 		List<FileVO> fileList = new ArrayList<FileVO>();
+		
+		if(fileList.size() > 0) {
+			for(MultipartFile multipartFile : files) {
+				log.info("upload File Name = {}", multipartFile.getOriginalFilename()); 
+			}
+		}
+		
 		//for(MultipartFile file : )
 		
 	}
