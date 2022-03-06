@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">
+	<div class="container-fluid">
+		<!-- Page Heading -->
+		<h1 class="h3 mb-2 text-gray-800" th:text="게임등록"></h1>
+
+		<div class="" style="margin-top: 24px; width: 800px;">
+			<!-- margin:auto; -->
+			<form id="userForm" method="POST" th:action="@{/loginProcess}">
+				<h5>
+					<label for="gameName">게임명</label>
+				</h5>
+				<div class="form-group">
+					<input type="text" class="form-control form-control-user"
+						id="gameName" name="gameName" />
+				</div>
+				<div class="form-group">
+					<h5>
+						<label for="delYn">사용여부</label>
+					</h5>
+					<select class="form-control" id="delYn" name="delYn">
+						<option value=""></option>
+						<option value="Y">사용</option>
+						<option value="N">미사용</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="input-file-button" for="input-file">대표이미지 업로드</label> 
+					<input type="file" id="input-file" style="display: none" />
+				</div>
+				<a href="javascript:void(0)"
+					class="btn btn-primary btn-user btn-block" onclick="goLogin()">
+					로그인 </a>
+				<hr>
+			</form>
+		</div>
+
+		<hr>
+		<div class="text-center">
+			<a class="small" href="/user/new">회원가입</a> <a class="small"
+				href="forgot-password.html" style="margin-left: 123px;">비밀번호 찾기</a>
+		</div>
+	</div>
+</th:block>

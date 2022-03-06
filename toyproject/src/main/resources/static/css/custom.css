@@ -2,5 +2,12 @@
 
 .no-Atag:hover, .no-Atag:active {text-decoration: none; }
 
-
+/* 파일 업로드 버튼 CSS */
+.input-file-button {
+	padding: 6px 25px;
+	background-color: #FF6600;
+	border-radius: 4px;
+	color: white;
+	cursor: pointer;
+}
 
