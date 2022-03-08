@@ -10,7 +10,7 @@
 
 		<div class="" style="margin-top: 24px; width: 800px;">
 			<!-- margin:auto; -->
-			<form id="userForm" method="POST" th:action="@{/loginProcess}">
+			<form id="gameForm" method="POST" th:action="@{/admin/game/regist}" enctype="multipart/form-data">
 				<h5>
 					<label for="gameName">게임명</label>
 				</h5>
@@ -29,20 +29,18 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<label class="input-file-button" for="input-file">대표이미지 업로드</label> 
-					<input type="file" id="input-file" style="display: none" />
+					<label class="input-file-button" for="multipartFile">대표이미지 업로드</label> 
+					<input type="file" id="multipartFile" name="multipartFile" style="display: none" />
 				</div>
-				<a href="javascript:void(0)"
-					class="btn btn-primary btn-user btn-block" onclick="goLogin()">
-					로그인 </a>
+				<button type="submit">게임 등록</button>
+				<!--<a href="javascript:void(0)"class="btn btn-primary btn-user btn-block" onclick="goLogin()">로그인 </a>  -->
 				<hr>
 			</form>
 		</div>
 
 		<hr>
 		<div class="text-center">
-			<a class="small" href="/user/new">회원가입</a> <a class="small"
-				href="forgot-password.html" style="margin-left: 123px;">비밀번호 찾기</a>
+			<a class="small" href="/user/new">회원가입</a> <a class="small" href="forgot-password.html" style="margin-left: 123px;">비밀번호 찾기</a>
 		</div>
 	</div>
 </th:block>

@@ -1,6 +1,9 @@
 package weather.toyproject.com.file;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,14 +26,16 @@ public class FileVO {
 	private String fileSize; // 파일크기
 	private String fileExt; // 파일 확장자
 	private String filePath; // 파일 저장경로
+	private List<MultipartFile> multipartFile;
 	
 	
 	public FileVO() {
 		
 	}
-	
+
 	public FileVO(String fileId, String attachTY, String register, String updater, Timestamp regDate, Timestamp modDate,
-			String attachId, String fileNm, String virFileNm, String fileSize, String fileExt, String filePath) {
+			String attachId, String fileNm, String virFileNm, String fileSize, String fileExt, String filePath,
+			List<MultipartFile> multipartFile) {
 		super();
 		this.fileId = fileId;
 		this.attachTY = attachTY;
@@ -44,5 +49,8 @@ public class FileVO {
 		this.fileSize = fileSize;
 		this.fileExt = fileExt;
 		this.filePath = filePath;
+		this.multipartFile = multipartFile;
 	}
+	
+	
 }
