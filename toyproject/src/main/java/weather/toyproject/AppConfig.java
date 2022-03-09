@@ -9,6 +9,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import weather.toyproject.com.file.FileUtil;
+
 @Configuration
 public class AppConfig {
 	
@@ -43,4 +45,11 @@ public class AppConfig {
 		httpRequestfactory.setHttpClient(httpClient);
 		return new RestTemplate(httpRequestfactory);
 	}
+	
+	/**
+	@Bean
+	public FileUtil fileUtil() {
+		return new FileUtil();
+	}
+	*/
 }

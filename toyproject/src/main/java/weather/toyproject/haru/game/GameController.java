@@ -2,6 +2,7 @@ package weather.toyproject.haru.game;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,9 @@ import weather.toyproject.com.file.FileVO;
 @Slf4j
 @Controller
 public class GameController {
+	
+	@Autowired
+	FileUtil fileUtil;
 
 	/**
 	 * 관리자 게임등록페이지 Controller
@@ -34,12 +38,11 @@ public class GameController {
 	@ResponseBody
 	@PostMapping("/admin/game/regist")
 	public String gameRegist(@ModelAttribute FileVO files, @RequestParam String gameName) throws IOException {
-	    FileUtil fileUtil = new FileUtil();
 	    fileUtil.store(files.getMultipartFile());
 		for(MultipartFile file : files.getMultipartFile()) {
-			log.info("file.orginalName = {}", file.getOriginalFilename());
+			//log.info("file.orginalName = {}", file.getOriginalFilename());
 		}
-		log.info("gameName = {}", gameName);
+		//log.info("gameName = {}", gameName);
 		//return "game/gameRegist";
 		return "OK";
 	}

@@ -1,5 +1,6 @@
 package weather.toyproject.com.file;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,11 +37,15 @@ public class FileUtil {
 		Files.copy(inputStream, getPath().resolve(fileName),
 				StandardCopyOption.REPLACE_EXISTING);
 		*/
-		List<FileVO> fileList = new ArrayList<FileVO>();
-		
-		if(fileList.size() > 0) {
+		log.info("fileUploadPath = {}", fileUploadPath);
+		if(files.size() > 0) {
 			for(MultipartFile multipartFile : files) {
+				Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
 				log.info("upload File Name = {}", multipartFile.getOriginalFilename()); 
+				log.info("fileName = {}", path);
+				//File file = new File(path.);
+				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
 			}
 		}
 		
