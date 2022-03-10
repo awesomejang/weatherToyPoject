@@ -2,6 +2,7 @@ package weather.toyproject.com.file;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,5 +53,8 @@ public class FileVO {
 		this.multipartFile = multipartFile;
 	}
 	
+	public String getUUID() {
+		return UUID.randomUUID().toString();
+	}
 	
 }
