@@ -10,21 +10,35 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import groovy.transform.AutoImplement;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class FileUtil {
 	
-	@Value("${service.file.uploadPath}")
+	@Value("${local.file.uploadPath}")
 	private String fileUploadPath;
 	
+	private FileVO fileVO;
+	
+	
+	public FileUtil() {
+		
+	}
+	
+	
+	@Autowired
+	public FileUtil(FileVO fileVO) {
+		this.fileVO = fileVO;
+	}
 	
 	/**
 	 * 다중 파일 업로드 
@@ -37,10 +51,16 @@ public class FileUtil {
 		Files.copy(inputStream, getPath().resolve(fileName),
 				StandardCopyOption.REPLACE_EXISTING);
 		*/
+		Path targetFolder = Paths.get(fileUploadPath);
 		log.info("fileUploadPath = {}", fileUploadPath);
+		
 		if(files.size() > 0) {
+			if(!Files.exists(targetFolder.getFileName())) {
+				Files.createDirectories(targetFolder);
+			}
 			for(MultipartFile multipartFile : files) {
 				Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
+				
 				log.info("upload File Name = {}", multipartFile.getOriginalFilename()); 
 				log.info("fileName = {}", path);
 				//File file = new File(path.);

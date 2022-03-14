@@ -4,12 +4,14 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
+@Component
 public class FileVO {
 	//==FILE_MASTER==//
 	private String fileId; // 파일마스터 PK
@@ -19,6 +21,7 @@ public class FileVO {
 	private Timestamp regDate; // 등록일자
 	private Timestamp modDate; // 수정일자
 	//==============//
+	
 	//==FILE_DETAIL==//
 	private String attachId; // FILE_DETAIL(PK)
 	//private String fileId; // FK
