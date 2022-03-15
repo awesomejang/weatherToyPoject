@@ -1,19 +1,29 @@
 package weather.toyproject.haru.game;
 
 import java.io.IOException;
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
+import weather.toyproject.com.AuthUtil;
 import weather.toyproject.com.file.FileUtil;
 import weather.toyproject.com.file.FileVO;
+import weather.toyproject.haru.user.domain.CustomUserDetails;
+import weather.toyproject.haru.user.domain.UserVO;
 
 @Slf4j
 @Controller
@@ -27,7 +37,13 @@ public class GameController {
 	 * @return String
 	 */
 	@GetMapping("/admin/game/regist")
-	public String gameRegistPage() { 
+	public String gameRegistPage(HttpServletRequest reqeust, Principal principal) {
+		HttpSession httpSession = reqeust.getSession(true);
+		
+		ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		UserVO userVo =  (UserVO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserVO userVotest =  (UserVO)AuthUtil.getLoginSession();
+		 log.info("userid = {}", userVo.getUserId());
 		return "game/gameRegist";
 	}
 	
@@ -37,7 +53,13 @@ public class GameController {
 	 */
 	@ResponseBody
 	@PostMapping("/admin/game/regist")
-	public String gameRegist(@ModelAttribute FileVO files, @RequestParam String gameName) throws IOException {
+	public String gameRegist(HttpServletRequest reqeust, @ModelAttribute FileVO files, @RequestParam String gameName, Principal principal) throws IOException {
+		HttpSession httpSession = reqeust.getSession(true);
+		ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		CustomUserDetails userVo =  (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 //UserVO userVo =  (UserVO)AuthUtil.getLoginSession();
+		 log.info("userid = {}", userVo.getUsername());
+		
 	    //fileUtil.store(files.getMultipartFile());
 		for(MultipartFile file : files.getMultipartFile()) {
 			//log.info("file.orginalName = {}", file.getOriginalFilename());

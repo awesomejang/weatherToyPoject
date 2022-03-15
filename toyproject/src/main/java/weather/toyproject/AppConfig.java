@@ -9,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import weather.toyproject.com.AuthUtil;
 import weather.toyproject.com.file.FileUtil;
 
 @Configuration
@@ -44,6 +45,11 @@ public class AppConfig {
 								.build();
 		httpRequestfactory.setHttpClient(httpClient);
 		return new RestTemplate(httpRequestfactory);
+	}
+	
+	@Bean
+	public AuthUtil authUtil() {
+		return new AuthUtil();
 	}
 	
 	/**

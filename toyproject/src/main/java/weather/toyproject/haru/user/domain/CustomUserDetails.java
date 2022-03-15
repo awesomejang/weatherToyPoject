@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class CustomUserDetails extends UserVO implements UserDetails{
 
-	private  UserVO userVO;
+	private UserVO userVO;
 	
 	//protected 생성자면 같은 패키지에서만 사용가능
 	public CustomUserDetails() {
