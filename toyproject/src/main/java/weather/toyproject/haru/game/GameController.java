@@ -38,7 +38,7 @@ public class GameController {
 	@ResponseBody
 	@PostMapping("/admin/game/regist")
 	public String gameRegist(@ModelAttribute FileVO files, @RequestParam String gameName) throws IOException {
-	    fileUtil.store(files.getMultipartFile());
+	    //fileUtil.store(files.getMultipartFile());
 		for(MultipartFile file : files.getMultipartFile()) {
 			//log.info("file.orginalName = {}", file.getOriginalFilename());
 		}

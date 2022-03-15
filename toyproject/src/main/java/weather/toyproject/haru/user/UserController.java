@@ -42,6 +42,7 @@ public class UserController {
 	//@Value("#{ApiResource['weather.api.url']}")
 	//private String url;
 	
+	//private final Environment environment;
 	private Environment environment;
 	private final UserService userService;
 	

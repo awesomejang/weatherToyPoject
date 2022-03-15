@@ -3,6 +3,7 @@ package weather.toyproject.haru.game.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,5 +19,9 @@ public class GameService {
 	
 	public List<GameListVO> gameList() {  
 		return gameRepository.getGameList();
+	}
+	
+	public void gameUpload(List<MultipartFile> files) {
+		
 	}
 }

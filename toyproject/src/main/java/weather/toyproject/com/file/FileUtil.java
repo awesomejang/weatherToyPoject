@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,14 +44,8 @@ public class FileUtil {
 	/**
 	 * 다중 파일 업로드 
 	 */
-	public void store(List<MultipartFile> files) throws IOException {
-		/**
-        ///"경로/.." 및 내부 단순 점과 같은 시퀀스를 억제하여 경로를 정규화합니다.
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		InputStream inputStream = file.getInputStream();
-		Files.copy(inputStream, getPath().resolve(fileName),
-				StandardCopyOption.REPLACE_EXISTING);
-		*/
+	public void store(List<MultipartFile> files, String attachTY) throws IOException {
+		List<FileVO> uploadList = new ArrayList<FileVO>();
 		Path targetFolder = Paths.get(fileUploadPath);
 		log.info("fileUploadPath = {}", fileUploadPath);
 		
@@ -58,13 +53,17 @@ public class FileUtil {
 			if(!Files.exists(targetFolder.getFileName())) {
 				Files.createDirectories(targetFolder);
 			}
+			
 			for(MultipartFile multipartFile : files) {
-				Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
+				String UUID = fileVO.getUUID();
+				//Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
+				Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(UUID));
 				
 				log.info("upload File Name = {}", multipartFile.getOriginalFilename()); 
-				log.info("fileName = {}", path);
-				//File file = new File(path.);
 				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				//fileVO.set
+				
+				
 
 			}
 		}
