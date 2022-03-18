@@ -37,13 +37,8 @@ public class GameController {
 	 * @return String
 	 */
 	@GetMapping("/admin/game/regist")
-	public String gameRegistPage(HttpServletRequest reqeust, Principal principal) {
-		HttpSession httpSession = reqeust.getSession(true);
+	public String gameRegistPage(HttpServletRequest reqeust) {
 		
-		ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		UserVO userVo =  (UserVO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserVO userVotest =  (UserVO)AuthUtil.getLoginSession();
-		 log.info("userid = {}", userVo.getUserId());
 		return "game/gameRegist";
 	}
 	
@@ -54,11 +49,6 @@ public class GameController {
 	@ResponseBody
 	@PostMapping("/admin/game/regist")
 	public String gameRegist(HttpServletRequest reqeust, @ModelAttribute FileVO files, @RequestParam String gameName, Principal principal) throws IOException {
-		HttpSession httpSession = reqeust.getSession(true);
-		ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		CustomUserDetails userVo =  (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		 //UserVO userVo =  (UserVO)AuthUtil.getLoginSession();
-		 log.info("userid = {}", userVo.getUsername());
 		
 	    //fileUtil.store(files.getMultipartFile());
 		for(MultipartFile file : files.getMultipartFile()) {

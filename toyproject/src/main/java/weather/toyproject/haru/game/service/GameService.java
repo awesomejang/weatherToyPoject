@@ -21,7 +21,8 @@ public class GameService {
 		return gameRepository.getGameList();
 	}
 	
+	
 	public void gameUpload(List<MultipartFile> files) {
-		
+		//gameRepository.
 	}
 }

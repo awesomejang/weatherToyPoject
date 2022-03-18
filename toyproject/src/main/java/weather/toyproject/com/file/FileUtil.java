@@ -61,9 +61,9 @@ public class FileUtil {
 				
 				log.info("upload File Name = {}", multipartFile.getOriginalFilename()); 
 				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				//fileVO.set
+				fileVO.set
 				
-				//fileVO.set
+				fileVO.set
 				
 
 			}

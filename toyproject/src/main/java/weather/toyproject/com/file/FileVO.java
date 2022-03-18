@@ -60,4 +60,9 @@ public class FileVO {
 		return UUID.randomUUID().toString();
 	}
 	
+	public FileVO setFileInfo(MultipartFile multipartFile) {
+		
+	}
+	
+	
 }
