@@ -52,10 +52,10 @@ public class AppConfig {
 		return new AuthUtil();
 	}
 	
-	/**
+	
 	@Bean
 	public FileUtil fileUtil() {
 		return new FileUtil();
 	}
-	*/
+	
 }

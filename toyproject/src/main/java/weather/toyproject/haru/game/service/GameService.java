@@ -21,8 +21,12 @@ public class GameService {
 		return gameRepository.getGameList();
 	}
 	
-	
+	/**
+	 * 게임등록을 처리한다.
+	 * @param files
+	 * 
+	 */
 	public void gameUpload(List<MultipartFile> files) {
-		//gameRepository.
+		
 	}
 }

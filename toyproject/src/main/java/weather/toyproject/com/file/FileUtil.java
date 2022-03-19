@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import groovy.transform.AutoImplement;
 import lombok.extern.slf4j.Slf4j;
+import weather.toyproject.com.AuthUtil;
+import weather.toyproject.haru.user.domain.UserVO;
 
 @Slf4j
 @Service
@@ -35,7 +37,6 @@ public class FileUtil {
 		
 	}
 	
-	
 	@Autowired
 	public FileUtil(FileVO fileVO) {
 		this.fileVO = fileVO;
@@ -44,33 +45,35 @@ public class FileUtil {
 	/**
 	 * 다중 파일 업로드 
 	 */
-	public void store(List<MultipartFile> files, String attachTY) throws IOException {
+	public List<FileVO> fileStore(List<MultipartFile> files) throws IOException {
 		List<FileVO> uploadList = new ArrayList<FileVO>();
 		Path targetFolder = Paths.get(fileUploadPath);
-		log.info("fileUploadPath = {}", fileUploadPath);
+		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
+		
+		if(!Files.exists(targetFolder.getFileName())) {
+			Files.createDirectories(targetFolder);
+		}
 		
 		if(files.size() > 0) {
-			if(!Files.exists(targetFolder.getFileName())) {
-				Files.createDirectories(targetFolder);
-			}
-			
 			for(MultipartFile multipartFile : files) {
-				String UUID = fileVO.getUUID();
 				//Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
+				String UUID = fileVO.getUUID();
 				Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(UUID));
 				
 				log.info("upload File Name = {}", multipartFile.getOriginalFilename()); 
 				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				fileVO.set
-				
-				fileVO.set
-				
-
+				fileVO.setRegister(userVO.getUserId());
+				fileVO.setFileNm(multipartFile.getOriginalFilename());
+				fileVO.setVirFileNm(UUID);
+				fileVO.setFileSize(multipartFile.getSize());
+				fileVO.setFileExt(fileVO.getFileExt(multipartFile.getOriginalFilename()));
+				fileVO.setFileExt(fileVO.getFileExt(fileUploadPath));
+				uploadList.add(fileVO);
 			}
+		}else {
+			throw new IllegalStateException("업로드할 파일이 없습니다.");
 		}
-		
-		//for(MultipartFile file : )
-		
+		return uploadList;
 	}
 	
 	private Path getPath() {

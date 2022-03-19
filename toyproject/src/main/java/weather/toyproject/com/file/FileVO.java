@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +28,7 @@ public class FileVO {
 	//private String fileId; // FK
 	private String fileNm; // 파일명(원본)
 	private String virFileNm; // 파일명(서버저장)
-	private String fileSize; // 파일크기
+	private Long fileSize; // 파일크기
 	private String fileExt; // 파일 확장자
 	private String filePath; // 파일 저장경로
 	private List<MultipartFile> multipartFile;
@@ -38,7 +39,7 @@ public class FileVO {
 	}
 
 	public FileVO(String fileId, String attachTY, String register, String updater, Timestamp regDate, Timestamp modDate,
-			String attachId, String fileNm, String virFileNm, String fileSize, String fileExt, String filePath,
+			String attachId, String fileNm, String virFileNm, Long fileSize, String fileExt, String filePath,
 			List<MultipartFile> multipartFile) {
 		super();
 		this.fileId = fileId;
@@ -60,9 +61,11 @@ public class FileVO {
 		return UUID.randomUUID().toString();
 	}
 	
-	public FileVO setFileInfo(MultipartFile multipartFile) {
-		
+	public String getFileExt(String fileName) {
+		int extIndex = fileName.lastIndexOf(".");
+		if(extIndex > 0) {
+			return fileName.substring(extIndex + 1);
+		}
+		return null;
 	}
-	
-	
 }
