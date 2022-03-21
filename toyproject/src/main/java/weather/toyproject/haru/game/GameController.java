@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.com.AuthUtil;
 import weather.toyproject.com.file.FileUtil;
 import weather.toyproject.com.file.FileVO;
+import weather.toyproject.haru.game.domain.GameListVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
 import weather.toyproject.haru.user.domain.UserVO;
 
@@ -48,12 +49,12 @@ public class GameController {
 	 */
 	@ResponseBody
 	@PostMapping("/admin/game/regist")
-	public String gameRegist(HttpServletRequest reqeust, @ModelAttribute FileVO files, @RequestParam String gameName, Principal principal) throws IOException {
+	public String gameRegist(HttpServletRequest reqeust, @ModelAttribute FileVO files, GameListVO gameListVO, Principal principal) throws IOException {
 		
 	    //fileUtil.store(files.getMultipartFile());
-		for(MultipartFile file : files.getMultipartFile()) {
+		//for(MultipartFile file : files.getMultipartFile()) {
 			//log.info("file.orginalName = {}", file.getOriginalFilename());
-		}
+		//}
 		//log.info("gameName = {}", gameName);
 		//return "game/gameRegist";
 		return "OK";

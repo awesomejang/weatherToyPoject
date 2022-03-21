@@ -57,7 +57,7 @@ public class UserController {
 		return "user/loginPage";
 	}
 	
-	@GetMapping("/user/new") 
+	@GetMapping("/user/new") //여기서 model에 담아서 다시 줘야하는데 안줘서 안갔나 보네... 
 	public String userNew(@ModelAttribute UserVO userVO, HttpServletRequest request, HttpServletResponse response, Model model) {
 		return "user/userRegistForm";
 	}

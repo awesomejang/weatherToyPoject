@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.GameMapper;
 import weather.toyproject.haru.game.domain.GameListVO;
 
@@ -16,6 +17,10 @@ public class GameRepository {
 	
 	public List<GameListVO> getGameList() {
 		return gameMapper.getGameList();
+	}
+	
+	public void insertGameImage(FileVO fileVO) {
+		gameMapper.insertGameImageInfo(fileVO);
 	}
 	
 }

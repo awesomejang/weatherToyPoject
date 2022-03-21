@@ -42,10 +42,41 @@ public class FileUtil {
 		this.fileVO = fileVO;
 	}
 	
+	
+	/**
+	 * 단건 파일 업로드 
+	 */
+	public FileVO fileStore(MultipartFile files) throws IOException {
+		Path targetFolder = Paths.get(fileUploadPath);
+		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
+		
+		if(!Files.exists(targetFolder.getFileName())) {
+			Files.createDirectories(targetFolder);
+		}
+		
+		if(!files.isEmpty()) {
+			//Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
+			String UUID = fileVO.getUUID();
+			Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(UUID));
+			
+			log.info("upload File Name = {}", files.getOriginalFilename()); 
+			Files.copy(files.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			fileVO.setRegister(userVO.getUserId());
+			fileVO.setFileNm(files.getOriginalFilename());
+			fileVO.setVirFileNm(UUID);
+			fileVO.setFileSize(files.getSize());
+			fileVO.setFileExt(fileVO.getFileExt(files.getOriginalFilename()));
+			fileVO.setFileExt(fileVO.getFileExt(fileUploadPath));
+		}else {
+			throw new IllegalStateException("업로드할 파일이 없습니다.");
+		}
+		return fileVO;
+	}
+	
 	/**
 	 * 다중 파일 업로드 
 	 */
-	public List<FileVO> fileStore(List<MultipartFile> files) throws IOException {
+	public List<FileVO> fileListStore(List<MultipartFile> files) throws IOException {
 		List<FileVO> uploadList = new ArrayList<FileVO>();
 		Path targetFolder = Paths.get(fileUploadPath);
 		UserVO userVO = (UserVO) AuthUtil.getLoginSession();

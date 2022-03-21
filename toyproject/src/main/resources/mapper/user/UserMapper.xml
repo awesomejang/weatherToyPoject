@@ -84,15 +84,15 @@
 		        ,sysdate
 		        ,sysdate
 		      )
-		<selectKey resultType="Long" keyProperty="userNo"  order="AFTER">
+		<selectKey resultType="Long" keyProperty="userNo" order="AFTER"> <!-- keyProperty=""(해당하는 vo에 키값 입력한다.) -->
 			select USER_SEQUENCE.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
 	
 	<insert id="InsertUserAuthMapping" parameterType="Long">
 		INSERT INTO USER_AUTH_MAPPING
-		VALUES (select AUTH_ID from AUTH_T where AUTH_NAME = 'ROLE_USER' 
-		       ,#{userNo}
+		VALUES ( select AUTH_ID from AUTH_T where AUTH_NAME = 'ROLE_USER' 
+		       , #{userNo}
 		       )
 	</insert>
 	

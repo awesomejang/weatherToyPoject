@@ -31,8 +31,8 @@ public class FileVO {
 	private Long fileSize; // 파일크기
 	private String fileExt; // 파일 확장자
 	private String filePath; // 파일 저장경로
-	private List<MultipartFile> multipartFile;
-	
+	private MultipartFile multipartFile;
+	//private List<MultipartFile> multipartFile;
 	
 	public FileVO() {
 		
@@ -40,7 +40,7 @@ public class FileVO {
 
 	public FileVO(String fileId, String attachTY, String register, String updater, Timestamp regDate, Timestamp modDate,
 			String attachId, String fileNm, String virFileNm, Long fileSize, String fileExt, String filePath,
-			List<MultipartFile> multipartFile) {
+			MultipartFile multipartFile) {
 		super();
 		this.fileId = fileId;
 		this.attachTY = attachTY;
@@ -68,4 +68,6 @@ public class FileVO {
 		}
 		return null;
 	}
+
+
 }

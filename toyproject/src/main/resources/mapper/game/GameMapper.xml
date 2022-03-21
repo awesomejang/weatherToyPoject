@@ -15,11 +15,38 @@
 		<result property="fileAttYn" column="file_att_yn" />
 	</resultMap>
 	
-	
+	<resultMap id="FileVO" type="weather.toyproject.com.file.FileVO">
+		<id property="fileId" column="file_id" />
+		<result property="register" column="register" />
+		<result property="userId" column="user_id" />
+		<result property="updater" column="updater" />
+		<result property="regDate" column="regdate" />
+		<result property="modDate" column="moddate" />
+		<result property="attachId" column="attach_id" />
+		<result property="fileNm" column="file_nm" />
+		<result property="virFileNm" column="vir_file_nm" />
+		<result property="fileSize" column="file_size" />
+		<result property="fileExt" column="file_ext" />
+		<result property="filePath" column="file_path" />
+	</resultMap>
 	
 	
 	<select id="getGameList" resultMap="GameListVO">
-		select *
-		from game_list
+		SELECT *
+		FROM GAME_LIST
 	</select>
+	
+	<insert id="insertGameImageInfo" useGeneratedKeys="true" parameterType="FileVO" keyProperty="fileId"> <!-- keyProperty로 PK담겨서 리턴됨 -->
+		INSERT INTO FILE_MASTER (
+		          REGISTER
+				, REGDATE
+		) 
+		VALUES ( 
+				  #{register}
+			 	, SYSDATE 
+		)
+		<selectKey resultType="Long" keyProperty="fileId" order="AFTER"> 
+			SELECT 
+		</selectKey>
+	</insert>
 </mapper>
