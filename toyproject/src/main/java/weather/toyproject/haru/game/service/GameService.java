@@ -35,7 +35,9 @@ public class GameService {
 			// 1. 단건 파일업로드
 			FileVO fileInfo = fileUtil.fileStore(files);
 			// 2. 파일정보 DB입력
-			
+			int reuslt = gameRepository.insertGameImage(fileInfo);
+			log.info("insertReuslt = {}", reuslt);
+			log.info("insert file_master_PK = {}", fileInfo.getFileId());
 			
 		} catch (IOException e) {
 			e.printStackTrace();

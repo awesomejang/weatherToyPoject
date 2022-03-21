@@ -36,17 +36,19 @@
 		FROM GAME_LIST
 	</select>
 	
-	<insert id="insertGameImageInfo" useGeneratedKeys="true" parameterType="FileVO" keyProperty="fileId"> <!-- keyProperty로 PK담겨서 리턴됨 -->
+	<insert id="insertGameImageInfo" parameterType="weather.toyproject.com.file.FileVO"  > <!-- keyProperty로 PK담겨서 리턴됨 -->
 		INSERT INTO FILE_MASTER (
-		          REGISTER
+				  FILE_ID
+		        , REGISTER
 				, REGDATE
 		) 
-		VALUES ( 
-				  #{register}
+		VALUES (  
+				  FILE_MASTER_SEQUENCE.NEXTVAL
+				, #{register}
 			 	, SYSDATE 
 		)
-		<selectKey resultType="Long" keyProperty="fileId" order="AFTER"> 
-			SELECT 
+		<selectKey resultType="long" keyProperty="fileId" order="AFTER"> 
+			SELECT FILE_MASTER_SEQUENCE.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
 </mapper>

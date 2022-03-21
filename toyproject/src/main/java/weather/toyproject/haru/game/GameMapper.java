@@ -24,5 +24,4 @@ public interface GameMapper {
 	 * @return int 
 	 */
 	int insertGameImageInfo(FileVO fileVO); 
-		
-}
+}	

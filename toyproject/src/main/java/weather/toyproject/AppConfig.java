@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import weather.toyproject.com.AuthUtil;
 import weather.toyproject.com.file.FileUtil;
+import weather.toyproject.com.file.FileVO;
 
 @Configuration
 public class AppConfig {
@@ -53,9 +54,9 @@ public class AppConfig {
 	}
 	
 	
-	@Bean
+	@Bean(name = "fileUtil")
 	public FileUtil fileUtil() {
-		return new FileUtil();
+		return new FileUtil(new FileVO());
 	}
 	
 }

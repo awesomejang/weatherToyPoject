@@ -19,8 +19,9 @@ public class GameRepository {
 		return gameMapper.getGameList();
 	}
 	
-	public void insertGameImage(FileVO fileVO) {
-		gameMapper.insertGameImageInfo(fileVO);
+	//void로 안해도 되긴하다. 
+	public int insertGameImage(FileVO fileVO) {
+		return gameMapper.insertGameImageInfo(fileVO);
 	}
 	
 }

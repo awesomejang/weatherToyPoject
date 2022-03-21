@@ -24,7 +24,6 @@ import weather.toyproject.com.AuthUtil;
 import weather.toyproject.haru.user.domain.UserVO;
 
 @Slf4j
-@Service
 public class FileUtil {
 	
 	@Value("${local.file.uploadPath}")
@@ -32,10 +31,6 @@ public class FileUtil {
 	
 	private FileVO fileVO;
 	
-	
-	public FileUtil() {
-		
-	}
 	
 	@Autowired
 	public FileUtil(FileVO fileVO) {
