@@ -74,7 +74,8 @@
 	
 	<insert id="InsertUser" parameterType="weather.toyproject.haru.user.domain.UserVO">
 		INSERT INTO USER_T
-		VALUES ( USER_SEQUENCE.NEXTVAL
+		VALUES ( 
+		         USER_SEQUENCE.NEXTVAL
 		        ,#{userId}
 		        ,#{password}
 		        ,#{email}
@@ -83,7 +84,7 @@
 		        ,'N'
 		        ,sysdate
 		        ,sysdate
-		      )
+		 )
 		<selectKey resultType="Long" keyProperty="userNo" order="AFTER"> <!-- keyProperty=""(해당하는 vo에 키값 입력한다.) -->
 			select USER_SEQUENCE.CURRVAL FROM DUAL
 		</selectKey>

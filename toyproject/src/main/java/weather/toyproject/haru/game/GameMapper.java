@@ -1,11 +1,6 @@
 package weather.toyproject.haru.game;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
-
-import weather.toyproject.com.file.FileUtil;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.domain.GameListVO;
 
@@ -15,13 +10,16 @@ public interface GameMapper {
 	List<GameListVO> getGameList();
 	
 	/**
-	 * 게임정보를 DB에 입력한다. 
+	 * 게임정보를 DB에 입력한다.
+	 * @param gameListVO
+	 * @return int
 	 */
-	
+	int insertGameInfo(GameListVO gameListVO);
 	
 	/**
 	 * 게임이미지 파일정보를 DB에 입력한다. 
-	 * @return int 
+	 * @return Long 
+	 * @param FileVO
 	 */
-	int insertGameImageInfo(FileVO fileVO); 
+	Long insertGameImageInfo(FileVO fileVO); 
 }	

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import weather.toyproject.com.file.FileVO;
 
 //@Data
 @Getter @Setter
@@ -17,6 +18,18 @@ public class GameListVO {
 	private String delYn; // 사용여부
 	private Timestamp regDate; //등록일 
 	private Timestamp modDate; //수정일
-	private String fileId; // 파일FK
+	private Long fileId; // 파일FK
 	private String fileAttYn; // 파일 업로드 여부
+	
+	/**
+	 * 파일PK와 파일업로드여부를 변경한다.
+	 * @param fileId
+	 */
+	public void setGameImageInfo(FileVO fileInfo) { 
+		this.fileId = fileInfo.getFileId();
+		this.fileAttYn = "Y";
+	}
+	
+	
+	
 }
