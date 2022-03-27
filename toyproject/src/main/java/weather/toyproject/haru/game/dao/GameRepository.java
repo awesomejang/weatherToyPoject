@@ -38,8 +38,16 @@ public class GameRepository {
 	 * @param fileVO
 	 * @return int 
 	 */
-	public Long insertGameImage(FileVO fileVO) throws Exception {
+	public Long insertGameImageInfo(FileVO fileVO) throws Exception {
 		return gameMapper.insertGameImageInfo(fileVO);
 	}
 	
+	/**
+	 * FILE_DETAIL테이블에 파일 정보를 입력한다.
+	 * @param fileVO
+	 * @return Long 
+	 */
+	public Long insertGameImageDetailInfo(FileVO fileVO) throws Exception {
+		return gameMapper.insertGameImageDetailInfo(fileVO);
+	}
 }

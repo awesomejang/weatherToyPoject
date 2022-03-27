@@ -22,4 +22,12 @@ public interface GameMapper {
 	 * @param FileVO
 	 */
 	Long insertGameImageInfo(FileVO fileVO); 
+	
+	
+	/**
+	 * FILE_DETAIE테이블에 파일정보를 입력한다. 
+	 * @return Long 
+	 * @param FileVO
+	 */
+	Long insertGameImageDetailInfo(FileVO fileVO);
 }	

@@ -60,8 +60,9 @@ public class FileUtil {
 			fileVO.setFileNm(files.getOriginalFilename());
 			fileVO.setVirFileNm(UUID);
 			fileVO.setFileSize(files.getSize());
+			
 			fileVO.setFileExt(fileVO.getFileExt(files.getOriginalFilename()));
-			fileVO.setFileExt(fileVO.getFileExt(fileUploadPath));
+			fileVO.setFilePath(fileUploadPath);
 		}else {
 			throw new IllegalStateException("업로드할 파일이 없습니다.");
 		}

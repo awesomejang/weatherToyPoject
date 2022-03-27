@@ -38,8 +38,10 @@ public class GameService {
 			// 1. 단건 파일업로드
 			FileVO fileInfo = fileUtil.fileStore(files);
 			// 2. 파일정보 DB입력
-			gameRepository.insertGameImage(fileInfo);
-			// 3. 게임정보 DB입력 
+			gameRepository.insertGameImageInfo(fileInfo);
+			// 3. 파일디테일정보 DB입력
+			gameRepository.insertGameImageDetailInfo(fileInfo);
+			// 4. 게임정보 DB입력 
 			gameListVO.setUserId(userVO.getUserId());
 			gameListVO.setGameImageInfo(fileInfo);
 			int result = gameRepository.insertGameInfo(gameListVO);

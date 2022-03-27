@@ -52,6 +52,19 @@
 		</selectKey>
 	</insert>
 	
+	<insert id="insertGameImageDetailInfo" parameterType="weather.toyproject.com.file.FileVO">
+		INSERT INTO FILE_DETAIL  
+		VALUES (
+				 FILE_DETAIL_SEQUENCE.NEXTVAL
+			   , #{fileId}
+			   , #{fileNm}
+			   , #{virFileNm}
+			   , #{fileSize}
+			   , #{fileExt}
+			   , #{filePath}
+		)
+	</insert>
+	
 	<insert id="insertGameInfo" parameterType="weather.toyproject.haru.game.domain.GameListVO">
 		INSERT INTO GAME_LIST (
 				  GAME_CODE
@@ -72,4 +85,6 @@
 			   , #{fileAttYn}
 		)
 	</insert>
+	
+	
 </mapper>
