@@ -50,7 +50,6 @@ public class FileUtil {
 		}
 		
 		if(!files.isEmpty()) {
-			//Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
 			String UUID = fileVO.getUUID();
 			Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(UUID));
 			
@@ -60,7 +59,6 @@ public class FileUtil {
 			fileVO.setFileNm(files.getOriginalFilename());
 			fileVO.setVirFileNm(UUID);
 			fileVO.setFileSize(files.getSize());
-			
 			fileVO.setFileExt(fileVO.getFileExt(files.getOriginalFilename()));
 			fileVO.setFilePath(fileUploadPath);
 		}else {
@@ -94,7 +92,7 @@ public class FileUtil {
 				fileVO.setVirFileNm(UUID);
 				fileVO.setFileSize(multipartFile.getSize());
 				fileVO.setFileExt(fileVO.getFileExt(multipartFile.getOriginalFilename()));
-				fileVO.setFileExt(fileVO.getFileExt(fileUploadPath));
+				fileVO.setFilePath(fileUploadPath);
 				uploadList.add(fileVO);
 			}
 		}else {
