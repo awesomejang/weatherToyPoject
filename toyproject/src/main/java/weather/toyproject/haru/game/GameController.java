@@ -56,7 +56,7 @@ public class GameController {
 		
 		Boolean result = gameService.gameUpload(files.getMultipartFile(), gameListVO);
 		if(result) {
-			model.addAttribute("msg", "게임업로드에 성공했습니다. ");
+			model.addAttribute("msg", "게임업로드에 성공했습니다.");
 			return "redirect:/admin/gameList";
 		}
 		model.addAttribute("msg", "게임업로드에 실패했습니다.");
