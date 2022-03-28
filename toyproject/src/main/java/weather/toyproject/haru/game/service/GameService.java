@@ -2,6 +2,7 @@ package weather.toyproject.haru.game.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public class GameService {
 	 * @param files
 	 * 
 	 */
-	public void gameUpload(MultipartFile files, GameListVO gameListVO) {
+	public boolean gameUpload(MultipartFile files, GameListVO gameListVO) {
 		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
 		try {
 			// 1. 단건 파일업로드
@@ -44,17 +45,15 @@ public class GameService {
 			// 4. 게임정보 DB입력 
 			gameListVO.setUserId(userVO.getUserId());
 			gameListVO.setGameImageInfo(fileInfo);
-			int result = gameRepository.insertGameInfo(gameListVO);
-			
-			log.info("insert file_master_PK = {}", fileInfo.getFileId());
-			log.info("result = {}", result);
-		
+			gameRepository.insertGameInfo(gameListVO);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		
 		} catch (Exception e) {
 			e.printStackTrace();
-		
+			return false;
 		}
 	}
 }

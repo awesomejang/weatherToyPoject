@@ -89,10 +89,8 @@ public class UserController {
 		if(result != true) {
 			log.info("userRegist_fail = {}", userService.InsertUser(userVO));
 			redirectAttributes.addFlashAttribute("userRegistMsg", environment.getProperty("user.regist.fail.msg"));
-			//redirectAttributes.addFlashAttribute("userVO", userVO);
 			return "redirect:/user/new";
 		}
-		
 		
 		redirectAttributes.addFlashAttribute("message", environment.getProperty("user.regist.success.msg"));
 		return "redirect:/";
@@ -111,5 +109,4 @@ public class UserController {
 		return "admin/gameListAdmin";
 	}
 	
-	//@
 }

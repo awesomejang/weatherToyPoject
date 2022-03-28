@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,14 +51,15 @@ public class GameController {
 	 */
 	@ResponseBody
 	@PostMapping("/admin/game/regist")
-	public String gameRegist(HttpServletRequest reqeust, @ModelAttribute FileVO files, GameListVO gameListVO, Principal principal) throws IOException {
-		gameService.gameUpload(files.getMultipartFile(), gameListVO);
-	    //fileUtil.store(files.getMultipartFile());
-		//for(MultipartFile file : files.getMultipartFile()) {
-			//log.info("file.orginalName = {}", file.getOriginalFilename());
-		//}
-		//log.info("gameName = {}", gameName);
-		//return "game/gameRegist";
-		return "OK";
+	public String gameRegist(HttpServletRequest reqeust, @ModelAttribute FileVO files, 
+			GameListVO gameListVO, Principal principal, Model model) throws IOException {
+		
+		Boolean result = gameService.gameUpload(files.getMultipartFile(), gameListVO);
+		if(result) {
+			model.addAttribute("msg", "게임업로드에 성공했습니다.");
+			return "redirect:/admin/gameList";
+		}
+		model.addAttribute("msg", "게임업로드에 실패했습니다.");
+		return "redirect:/admin/game/regist";
 	}
 }
