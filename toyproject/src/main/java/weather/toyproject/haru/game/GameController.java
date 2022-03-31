@@ -41,7 +41,7 @@ public class GameController {
 	 * @return String
 	 */
 	@GetMapping("/admin/game/regist")
-	public String gameRegistPage(HttpServletRequest reqeust) {
+	public String gameRegistPage(HttpServletRequest reqeust, Model model) {
 		return "game/gameRegist";
 	}
 	

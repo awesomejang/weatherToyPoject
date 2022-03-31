@@ -47,10 +47,6 @@ public class GameService {
 			gameListVO.setGameImageInfo(fileInfo);
 			gameRepository.insertGameInfo(gameListVO);
 			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
