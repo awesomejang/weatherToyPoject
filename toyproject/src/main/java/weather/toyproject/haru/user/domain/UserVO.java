@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import groovy.transform.ToString;
 import lombok.Getter;
 import lombok.Setter;
-import weather.toyproject.haru.user.validate.Password;
 
 @Getter@Setter
 @Component

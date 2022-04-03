@@ -31,7 +31,7 @@ public class GameService {
 	/**
 	 * 게임등록을 처리한다.
 	 * @param files
-	 * 
+	 * @return boolean
 	 */
 	public boolean gameUpload(MultipartFile files, GameListVO gameListVO) {
 		UserVO userVO = (UserVO) AuthUtil.getLoginSession();

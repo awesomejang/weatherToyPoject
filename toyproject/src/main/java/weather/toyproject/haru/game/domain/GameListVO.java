@@ -2,6 +2,9 @@ package weather.toyproject.haru.game.domain;
 
 //import java.security.Timestamp;
 import java.sql.Timestamp;
+
+import javax.validation.constraints.NotBlank;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,9 +15,11 @@ import weather.toyproject.com.file.FileVO;
 public class GameListVO {
 
 	private Long gameCode; // PK
+	@NotBlank(message = "게임이름을 입력해주세요.")
 	private String gameName; // 게임이름
 	private String userId; //등록자 계정명
 	private String modUserId; // 수정자 계정명
+	//@non
 	private String delYn; // 사용여부
 	private Timestamp regDate; //등록일 
 	private Timestamp modDate; //수정일

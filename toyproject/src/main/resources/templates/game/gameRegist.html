@@ -23,7 +23,7 @@
 						<label for="delYn">사용여부</label>
 					</h5>
 					<select class="form-control" id="delYn" name="delYn">
-						<option value=""></option>
+						<!--<option value=""></option>  -->
 						<option value="Y">사용</option>
 						<option value="N">미사용</option>
 					</select>
@@ -32,15 +32,12 @@
 					<label class="input-file-button" for="multipartFile">대표이미지 업로드</label> 
 					<input type="file" id="multipartFile" name="multipartFile" style="display: none" />
 				</div>
-				<button type="submit">게임 등록</button>
+				<button type="submit" class="btn btn-primary">게임 등록</button>
 				<!--<a href="javascript:void(0)"class="btn btn-primary btn-user btn-block" onclick="goLogin()">로그인 </a>  -->
 				<hr>
 			</form>
 		</div>
-
-		<hr>
 		<div class="text-center">
-			<a class="small" href="/user/new">회원가입</a> <a class="small" href="forgot-password.html" style="margin-left: 123px;">비밀번호 찾기</a>
 		</div>
 	</div>
 </th:block>
