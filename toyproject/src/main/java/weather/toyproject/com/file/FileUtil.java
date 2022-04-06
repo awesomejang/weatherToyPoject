@@ -51,7 +51,7 @@ public class FileUtil {
 		
 		if(!files.isEmpty()) {
 			String UUID = fileVO.getUUID();
-			Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(UUID));
+			Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(UUID) + this.getFileExt(files.getOriginalFilename()));
 			
 			log.info("upload File Name = {}", files.getOriginalFilename()); 
 			Files.copy(files.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
@@ -61,8 +61,6 @@ public class FileUtil {
 			fileVO.setFileSize(files.getSize());
 			fileVO.setFileExt(fileVO.getFileExt(files.getOriginalFilename()));
 			fileVO.setFilePath(fileUploadPath);
-		}else {
-			throw new IllegalStateException("업로드할 파일이 없습니다.");
 		}
 		return fileVO;
 	}
@@ -95,13 +93,19 @@ public class FileUtil {
 				fileVO.setFilePath(fileUploadPath);
 				uploadList.add(fileVO);
 			}
-		}else {
-			throw new IllegalStateException("업로드할 파일이 없습니다.");
 		}
 		return uploadList;
 	}
 	
 	private Path getPath() {
 		return Paths.get(fileUploadPath);
+	}
+	
+	public String getFileExt(String fileName) {
+		int extIndex = fileName.lastIndexOf(".");
+		if(extIndex > 0) {
+			return fileName.substring(extIndex);
+		}
+		return null;
 	}
 }

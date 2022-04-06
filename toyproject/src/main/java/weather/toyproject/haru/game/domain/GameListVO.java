@@ -32,7 +32,11 @@ public class GameListVO {
 	 */
 	public void setGameImageInfo(FileVO fileInfo) { 
 		this.fileId = fileInfo.getFileId();
-		this.fileAttYn = "Y";
+		if(fileInfo.getFileId() == null) {
+			this.fileAttYn = "N";
+		}else {
+			this.fileAttYn = "Y";
+		}
 	}
 	
 }

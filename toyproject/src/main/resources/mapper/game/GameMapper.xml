@@ -66,6 +66,7 @@
 	</insert>
 	
 	<insert id="insertGameInfo" parameterType="weather.toyproject.haru.game.domain.GameListVO">
+		/** insertGameInfo */
 		INSERT INTO GAME_LIST (
 				  GAME_CODE
 				, USER_ID
