@@ -14,10 +14,12 @@
 				<h5>
 					<label for="gameName">게임명</label>
 				</h5>
+				
 				<div class="form-group">
 					<input type="text" class="form-control form-control-user"
 						id="gameName" name="gameName" />
 				</div>
+				<span th:if="${validResult} != null" th:text="${validResult['valid_gameName']}"></span>
 				<div class="form-group">
 					<h5>
 						<label for="delYn">사용여부</label>

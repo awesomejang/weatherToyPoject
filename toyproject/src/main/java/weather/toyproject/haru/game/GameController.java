@@ -50,7 +50,7 @@ public class GameController {
 	 */
 	@GetMapping("/admin/game/regist")
 	public String gameRegistPage(HttpServletRequest reqeust, Model model, Map<String, String> validResult) {
-		model.addAttribute("validResult", validResult);
+		model.addAttribute("validResult", validResult.get("validMap")); 
 		return "game/gameRegist";
 	}
 	
@@ -70,12 +70,13 @@ public class GameController {
 		} 
 		
 		Boolean result = gameService.gameUpload(files.getMultipartFile(), gameListVO);
+		
 		if(result) {
-			model.addAttribute("msg", "게임업로드에 성공했습니다.");
+			redirectAttribute.addAttribute("msg", "게임업로드에 성공했습니다.");
 			return "redirect:/admin/gameList";
 		}
 		model.addAttribute("msg", "게임업로드에 실패했습니다.");
-		return "redirect:/admin/game/regist";
+		return "redirect:/admin/game/gameRegist";
 	}
 	
 	private Map<String, String> GameValidHandle(Errors errors) {
