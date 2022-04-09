@@ -63,6 +63,7 @@ public class GameController {
 	public String gameRegist(HttpServletRequest reqeust, HttpServletResponse reponse , @ModelAttribute FileVO files, 
 			@Valid GameListVO gameListVO, BindingResult bindingResult
 			, Errors errors , Model model, RedirectAttributes redirectAttribute) throws IOException {
+		
 		if(bindingResult.hasErrors()) {
 			Map<String, String> validResult = this.GameValidHandle(errors);
 			redirectAttribute.addFlashAttribute("validMap", validResult);
@@ -75,7 +76,7 @@ public class GameController {
 			redirectAttribute.addAttribute("msg", "게임업로드에 성공했습니다.");
 			return "redirect:/admin/gameList";
 		}
-		model.addAttribute("msg", "게임업로드에 실패했습니다.");
+		redirectAttribute.addAttribute("msg", "게임업로드에 실패했습니다.");
 		return "redirect:/admin/game/gameRegist";
 	}
 	
