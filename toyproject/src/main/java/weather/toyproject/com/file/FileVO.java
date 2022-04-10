@@ -25,7 +25,6 @@ public class FileVO {
 	
 	//==FILE_DETAIL==//
 	private Long attachId; // FILE_DETAIL(PK)
-	//private String fileId; // FK
 	private String fileNm; // 파일명(원본)
 	private String virFileNm; // 파일명(서버저장)
 	private Long fileSize; // 파일크기

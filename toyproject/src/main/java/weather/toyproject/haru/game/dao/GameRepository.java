@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.GameMapper;
 import weather.toyproject.haru.game.domain.GameListVO;
+import weather.toyproject.haru.user.domain.GameListDto;
 
 @Repository
 public class GameRepository {
@@ -18,9 +19,23 @@ public class GameRepository {
 		this.gameMapper = gameMapper;
 	}
 	
-	
-	public List<GameListVO> getGameList() {
+	/**
+	 * 게임목록리턴 
+	 * @return List
+	 * @exception Exception
+	 */
+	public List<GameListVO> getGameList() throws Exception {
 		return gameMapper.getGameList();
+	}
+	
+	/**
+	 * 게임상세정보리턴
+	 * @param gameId
+	 * @return GameListDto
+	 * @throws Exception
+	 */
+	public GameListDto getGame(String gameId) throws Exception {
+		return gameMapper.getGame(gameId);
 	}
 	
 	/**

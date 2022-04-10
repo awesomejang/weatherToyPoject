@@ -80,10 +80,6 @@ public class GameController {
 		return "redirect:/admin/game/gameRegist";
 	}
 	
-	@
-	public String gameUpdate() {
-		
-	}
 	
 	private Map<String, String> GameValidHandle(Errors errors) {
 		Map<String, String> validatorResult = new HashMap<String, String>();

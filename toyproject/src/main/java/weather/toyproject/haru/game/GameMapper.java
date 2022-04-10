@@ -3,11 +3,19 @@ package weather.toyproject.haru.game;
 import java.util.List;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.domain.GameListVO;
+import weather.toyproject.haru.user.domain.GameListDto;
 
 //@Mapper
 public interface GameMapper {
 	
 	List<GameListVO> getGameList();
+	
+	/**
+	 * 게임의정보를리턴한다.
+	 * @param String
+	 * @return GameListDto
+	 */
+	GameListDto getGame(String gameId);
 	
 	/**
 	 * 게임정보를 DB에 입력한다.
@@ -30,4 +38,6 @@ public interface GameMapper {
 	 * @param FileVO
 	 */
 	Long insertGameImageDetailInfo(FileVO fileVO);
+	
+	
 }	

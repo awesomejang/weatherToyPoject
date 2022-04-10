@@ -14,6 +14,7 @@ import weather.toyproject.com.file.FileUtil;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.dao.GameRepository;
 import weather.toyproject.haru.game.domain.GameListVO;
+import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
 
 @Slf4j
@@ -24,9 +25,24 @@ public class GameService {
 	private final GameRepository gameRepository;
 	private final FileUtil fileUtil;
 	
+	/**
+	 * 게임목록을 리턴한다.
+	 * @return List
+	 * @throws Exception
+	 */
 	public List<GameListVO> gameList() throws Exception {  
 		return gameRepository.getGameList();
 	}
+	
+	/**
+	public GameListDto getGame(String gameId) {
+		try {
+			return gameRepository.getGame(gameId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	*/
 	
 	/**
 	 * 게임등록을 처리한다.
