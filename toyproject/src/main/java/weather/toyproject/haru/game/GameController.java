@@ -19,6 +19,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -80,6 +81,11 @@ public class GameController {
 		return "redirect:/admin/game/gameRegist";
 	}
 	
+	
+	@GetMapping(value = "/admin/game")
+	public String game(@PathVariable String gameId, Model model) {
+		return "game/gameHome";
+	}
 	
 	private Map<String, String> GameValidHandle(Errors errors) {
 		Map<String, String> validatorResult = new HashMap<String, String>();

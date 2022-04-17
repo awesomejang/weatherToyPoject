@@ -12,19 +12,14 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.com.ComUtil;
-import weather.toyproject.haru.user.UserMapper;
 import weather.toyproject.haru.user.dao.UserRepository;
 import weather.toyproject.haru.user.domain.AuthVO;
-import weather.toyproject.haru.user.domain.CustomUserDetails;
 import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
 
@@ -86,6 +81,7 @@ public class UserService {
 	 */
 	//@Transactional //선언안해주니까 예외 발생해도 데이터 들어간다;
 	public boolean InsertUser(UserVO userVO) {
+		
 		
 		boolean result = false;
 		userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
