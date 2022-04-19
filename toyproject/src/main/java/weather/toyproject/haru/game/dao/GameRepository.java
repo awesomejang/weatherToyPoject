@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import weather.toyproject.com.file.FileDto;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.GameMapper;
 import weather.toyproject.haru.game.domain.GameListVO;
@@ -37,6 +38,8 @@ public class GameRepository {
 	public GameListDto getGame(String gameId) throws Exception {
 		return gameMapper.getGame(gameId);
 	}
+	
+	//public FileDto getGameImageInfo()
 	
 	/**
 	 * 게임정보를 DB에 저장한다.

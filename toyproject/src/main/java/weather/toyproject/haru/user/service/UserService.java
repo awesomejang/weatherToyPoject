@@ -39,7 +39,6 @@ public class UserService {
 		this.enviroment = enviroment;
 	}
 
-	
 	public UserVO getUserById(String userId) {
 		return userRepository.getUserById(userId);
 	}
@@ -58,6 +57,7 @@ public class UserService {
 			resultMap.put("msg", "아이디가 입력되지 않았습니다.");
 			return resultMap;
 		}
+		
 		UserVO userVO = userRepository.getUserById(userId);
 		if(userVO != null) {
 			resultMap.put("code", "DUP");

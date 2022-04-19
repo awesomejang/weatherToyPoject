@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="weather.toyproject.haru.game.GameMapper">
-
 	<resultMap id="GameListVO" type="weather.toyproject.haru.game.domain.GameListVO">
 		<id property="gameCode" column="game_code" />
 		<result property="gameName" column="game_name" />
@@ -23,6 +22,20 @@
 		<result property="regDate" column="regdate" />
 		<result property="modDate" column="moddate" />
 		<result property="attachId" column="attach_id" />
+		<result property="fileNm" column="file_nm" />
+		<result property="virFileNm" column="vir_file_nm" />
+		<result property="fileSize" column="file_size" />
+		<result property="fileExt" column="file_ext" />
+		<result property="filePath" column="file_path" />
+	</resultMap>
+	
+	<resultMap id="FileDto" type="weather.toyproject.com.file.FileDto">
+		<id property="fileId" column="file_id" />
+		<id property="attachId" column="ATTACH_ID"/>
+		<result property="register" column="register"/>
+		<result property="updater" column="updater" />
+		<result property="regDate" column="regdate" />
+		<result property="modDate" column="moddate" />
 		<result property="fileNm" column="file_nm" />
 		<result property="virFileNm" column="vir_file_nm" />
 		<result property="fileSize" column="file_size" />
@@ -87,5 +100,35 @@
 		)
 	</insert>
 	
+	<select id="getGame" parameterType="Integer" resultMap="GameListVO">
+		SELECT 
+			 GAME_CODE
+		   , USER_ID
+		   , GAME_NAME
+		   , DEL_YN
+		   , REGDATE
+		   , MODDATE
+		   , MOD_USER_ID
+		   , FILE_ID
+		   , FILE_ATT_YN
+	   FROM GAME_LIST
+	   WHERE GAME_CODE = #{gameCode}
+	</select>
 	
+	<select id="getGameImageInfo" parameterType="Integer" parameterMap="FileDto">
+	   SELECT 
+	     	MA.FILE_ID
+	      , REGISTER
+	   	  , UPDATER
+	      , REGDATE
+	      , MODDATE
+	      , FILE_NM
+	      , VIR_FILE_NM
+	      , FILE_SIZE
+	      , FILE_EXT
+	      , FILE_PATH
+	   FROM FILE_MASTER MA
+	   INNER JOIN FILE_DETAIL FD
+	     ON MA.FILE_ID = FD.FILE_ID
+	</select>
 </mapper>

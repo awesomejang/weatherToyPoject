@@ -8,6 +8,7 @@ import weather.toyproject.haru.user.domain.GameListDto;
 //@Mapper
 public interface GameMapper {
 	
+	
 	List<GameListVO> getGameList();
 	
 	/**

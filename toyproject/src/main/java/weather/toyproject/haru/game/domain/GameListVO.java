@@ -1,3 +1,4 @@
+
 package weather.toyproject.haru.game.domain;
 
 //import java.security.Timestamp;
