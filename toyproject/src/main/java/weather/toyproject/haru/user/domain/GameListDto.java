@@ -8,7 +8,7 @@ import weather.toyproject.com.file.FileDto;
 import weather.toyproject.com.file.FileVO;
 
 @Setter @Getter
-public class GameListDto extends FileDto {
+public class GameListDto {
 	
 	private Long gameCode; // PK
 	private String gameName; // 게임이름

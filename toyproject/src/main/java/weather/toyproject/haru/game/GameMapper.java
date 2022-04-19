@@ -1,6 +1,8 @@
 package weather.toyproject.haru.game;
 
 import java.util.List;
+
+import weather.toyproject.com.file.FileDto;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.domain.GameListVO;
 import weather.toyproject.haru.user.domain.GameListDto;
@@ -16,7 +18,15 @@ public interface GameMapper {
 	 * @param String
 	 * @return GameListDto
 	 */
-	GameListDto getGame(String gameId);
+	GameListVO getGame(String gameId);
+	
+	
+	/**
+	 * 게임의이미지파일정보를 리턴한다.
+	 * @param fileId
+	 * @return FileDto
+	 */
+	FileDto getGameImageInfo(Long fileId);
 	
 	/**
 	 * 게임정보를 DB에 입력한다.

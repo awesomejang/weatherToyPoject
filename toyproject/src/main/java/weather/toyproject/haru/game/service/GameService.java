@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.com.AuthUtil;
+import weather.toyproject.com.file.FileDto;
 import weather.toyproject.com.file.FileUtil;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.dao.GameRepository;
@@ -41,8 +42,12 @@ public class GameService {
 	 * @return GameListDto
 	 * @throws Exception
 	 */
-	public GameListDto getGame(String gameId) throws Exception {
+	public GameListVO getGame(String gameId) throws Exception {
 		return gameRepository.getGame(gameId);
+	}
+	
+	public FileDto getGameImageInfo(Long fileId) throws Exception {
+		return gameRepository.getGameImageInfo(fileId);
 	}
 
 	/**
@@ -56,7 +61,7 @@ public class GameService {
 		try {
 			// 1. 단건 파일업로드
 			FileVO fileInfo = fileUtil.fileStore(files);
-			if (fileInfo.getFileId() != null) {
+			if (fileInfo.getRegister() != null) {
 				// 2. 파일정보 DB입력
 				gameRepository.insertGameImageInfo(fileInfo);
 				// 3. 파일디테일정보 DB입력

@@ -35,11 +35,19 @@ public class GameRepository {
 	 * @return GameListDto
 	 * @throws Exception
 	 */
-	public GameListDto getGame(String gameId) throws Exception {
+	public GameListVO getGame(String gameId) throws Exception {
 		return gameMapper.getGame(gameId);
 	}
 	
-	//public FileDto getGameImageInfo()
+	/**
+	 * 게임이미지상세정보리턴
+	 * @param fileId
+	 * @return FileDto
+	 * @throws Exception
+	 */
+	public FileDto getGameImageInfo(Long fileId) throws Exception {
+		return gameMapper.getGameImageInfo(fileId);
+	}
 	
 	/**
 	 * 게임정보를 DB에 저장한다.

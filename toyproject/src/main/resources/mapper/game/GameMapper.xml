@@ -100,7 +100,7 @@
 		)
 	</insert>
 	
-	<select id="getGame" parameterType="Integer" resultMap="GameListVO">
+	<select id="getGame" parameterType="String" resultMap="GameListVO">
 		SELECT 
 			 GAME_CODE
 		   , USER_ID
@@ -115,20 +115,23 @@
 	   WHERE GAME_CODE = #{gameCode}
 	</select>
 	
-	<select id="getGameImageInfo" parameterType="Integer" parameterMap="FileDto">
-	   SELECT 
-	     	MA.FILE_ID
-	      , REGISTER
-	   	  , UPDATER
-	      , REGDATE
-	      , MODDATE
-	      , FILE_NM
-	      , VIR_FILE_NM
-	      , FILE_SIZE
-	      , FILE_EXT
-	      , FILE_PATH
-	   FROM FILE_MASTER MA
-	   INNER JOIN FILE_DETAIL FD
-	     ON MA.FILE_ID = FD.FILE_ID
+	<select id="getGameImageInfo" parameterType="Long" resultMap="FileDto">
+	   SELECT *
+	   FROM ( SELECT 
+		     	MA.FILE_ID
+		      , REGISTER
+		   	  , UPDATER
+		      , REGDATE
+		      , MODDATE
+		      , FILE_NM
+		      , VIR_FILE_NM
+		      , FILE_SIZE
+		      , FILE_EXT
+		      , FILE_PATH
+	   		 FROM FILE_MASTER MA
+	   		 INNER JOIN FILE_DETAIL FD
+	          ON MA.FILE_ID = FD.FILE_ID
+	        )
+	   WHERE FILE_ID = #{fileId}
 	</select>
 </mapper>

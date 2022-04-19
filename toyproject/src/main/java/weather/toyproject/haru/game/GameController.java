@@ -36,6 +36,7 @@ import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.domain.GameListVO;
 import weather.toyproject.haru.game.service.GameService;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
+import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
 
 @Slf4j
@@ -81,9 +82,11 @@ public class GameController {
 		return "redirect:/admin/game/gameRegist";
 	}
 	
-	
-	@GetMapping(value = "/admin/game")
-	public String game(@PathVariable String gameId, Model model) {
+	//==게임상세페이지==//
+	@GetMapping(value = "/admin/game/{gameId}")
+	public String game(@PathVariable String gameId, Model model) throws Exception {
+		GameListVO gameInfo = gameService.getGame(gameId);
+		gameService.getGameImageInfo(gameInfo.getFileId());
 		return "game/gameHome";
 	}
 	
