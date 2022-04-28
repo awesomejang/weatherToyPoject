@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">
+	<div class="container-fluid">
+		<!-- Page Heading -->
+		<h1 class="h3 mb-2 text-gray-800" th:text="게임상세"></h1>
+		<div class="" style="margin-top: 24px; width: 800px;">
+			<!-- margin:auto; -->
+			<form id="gameForm" method="POST" th:action="@{/admin/game/update}" enctype="multipart/form-data">
+				<h5>
+					<label for="gameName">게임명</label>
+				</h5>
+				<div class="form-group">
+					<input type="text" id="gameName" name="gameName" class="form-control form-control-user" th:value="${gameInfo.gameName}" />
+				</div>
+				<span th:if="${validResult} != null" th:text="${validResult['valid_gameName']}"></span>
+				<div class="form-group">
+					<h5>
+						<label for="delYn">사용여부</label>
+					</h5>
+					<select class="form-control" id="delYn" name="delYn" th:value="${gameInfo.delYn}">
+						<option th:selected="${gameInfo.delYn} == 'Y'" value="Y">사용</option>
+						<option th:selected="${gameInfo.delYn} == 'N'" value="N">미사용</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="input-file-button" for="multipartFile">대표이미지 업로드</label> 
+					<input type="file" id="multipartFile" name="multipartFile" style="display: none"/>
+				</div>
+				<input type="hidden" >
+				<button type="submit" class="btn btn-primary">게임 등록</button>
+				<hr>
+			</form>
+		</div>
+		<div class="text-center">
+		</div>
+	</div>
+</th:block>

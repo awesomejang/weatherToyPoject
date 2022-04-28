@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.com.AuthUtil;
+import weather.toyproject.com.file.FileDto;
 import weather.toyproject.com.file.FileUtil;
 import weather.toyproject.com.file.FileVO;
 import weather.toyproject.haru.game.domain.GameListVO;
@@ -86,7 +87,9 @@ public class GameController {
 	@GetMapping(value = "/admin/game/{gameId}")
 	public String game(@PathVariable String gameId, Model model) throws Exception {
 		GameListVO gameInfo = gameService.getGame(gameId);
-		gameService.getGameImageInfo(gameInfo.getFileId());
+		FileDto fileInfo = gameService.getGameImageInfo(gameInfo.getFileId());
+		model.addAttribute("gameInfo", gameInfo);
+		model.addAttribute("fileInfo", fileInfo);
 		return "game/gameHome";
 	}
 	

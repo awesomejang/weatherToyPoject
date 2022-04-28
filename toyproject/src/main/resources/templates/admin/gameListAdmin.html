@@ -26,7 +26,7 @@
 			<tbody>
 				<tr th:each="game : ${games}">
 					<td th:text="${game.gameCode}">ID</td>
-					<td><a href="#" class="no-Atag" th:text="${game.gameName}">제목</a></td>
+					<td><a th:href="@{/admin/game/{gameId}(gameId=${game.gameCode})}" class="no-Atag" th:text="${game.gameName}">제목</a></td>
 					<td th:text="${game.userId}">등록자</td>
 					<td th:text="${game.delYn == 'Y'} ? '사용' : '미사용'">사용여부</td>
 					<td th:text="${game.regDate}">등록일</td>

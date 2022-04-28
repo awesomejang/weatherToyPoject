@@ -130,7 +130,7 @@
 		      , FILE_PATH
 	   		 FROM FILE_MASTER MA
 	   		 INNER JOIN FILE_DETAIL FD
-	          ON MA.FILE_ID = FD.FILE_ID
+	         	ON MA.FILE_ID = FD.FILE_ID
 	        )
 	   WHERE FILE_ID = #{fileId}
 	</select>
