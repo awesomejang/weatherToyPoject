@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout/default">
-
 <th:block layout:fragment="content">
 	<div class="container-fluid">
 		<!-- Page Heading -->
@@ -28,14 +27,19 @@
 				</div>
 				<div class="form-group">
 					<label class="input-file-button" for="multipartFile">대표이미지 업로드</label> 
-					<input type="file" id="multipartFile" name="multipartFile" style="display: none"/>
+					<input type="file" id="multipartFile" name="multipartFile" style="display: none" onchange="changeFileStatus()"/>
 				</div>
-				<input type="hidden" >
-				<button type="submit" class="btn btn-primary">게임 등록</button>
+				<input type="hidden" id="fileChageStatus" name="fileChageStatus" value="NO">
+				<button type="submit" class="btn btn-primary">게임 수정</button>
 				<hr>
 			</form>
 		</div>
 		<div class="text-center">
 		</div>
 	</div>
+	<script>
+	function changeFileStatus() {
+		$("#fileChageStatus").val("YES");
+	}
+</script>
 </th:block>

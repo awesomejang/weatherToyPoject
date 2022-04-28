@@ -93,9 +93,31 @@ public class GameController {
 		return "game/gameHome";
 	}
 	
+	/**
+	 * 게임정보 수정
+	 * @param gameId
+	 * @param gameListVO
+	 * @return String
+	 */
+	/**
+	@PostMapping("/admin/game/{gameId}/edit") 
+	public String updateGame(@PathVariable String gameId, @RequestParam String fileChageStatus
+			               , @Valid GameListVO gameListVO, BindingResult bindingResult
+			               , RedirectAttributes redirectAttributes, Errors errors) {
+		if(bindingResult.hasErrors()) {
+			Map<String, String> validResult = this.GameValidHandle(errors);
+			redirectAttributes.addFlashAttribute("validMap", validResult);
+			return "redirect:/admin/game/regist";
+		} 
+	}
+	*/
+	/**
+	 * 게임정보 Validation
+	 * @param errors
+	 * @return Map
+	 */
 	private Map<String, String> GameValidHandle(Errors errors) {
 		Map<String, String> validatorResult = new HashMap<String, String>();
-		
 		for(FieldError error : errors.getFieldErrors()) { // 캡슐화된 Error객체
 			String validkeyName = String.format("valid_%s", error.getField()); //공통적인 메시지 처리에 유리
 			log.info("validation check = {}", validkeyName);
