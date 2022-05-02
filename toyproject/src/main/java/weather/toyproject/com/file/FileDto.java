@@ -18,6 +18,7 @@ public class FileDto {
 	private String updater; // 수정자
 	private Timestamp regDate; // 등록일자
 	private Timestamp modDate; // 수정일자
+	private String fileDelYn; // 사용여부
 	//==============//
 	
 	//==FILE_DETAIL==//

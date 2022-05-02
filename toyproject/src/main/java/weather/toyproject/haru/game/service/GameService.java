@@ -77,4 +77,24 @@ public class GameService {
 			return false;
 		}
 	}
+	
+	/**
+	 * FILE의 삭제여부를 Y로 변경한다.
+	 * @param fileId
+	 * @return int
+	 */
+	public int updateGameImage(Long fileId) {
+		return fileUtil.deleteFile(fileId);
+	}
+	
+	public void updateGame(String fileChageStatus, GameListVO gameListVO) {
+		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
+		if(fileChageStatus.equals("YES")) {
+			try {
+				
+			} catch (Exception e) {
+				
+			}
+		}
+	}
 }

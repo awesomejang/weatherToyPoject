@@ -8,7 +8,7 @@
 		<h1 class="h3 mb-2 text-gray-800" th:text="게임상세"></h1>
 		<div class="" style="margin-top: 24px; width: 800px;">
 			<!-- margin:auto; -->
-			<form id="gameForm" method="POST" th:action="@{/admin/game/update}" enctype="multipart/form-data">
+			<form id="gameForm" method="POST" th:object="${gameInfo}" enctype="multipart/form-data">
 				<h5>
 					<label for="gameName">게임명</label>
 				</h5>
@@ -30,8 +30,10 @@
 					<input type="file" id="multipartFile" name="multipartFile" style="display: none" onchange="changeFileStatus()"/>
 				</div>
 				<input type="hidden" id="fileChageStatus" name="fileChageStatus" value="NO">
-				<button type="submit" class="btn btn-primary">게임 수정</button>
+				<button type="submit" id="submit" class="btn btn-primary">게임 수정</button>
+				<button type="button" id="deleteImage" class="btn btn-primary">이미지 삭제</button>
 				<hr>
+				<input type="hidden" th:field="*{gameCode}">
 			</form>
 		</div>
 		<div class="text-center">

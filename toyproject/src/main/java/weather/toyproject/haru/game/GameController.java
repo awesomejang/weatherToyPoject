@@ -99,7 +99,6 @@ public class GameController {
 	 * @param gameListVO
 	 * @return String
 	 */
-	/**
 	@PostMapping("/admin/game/{gameId}/edit") 
 	public String updateGame(@PathVariable String gameId, @RequestParam String fileChageStatus
 			               , @Valid GameListVO gameListVO, BindingResult bindingResult
@@ -107,10 +106,20 @@ public class GameController {
 		if(bindingResult.hasErrors()) {
 			Map<String, String> validResult = this.GameValidHandle(errors);
 			redirectAttributes.addFlashAttribute("validMap", validResult);
-			return "redirect:/admin/game/regist";
-		} 
+			redirectAttributes.addFlashAttribute("${gameInfo}", gameListVO);
+			return "redirect:game/gameHome";
+		}
+		
+		gameService.updateGame(fileChageStatus, gameListVO);
+		
+		return "test";
 	}
-	*/
+	
+	@PostMapping("/admin/game/updateFile")
+	public void deleteGameImage(@RequestParam Long fileId) {
+		int result = gameService.updateGameImage(fileId);
+	}
+	
 	/**
 	 * 게임정보 Validation
 	 * @param errors

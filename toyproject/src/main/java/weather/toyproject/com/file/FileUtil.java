@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import groovy.transform.AutoImplement;
 import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.com.AuthUtil;
+import weather.toyproject.com.file.service.FileService;
 import weather.toyproject.haru.user.domain.UserVO;
 
 @Slf4j
@@ -28,13 +29,13 @@ public class FileUtil {
 	
 	@Value("${local.file.uploadPath}")
 	private String fileUploadPath;
-	
 	private FileVO fileVO;
-	
+	private FileService fileService;
 	
 	@Autowired
-	public FileUtil(FileVO fileVO) {
+	public FileUtil(FileVO fileVO, FileService fileService) {
 		this.fileVO = fileVO;
+		this.fileService = fileService;
 	}
 	
 	
@@ -96,6 +97,15 @@ public class FileUtil {
 		}
 		return uploadList;
 	}
+	
+	/**
+	 * FILE_MASTER 테이블의 FILE_DEL_YN컬럼의 상태를 변경한다.
+	 * @return int
+	 */
+	public int deleteFile(Long fileId) {
+		return fileService.deleteFile(fileId);
+	}
+	
 	
 	private Path getPath() {
 		return Paths.get(fileUploadPath);
