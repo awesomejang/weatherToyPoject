@@ -51,14 +51,15 @@
 		$.ajax({
 			type: "POST", //요청 메소드 방식
 			url:"/admin/game/updateFile",
-			dataType:"text", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+			dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
 			data : {fileId : fileId},
 			success : function(data){
 				alert(data.msg);
 			},
-			error : function(error){
-				console.log(error);
-				alert(error.msg);
+			error : function(fail){
+				if(fail.status ==  400) {
+				alert("잘못된 요청입니다.");
+				}
 			}
 		});
 	};
