@@ -102,7 +102,7 @@ public class FileUtil {
 	 * FILE_MASTER 테이블의 FILE_DEL_YN컬럼의 상태를 변경한다.
 	 * @return int
 	 */
-	public int deleteFile(Long fileId) {
+	public int deleteFile(Long fileId) throws Exception {
 		return fileService.deleteFile(fileId);
 	}
 	

@@ -2,6 +2,7 @@ package weather.toyproject;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,12 +11,17 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import weather.toyproject.com.AuthUtil;
+import weather.toyproject.com.file.FileMapper;
 import weather.toyproject.com.file.FileUtil;
 import weather.toyproject.com.file.FileVO;
+import weather.toyproject.com.file.dao.FileRepository;
+import weather.toyproject.com.file.service.FileService;
 
 @Configuration
 public class AppConfig {
 	
+	@Autowired
+	private FileMapper fileMapper;
 	
 	@Bean(name = "ApiResource")
 	public PropertiesFactoryBean propertiesFactoryBean() throws Exception {
@@ -53,10 +59,17 @@ public class AppConfig {
 		return new AuthUtil();
 	}
 	
+	private FileRepository fileRepository() {
+		return new FileRepository(fileMapper);
+	}
+	
+	private FileService fileService() {
+		return new FileService(fileRepository());
+	}
 	
 	@Bean(name = "fileUtil")
 	public FileUtil fileUtil() {
-		return new FileUtil(new FileVO());
+		return new FileUtil(new FileVO(), fileService());
 	}
 	
 }

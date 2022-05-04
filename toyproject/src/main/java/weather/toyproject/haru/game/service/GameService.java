@@ -1,6 +1,7 @@
 package weather.toyproject.haru.game.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,10 +82,20 @@ public class GameService {
 	/**
 	 * FILE의 삭제여부를 Y로 변경한다.
 	 * @param fileId
-	 * @return int
+	 * @return Map<String, String>
 	 */
-	public int updateGameImage(Long fileId) {
-		return fileUtil.deleteFile(fileId);
+	public Map<String, String> updateGameImage(Long fileId) {
+		Map<String, String> resultMap = new HashMap<String, String>();
+		try {
+			fileUtil.deleteFile(fileId);
+			resultMap.put("msg", "이미지 삭제에 성공했습니다.");
+			resultMap.put("code", "OK");
+		}catch(Exception e) {
+			e.printStackTrace();
+			resultMap.put("msg", "이미지 삭제에 실패했습니다.");
+			resultMap.put("code", "FAIL");
+		}
+		return resultMap;
 	}
 	
 	public void updateGame(String fileChageStatus, GameListVO gameListVO) {

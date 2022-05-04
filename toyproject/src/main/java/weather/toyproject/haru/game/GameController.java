@@ -106,7 +106,7 @@ public class GameController {
 		if(bindingResult.hasErrors()) {
 			Map<String, String> validResult = this.GameValidHandle(errors);
 			redirectAttributes.addFlashAttribute("validMap", validResult);
-			redirectAttributes.addFlashAttribute("${gameInfo}", gameListVO);
+			redirectAttributes.addFlashAttribute("gameInfo", gameListVO);
 			return "redirect:game/gameHome";
 		}
 		
@@ -115,9 +115,16 @@ public class GameController {
 		return "test";
 	}
 	
+	@ResponseBody
 	@PostMapping("/admin/game/updateFile")
-	public void deleteGameImage(@RequestParam Long fileId) {
-		int result = gameService.updateGameImage(fileId);
+	public Map deleteGameImage(@RequestParam() Long fileId){
+		Map<String, String> resultMap = null;
+		if(fileId == null) {
+			resultMap.put("FD", "삭제요청이 올바르지 않습니다.");
+			return resultMap;
+		}
+		resultMap = gameService.updateGameImage(fileId);
+		return resultMap;
 	}
 	
 	/**

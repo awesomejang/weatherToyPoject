@@ -11,7 +11,7 @@ public class FileService {
 
 	private final FileRepository fileRepository;
 	
-	public int deleteFile(Long fileId) {
+	public int deleteFile(Long fileId) throws Exception {
 		return fileRepository.deleteFile(fileId);
 	}
 }
