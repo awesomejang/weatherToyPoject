@@ -76,4 +76,8 @@ public class GameRepository {
 	public Long insertGameImageDetailInfo(FileVO fileVO) throws Exception {
 		return gameMapper.insertGameImageDetailInfo(fileVO);
 	}
+	
+	public int updateFileAttToN(Long gameCode) throws Exception {
+		return gameMapper.updateFileAttToN(gameCode);
+	}
 }

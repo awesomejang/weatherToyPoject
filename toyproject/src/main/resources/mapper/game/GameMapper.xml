@@ -134,4 +134,11 @@
 	        )
 	   WHERE FILE_ID = #{fileId}
 	</select>
+	
+	<update id="updateFileAttToN" parameterType="Long">
+		UPDATE GAME_LIST
+			SET FILE_ATT_YN = 'N'
+		      , FILE_ID = NULL  
+		WHERE GAME_CODE = #{gameCode} 	
+	</update>
 </mapper>

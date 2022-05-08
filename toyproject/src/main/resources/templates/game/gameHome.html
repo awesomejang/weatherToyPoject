@@ -29,11 +29,12 @@
 					<label class="input-file-button" for="multipartFile">대표이미지 업로드</label> 
 					<input type="file" id="multipartFile" name="multipartFile" style="display: none" onchange="FileStatus()"/>
 				</div>
-				<input type="hidden" id="fileChageStatus" name="fileChageStatus" value="NO">
+				<input type="hidden" id="imgChangeStatus" name="imgChangeStatus" value="NO">
 				<button type="submit" id="submit" class="btn btn-primary">게임 수정</button>
 				<button type="button" id="deleteImage" class="btn btn-primary" onclick="ChangeFileStatus()">이미지 삭제</button>
 				<hr>
 				<input type="hidden" th:field="*{gameCode}">
+				<input type="hidden" th:field="*{fileId}">
 			</form>
 		</div>
 		<div class="text-center">
@@ -41,18 +42,19 @@
 	</div>
 	<script>
 	
-	var fileId = "[[${gameInfo.fileId}]]";
-	
 	function FileStatus() {
 		$("#fileChageStatus").val("YES");
 	};
 	
+	var fileId = "[[${gameInfo.fileId}]]";
 	function ChangeFileStatus() {
 		$.ajax({
 			type: "POST", //요청 메소드 방식
-			url:"/admin/game/updateFile",
+			url:"/admin/game/deleteFile",
 			dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
-			data : {fileId : fileId},
+			data : { fileId : fileId
+				    ,gameCode : $("#gameCode").val()
+				   },
 			success : function(data){
 				alert(data.msg);
 			},

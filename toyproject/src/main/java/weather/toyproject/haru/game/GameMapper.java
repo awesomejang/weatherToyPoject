@@ -50,5 +50,6 @@ public interface GameMapper {
 	 */
 	Long insertGameImageDetailInfo(FileVO fileVO);
 	
+	int updateFileAttToN(Long gameCode);
 	
 }	

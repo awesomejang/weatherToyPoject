@@ -84,10 +84,11 @@ public class GameService {
 	 * @param fileId
 	 * @return Map<String, String>
 	 */
-	public Map<String, String> updateGameImage(Long fileId) {
+	public Map<String, String> deleteGameImage(Long fileId, Long gameCode) {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		try {
 			fileUtil.deleteFile(fileId);
+			gameRepository.updateFileAttToN(gameCode);
 			resultMap.put("msg", "이미지 삭제에 성공했습니다.");
 			resultMap.put("code", "OK");
 		}catch(Exception e) {
@@ -98,10 +99,18 @@ public class GameService {
 		return resultMap;
 	}
 	
-	public void updateGame(String fileChageStatus, GameListVO gameListVO) {
+	public void updateGame(String imgChangeStatus, GameListVO gameListVO) {
 		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
-		if(fileChageStatus.equals("YES")) {
+		if(imgChangeStatus.equals("YES")) {
 			try {
+				fileUtil.deleteFile(gameListVO.getFileId());
+				FileVO fileInfo = fileUtil.fileStore(gameListVO.get);
+				if (fileInfo.getRegister() != null) {
+					// 2. 파일정보 DB입력
+					gameRepository.insertGameImageInfo(fileInfo);
+					// 3. 파일디테일정보 DB입력
+					gameRepository.insertGameImageDetailInfo(fileInfo);
+				}
 				
 			} catch (Exception e) {
 				

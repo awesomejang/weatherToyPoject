@@ -100,7 +100,7 @@ public class GameController {
 	 * @return String
 	 */
 	@PostMapping("/admin/game/{gameId}/edit") 
-	public String updateGame(@PathVariable String gameId, @RequestParam String fileChageStatus
+	public String updateGame(@PathVariable String gameId, @RequestParam String imgChangeStatus
 			               , @Valid GameListVO gameListVO, BindingResult bindingResult
 			               , RedirectAttributes redirectAttributes, Errors errors) {
 		if(bindingResult.hasErrors()) {
@@ -110,20 +110,15 @@ public class GameController {
 			return "redirect:game/gameHome";
 		}
 		
-		gameService.updateGame(fileChageStatus, gameListVO);
+		gameService.updateGame(imgChangeStatus, gameListVO);
 		
 		return "test";
 	}
 	
 	@ResponseBody
-	@PostMapping("/admin/game/updateFile")
-	public Map deleteGameImage(@RequestParam() Long fileId){
-		Map<String, String> resultMap = null;
-		if(fileId == null) {
-			resultMap.put("FD", "삭제요청이 올바르지 않습니다.");
-			return resultMap;
-		}
-		resultMap = gameService.updateGameImage(fileId);
+	@PostMapping("/admin/game/deleteFile")
+	public Map deleteGameImage(@RequestParam Long fileId, @RequestParam Long gameCode){
+		Map<String, String> resultMap = gameService.deleteGameImage(fileId, gameCode);
 		return resultMap;
 	}
 	
