@@ -36,5 +36,4 @@
 			SET FILE_DEL_YN = 'Y'
 		WHERE FILE_ID = #{fileId}
 	</update>
-	
 </mapper>

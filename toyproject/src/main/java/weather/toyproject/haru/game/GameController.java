@@ -102,7 +102,8 @@ public class GameController {
 	@PostMapping("/admin/game/{gameId}/edit") 
 	public String updateGame(@PathVariable String gameId, @RequestParam String imgChangeStatus
 			               , @Valid GameListVO gameListVO, BindingResult bindingResult
-			               , RedirectAttributes redirectAttributes, Errors errors) {
+			               , RedirectAttributes redirectAttributes, Errors errors
+			               ,@ModelAttribute FileVO files) {
 		if(bindingResult.hasErrors()) {
 			Map<String, String> validResult = this.GameValidHandle(errors);
 			redirectAttributes.addFlashAttribute("validMap", validResult);
@@ -110,7 +111,7 @@ public class GameController {
 			return "redirect:game/gameHome";
 		}
 		
-		gameService.updateGame(imgChangeStatus, gameListVO);
+		gameService.updateGame(imgChangeStatus, gameListVO, files);
 		
 		return "test";
 	}

@@ -141,4 +141,16 @@
 		      , FILE_ID = NULL  
 		WHERE GAME_CODE = #{gameCode} 	
 	</update>
+	
+	<update id="updateGameInfo" parameterType="weather.toyproject.haru.game.domain.GameListVO">
+		/** updateGameInfo */
+		UPDATE GAME_LIST
+		SET   MOD_USER_ID = #{userId}
+			, GAME_NAME = #{gameName}
+			, DEL_YN = #{delYn}
+			, MODDATE = SYSDATE
+			, FILE_ID = #{fileId}
+			, FILE_ATT_YN = #{fileAttYn}
+		WHERE GAME_CODE = #{gameCode}
+	</update>
 </mapper>

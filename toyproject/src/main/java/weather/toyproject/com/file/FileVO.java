@@ -34,6 +34,7 @@ public class FileVO {
 	private MultipartFile multipartFile;
 	//private List<MultipartFile> multipartFile;
 	
+	
 	public String getUUID() {
 		return UUID.randomUUID().toString();
 	}
@@ -45,4 +46,6 @@ public class FileVO {
 		}
 		return null;
 	}
+	
+	
 }

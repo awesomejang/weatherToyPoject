@@ -35,6 +35,9 @@ public interface GameMapper {
 	 */
 	int insertGameInfo(GameListVO gameListVO);
 	
+	
+	int updateGameInfo(GameListVO gameListVO);
+	
 	/**
 	 * 게임이미지 파일정보를 DB에 입력한다. 
 	 * @return Long 
@@ -42,13 +45,13 @@ public interface GameMapper {
 	 */
 	Long insertGameImageInfo(FileVO fileVO); 
 	
-	
 	/**
 	 * FILE_DETAIE테이블에 파일정보를 입력한다. 
 	 * @return Long 
 	 * @param FileVO
 	 */
 	Long insertGameImageDetailInfo(FileVO fileVO);
+	
 	
 	int updateFileAttToN(Long gameCode);
 	

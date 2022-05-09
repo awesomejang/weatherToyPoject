@@ -99,22 +99,23 @@ public class GameService {
 		return resultMap;
 	}
 	
-	public void updateGame(String imgChangeStatus, GameListVO gameListVO) {
+	public void updateGame(String imgChangeStatus, GameListVO gameListVO, FileVO files) {
 		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
-		if(imgChangeStatus.equals("YES")) {
-			try {
+		try {
+			FileVO fileInfo = fileUtil.fileStore(files.getMultipartFile());
+			if(fileUtil.uploadCheck()) {
 				fileUtil.deleteFile(gameListVO.getFileId());
-				FileVO fileInfo = fileUtil.fileStore(gameListVO.get);
-				if (fileInfo.getRegister() != null) {
-					// 2. 파일정보 DB입력
-					gameRepository.insertGameImageInfo(fileInfo);
-					// 3. 파일디테일정보 DB입력
-					gameRepository.insertGameImageDetailInfo(fileInfo);
-				}
-				
-			} catch (Exception e) {
-				
+				// 2. 파일정보 DB입력
+				gameRepository.insertGameImageInfo(fileInfo);
+				// 3. 파일디테일정보 DB입력
+				gameRepository.insertGameImageDetailInfo(fileInfo);
+				// 4. 게임정보 DB입력
+				gameListVO.setUserId(userVO.getUserId());
+				gameListVO.setGameImageInfo(fileInfo);
 			}
+			gameRepository.updateGameInfo(gameListVO);
+		} catch (Exception e) {
+			
 		}
 	}
 }

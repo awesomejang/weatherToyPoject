@@ -77,7 +77,17 @@ public class GameRepository {
 		return gameMapper.insertGameImageDetailInfo(fileVO);
 	}
 	
+	/**
+	 * 게임 첨부상태 여부를 N으로 변경한다.
+	 * @param gameCode
+	 * @return int 
+	 * @throws Exception
+	 */
 	public int updateFileAttToN(Long gameCode) throws Exception {
 		return gameMapper.updateFileAttToN(gameCode);
+	}
+	
+	public int updateGameInfo(GameListVO gameListVO) throws Exception {
+		return gameMapper.updateGameInfo(gameListVO);
 	}
 }

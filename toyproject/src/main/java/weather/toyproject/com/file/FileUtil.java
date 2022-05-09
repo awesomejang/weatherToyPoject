@@ -31,6 +31,7 @@ public class FileUtil {
 	private String fileUploadPath;
 	private FileVO fileVO;
 	private FileService fileService;
+	private boolean uploadCheckToken = false;
 	
 	@Autowired
 	public FileUtil(FileVO fileVO, FileService fileService) {
@@ -51,6 +52,7 @@ public class FileUtil {
 		}
 		
 		if(!files.isEmpty()) {
+			this.setUploadCheck(true);
 			String UUID = fileVO.getUUID();
 			Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(UUID) + this.getFileExt(files.getOriginalFilename()));
 			
@@ -79,6 +81,7 @@ public class FileUtil {
 		}
 		
 		if(files.size() > 0) {
+			this.setUploadCheck(true);
 			for(MultipartFile multipartFile : files) {
 				//Path path = Paths.get(fileUploadPath + File.separator + StringUtils.cleanPath(multipartFile.getOriginalFilename()));
 				String UUID = fileVO.getUUID();
@@ -111,11 +114,28 @@ public class FileUtil {
 		return Paths.get(fileUploadPath);
 	}
 	
+	/**
+	 * 업로드 파일의 확장자 분리 
+	 * @param fileName
+	 * @return
+	 */
 	public String getFileExt(String fileName) {
 		int extIndex = fileName.lastIndexOf(".");
 		if(extIndex > 0) {
 			return fileName.substring(extIndex);
 		}
 		return null;
+	}
+	
+	public void setUploadCheck(boolean uploadCheckToken) {
+		this.uploadCheckToken = uploadCheckToken;
+	}
+	
+	/**
+	 * 파일 업로드 여부 
+	 * @return boolean
+	 */
+	public boolean uploadCheck() {
+		return uploadCheckToken;
 	}
 }
