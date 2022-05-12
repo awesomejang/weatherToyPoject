@@ -67,6 +67,7 @@ public class GameController {
 			@Valid GameListVO gameListVO, BindingResult bindingResult
 			, Errors errors , Model model, RedirectAttributes redirectAttribute) throws IOException {
 		
+		
 		if(bindingResult.hasErrors()) {
 			Map<String, String> validResult = this.GameValidHandle(errors);
 			redirectAttribute.addFlashAttribute("validMap", validResult);
@@ -99,6 +100,7 @@ public class GameController {
 	 * @param gameListVO
 	 * @return String
 	 */
+	@ResponseBody
 	@PostMapping("/admin/game/{gameId}/edit") 
 	public String updateGame(@PathVariable String gameId, @RequestParam String imgChangeStatus
 			               , @Valid GameListVO gameListVO, BindingResult bindingResult
