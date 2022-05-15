@@ -99,7 +99,7 @@ public class GameService {
 		return resultMap;
 	}
 	
-	public void updateGame(String imgChangeStatus, GameListVO gameListVO, FileVO files) {
+	public boolean updateGame(GameListVO gameListVO, FileVO files) {
 		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
 		try {
 			FileVO fileInfo = fileUtil.fileStore(files.getMultipartFile());
@@ -114,8 +114,10 @@ public class GameService {
 				gameListVO.setGameImageInfo(fileInfo);
 			}
 			gameRepository.updateGameInfo(gameListVO);
+			return true;
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

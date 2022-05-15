@@ -100,10 +100,8 @@ public class GameController {
 	 * @param gameListVO
 	 * @return String
 	 */
-	@ResponseBody
 	@PostMapping("/admin/game/{gameId}/edit") 
-	public String updateGame(@PathVariable String gameId, @RequestParam String imgChangeStatus
-			               , @Valid GameListVO gameListVO, BindingResult bindingResult
+	public String updateGame(@PathVariable String gameId,@Valid GameListVO gameListVO, BindingResult bindingResult
 			               , RedirectAttributes redirectAttributes, Errors errors
 			               ,@ModelAttribute FileVO files) {
 		if(bindingResult.hasErrors()) {
@@ -113,7 +111,8 @@ public class GameController {
 			return "redirect:game/gameHome";
 		}
 		
-		gameService.updateGame(imgChangeStatus, gameListVO, files);
+		boolean uploadResult = gameService.updateGame(gameListVO, files);
+		//flush할까... 
 		
 		return "test";
 	}
