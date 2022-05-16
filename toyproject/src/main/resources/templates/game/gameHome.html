@@ -52,7 +52,6 @@
 			type: "POST", //요청 메소드 방식
 			url:"/admin/game/deleteFile",
 			dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
-			processData: false, //파일이 포함되어 있을때 설정 
 			data : { fileId : fileId
 				    ,gameCode : $("#gameCode").val()
 				   },

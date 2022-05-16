@@ -106,7 +106,8 @@ public class FileUtil {
 	 * @return int
 	 */
 	public int deleteFile(Long fileId) throws Exception {
-		return fileService.deleteFile(fileId);
+		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
+		return fileService.deleteFile(fileId, userVO.getUserId());
 	}
 	
 	

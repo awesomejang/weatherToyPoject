@@ -149,8 +149,8 @@
 			, GAME_NAME = #{gameName}
 			, DEL_YN = #{delYn}
 			, MODDATE = SYSDATE
-			, FILE_ID = #{fileId}
 			<if test="fileId != null">
+			, FILE_ID = #{fileId}
 			, FILE_ATT_YN = #{fileAttYn}
 			</if>
 		WHERE GAME_CODE = #{gameCode}

@@ -31,10 +31,12 @@
 		<result property="filePath" column="file_path" />
 	</resultMap>
 	
-	<update id="deleteFile" parameterType="Long">
+	<update id="deleteFile" parameterType="map">
 		/** deleteFile */
 		UPDATE FILE_MASTER
-			SET FILE_DEL_YN = 'Y'
+			SET  FILE_DEL_YN = 'Y'
+			   , UPDATER = #{userId}
+			   , MODDATE = SYSDATE
 		WHERE FILE_ID = #{fileId}
 	</update>
 </mapper>

@@ -11,7 +11,7 @@ public class FileRepository {
 	
 	private final FileMapper fileMapper;
 	
-	public int deleteFile(Long fileId) throws Exception {
-		return fileMapper.deleteFile(fileId);
+	public int deleteFile(Long fileId, String userId) throws Exception {
+		return fileMapper.deleteFile(fileId, userId);
 	}
 }

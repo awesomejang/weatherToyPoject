@@ -112,7 +112,7 @@ public class GameController {
 		}
 		
 		boolean uploadResult = gameService.updateGame(gameListVO, files);
-		String msg = uploadResult ? "수정에 성공했습니다." : "수정에 실패했습니다.";
+ 		String msg = uploadResult ? "수정에 성공했습니다." : "수정에 실패했습니다.";
 		redirectAttributes.addAttribute("msg", msg);
 		return "redirect:/admin/gameList";
 	}
