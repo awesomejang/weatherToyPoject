@@ -8,7 +8,7 @@
 		<h1 class="h3 mb-2 text-gray-800" th:text="게임상세"></h1>
 		<div class="" style="margin-top: 24px; width: 800px;">
 			<!-- margin:auto; -->
-			<form id="gameForm" method="POST" th:object="${gameInfo}" enctype="multipart/form-data">
+			<form id="gameForm" method="POST" th:object="${gameInfo}" enctype="multipart/form-data" action="/admin/game/edit">
 				<h5>
 					<label for="gameName">게임명</label>
 				</h5>
@@ -52,6 +52,7 @@
 			type: "POST", //요청 메소드 방식
 			url:"/admin/game/deleteFile",
 			dataType:"json", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+			processData: false, //파일이 포함되어 있을때 설정 
 			data : { fileId : fileId
 				    ,gameCode : $("#gameCode").val()
 				   },

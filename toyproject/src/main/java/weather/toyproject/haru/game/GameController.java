@@ -100,21 +100,21 @@ public class GameController {
 	 * @param gameListVO
 	 * @return String
 	 */
-	@PostMapping("/admin/game/{gameId}/edit") 
-	public String updateGame(@PathVariable String gameId,@Valid GameListVO gameListVO, BindingResult bindingResult
+	@PostMapping("/admin/game/edit") 
+	public String updateGame(@Valid GameListVO gameListVO, BindingResult bindingResult
 			               , RedirectAttributes redirectAttributes, Errors errors
 			               ,@ModelAttribute FileVO files) {
 		if(bindingResult.hasErrors()) {
 			Map<String, String> validResult = this.GameValidHandle(errors);
 			redirectAttributes.addFlashAttribute("validMap", validResult);
 			redirectAttributes.addFlashAttribute("gameInfo", gameListVO);
-			return "redirect:game/gameHome";
+			return "redirect:/game/gameHome";
 		}
 		
 		boolean uploadResult = gameService.updateGame(gameListVO, files);
-		//flush할까... 
-		
-		return "test";
+		String msg = uploadResult ? "수정에 성공했습니다." : "수정에 실패했습니다.";
+		redirectAttributes.addAttribute("msg", msg);
+		return "redirect:/admin/gameList";
 	}
 	
 	@ResponseBody

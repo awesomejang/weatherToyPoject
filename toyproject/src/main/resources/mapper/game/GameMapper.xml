@@ -150,7 +150,9 @@
 			, DEL_YN = #{delYn}
 			, MODDATE = SYSDATE
 			, FILE_ID = #{fileId}
+			<if test="fileId != null">
 			, FILE_ATT_YN = #{fileAttYn}
+			</if>
 		WHERE GAME_CODE = #{gameCode}
 	</update>
 </mapper>

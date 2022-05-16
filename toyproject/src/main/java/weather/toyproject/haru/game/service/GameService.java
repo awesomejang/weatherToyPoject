@@ -103,7 +103,7 @@ public class GameService {
 		UserVO userVO = (UserVO) AuthUtil.getLoginSession();
 		try {
 			FileVO fileInfo = fileUtil.fileStore(files.getMultipartFile());
-			if(fileUtil.uploadCheck()) {
+			if(fileUtil.uploadCheck()) { // 파일이 첨부되었다.
 				fileUtil.deleteFile(gameListVO.getFileId());
 				// 2. 파일정보 DB입력
 				gameRepository.insertGameImageInfo(fileInfo);
@@ -111,6 +111,7 @@ public class GameService {
 				gameRepository.insertGameImageDetailInfo(fileInfo);
 				// 4. 게임정보 DB입력
 				gameListVO.setUserId(userVO.getUserId());
+				//gameListVO.setFileId(fileInfo.getFileId());
 				gameListVO.setGameImageInfo(fileInfo);
 			}
 			gameRepository.updateGameInfo(gameListVO);
