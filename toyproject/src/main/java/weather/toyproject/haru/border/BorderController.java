@@ -18,7 +18,6 @@ public class BorderController {
 	public String gameBorderList(@PathVariable(required = false) Long gameCode) {
 		log.debug("board selected gameCode ={}", gameCode);
 		return "board/gameBoard";
-		//return "game/{gameCode}";
 	}
 	
 }
