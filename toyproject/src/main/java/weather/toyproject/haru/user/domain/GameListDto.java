@@ -4,11 +4,12 @@ import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.Setter;
+import weather.toyproject.com.PageMaker;
 import weather.toyproject.com.file.FileDto;
 import weather.toyproject.com.file.FileVO;
 
 @Setter @Getter
-public class GameListDto {
+public class GameListDto extends PageMaker{
 	
 	private Long gameCode; // PK
 	private String gameName; // 게임이름
@@ -19,6 +20,5 @@ public class GameListDto {
 	private Timestamp modDate; //수정일
 	private String fileId; // 파일FK
 	private String fileAttYn; // 파일 업로드 여부
-	//private String 
 
 }

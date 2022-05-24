@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
+import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
 import weather.toyproject.haru.user.service.UserService;
 
@@ -104,7 +105,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/admin/gameList")
-	public String adminPage(@RequestParam(required = false) String msg, Model model) {
+	public String adminPage(GameListDto gameListDto, @RequestParam(required = false) String msg, Model model) {
 		model.addAttribute("games", userService.selectGameList_admin());
 		return "admin/gameListAdmin";
 	}
