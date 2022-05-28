@@ -28,6 +28,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.github.pagehelper.PageInfo;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.com.AuthUtil;
@@ -89,6 +91,7 @@ public class GameController {
 	public String game(@PathVariable String gameId, Model model) throws Exception {
 		GameListVO gameInfo = gameService.getGame(gameId);
 		FileDto fileInfo = gameService.getGameImageInfo(gameInfo.getFileId());
+		//PageInfo<TEST>
 		model.addAttribute("gameInfo", gameInfo);
 		model.addAttribute("fileInfo", fileInfo);
 		return "game/gameHome";
