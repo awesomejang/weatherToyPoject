@@ -69,7 +69,6 @@ public class GameController {
 			@Valid GameListVO gameListVO, BindingResult bindingResult
 			, Errors errors , Model model, RedirectAttributes redirectAttribute) throws IOException {
 		
-		
 		if(bindingResult.hasErrors()) {
 			Map<String, String> validResult = this.GameValidHandle(errors);
 			redirectAttribute.addFlashAttribute("validMap", validResult);
@@ -79,10 +78,12 @@ public class GameController {
 		Boolean result = gameService.gameUpload(files.getMultipartFile(), gameListVO);
 		
 		if(result) {
-			redirectAttribute.addAttribute("msg", "게임업로드에 성공했습니다.");
+			//redirectAttribute.addfl addAttribute("msg", "게임업로드에 성공했습니다.");
+			redirectAttribute.addFlashAttribute("msg", "게임업로드에 성공했습니다.");
 			return "redirect:/admin/gameList";
 		}
-		redirectAttribute.addAttribute("msg", "게임업로드에 실패했습니다.");
+		//redirectAttribute.addAttribute("msg", "게임업로드에 실패했습니다.");
+		redirectAttribute.addFlashAttribute("msg", "게임업로드에 실패했습니다.");
 		return "redirect:/admin/game/gameRegist";
 	}
 	
@@ -91,7 +92,6 @@ public class GameController {
 	public String game(@PathVariable String gameId, Model model) throws Exception {
 		GameListVO gameInfo = gameService.getGame(gameId);
 		FileDto fileInfo = gameService.getGameImageInfo(gameInfo.getFileId());
-		//PageInfo<TEST>
 		model.addAttribute("gameInfo", gameInfo);
 		model.addAttribute("fileInfo", fileInfo);
 		return "game/gameHome";

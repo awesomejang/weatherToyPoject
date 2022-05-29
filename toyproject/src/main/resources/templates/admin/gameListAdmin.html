@@ -37,5 +37,17 @@
 	</div>
 </th:block>
 <script>
-	alertProcess(msg);
+window.onload = function() {
+	eventBind();
+}
+function eventBind() {
+	alertProcess("[[${msg}]]"); //CDATA 타임리프의 jstl같은놈인듯
+	
+} 
+
+function alertProcess(msg) {
+	if(msg != null && msg != "") {
+		alert(msg);
+	}
+}
 </script>
