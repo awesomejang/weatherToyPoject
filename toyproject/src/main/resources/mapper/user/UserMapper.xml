@@ -93,10 +93,10 @@
 	<insert id="InsertUserAuthMapping" parameterType="Long">
 		INSERT INTO USER_AUTH_MAPPING
 		VALUES ( 
-				  select 
+				  SELECT 
 				  	  AUTH_ID 
-				  from AUTH_T 
-				  where AUTH_NAME = 'ROLE_USER' 
+				  FROM AUTH_T 
+				  WHERE AUTH_NAME = 'ROLE_USER' 
 		        , #{userNo}
 		)
 	</insert>

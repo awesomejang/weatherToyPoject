@@ -24,7 +24,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="game : ${games}">
+				<tr th:each="game : ${games.list}">
 					<td th:text="${game.gameCode}">ID</td>
 					<td><a th:href="@{/admin/game/{gameId}(gameId=${game.gameCode})}" class="no-Atag" th:text="${game.gameName}">제목</a></td>
 					<td th:text="${game.userId}">등록자</td>
@@ -34,20 +34,32 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<!-- 페이징 -->
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		  	<span th:text="${navigatepageNums}"></span>
+		    <li class="page-item" th:classappend="${games.prePage == 0} ? 'disabled'"><a class="page-link" href="#">Previous</a></li>
+		    <li class="page-item" th:each="pageNum : ${navigatepageNums}">
+		    	<a class="page-link" href="#" th:text="${pageNum}">1</a>
+		    </li>
+		    <li class="page-item" th:classappend="${games.nextPage == 0} ? 'disabled'"><a class="page-link" href="#">Next</a></li>
+		  </ul>
+		</nav>
 	</div>
-</th:block>
-<script>
-window.onload = function() {
-	eventBind();
-}
-function eventBind() {
-	alertProcess("[[${msg}]]"); //CDATA 타임리프의 jstl같은놈인듯
-	
-} 
-
-function alertProcess(msg) {
-	if(msg != null && msg != "") {
-		alert(msg);
+<script type="text/javascript">
+	window.onload = function() {
+		eventBind();
 	}
-}
+	function eventBind() {
+		alertProcess("[[${message}]]"); //CDATA 타임리프의 jstl같은놈인듯
+		
+	} 
+	
+	function alertProcess(msg) {
+		if(msg != null && msg != "") {
+			alert(msg);
+		}
+	}
 </script>
+</th:block>

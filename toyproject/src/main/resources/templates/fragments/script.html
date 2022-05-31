@@ -26,20 +26,6 @@
     <!-- Page level custom scripts -->
     <!--    <script th:src="@{/js/demo/chart-area-demo.js}"></script>-->
     <!--    <script th:src="@{/js/demo/chart-pie-demo.js}"></script>-->
-    <script>
-    window.onload = function() {
-		eventBind();
-	}
-	function eventBind() {
-		alertProcess("[[${message}]]"); //CDATA 타임리프의 jstl같은놈인듯
-
-	}
-
-	function alertProcess(msg) {
-		if (msg != null && msg != "") {
-			alert(msg);
-		}
-	}
-    </script>
+    
 </th:block>
 </html>

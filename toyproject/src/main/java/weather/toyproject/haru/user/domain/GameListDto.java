@@ -2,14 +2,12 @@ package weather.toyproject.haru.user.domain;
 
 import java.sql.Timestamp;
 
+
 import lombok.Getter;
 import lombok.Setter;
-import weather.toyproject.com.PageMaker;
-import weather.toyproject.com.file.FileDto;
-import weather.toyproject.com.file.FileVO;
 
 @Setter @Getter
-public class GameListDto extends PageMaker{
+public class GameListDto {
 	
 	private Long gameCode; // PK
 	private String gameName; // 게임이름

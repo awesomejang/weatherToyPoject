@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
+
 import weather.toyproject.haru.user.UserMapper;
 import weather.toyproject.haru.user.domain.AuthVO;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
@@ -35,7 +38,8 @@ public class UserRepository {
 		return userMapper.InsertUserAuthMapping(userNo);
 	}
 	
-	public List<GameListDto> selectGameList_admin() {
+	public List<GameListDto> selectGameList_admin() throws Exception {
 		return userMapper.selectGameList_admin();
 	}
+	
 }

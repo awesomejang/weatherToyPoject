@@ -108,9 +108,17 @@ public class UserController {
 	}
 	
 	@GetMapping("/admin/gameList")
-	public String adminPage(GameListDto gameListDto, @RequestParam(required = false) String msg, Model model) {
-		model.addAttribute("games", userService.selectGameList_admin());
+	public String adminPage(GameListDto gameListDto, @RequestParam(required = false) String msg, Model model) throws Exception {
+		PageInfo<GameListDto> p = new PageInfo<GameListDto>(userService.selectGameList_admin(), 10);
+		model.addAttribute("games", p);
 		return "admin/gameListAdmin";
+	}
+	
+	@ResponseBody
+	@GetMapping("/admin/gameList/test")
+	public PageInfo<GameListDto> adminPage2(GameListDto gameListDto, @RequestParam(required = false) String msg, Model model) throws Exception {
+		PageInfo<GameListDto> p = new PageInfo<GameListDto>(userService.selectGameList_admin(), 10);
+		return p;
 	}
 	
 }
