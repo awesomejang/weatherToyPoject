@@ -18,5 +18,4 @@ public class GameListDto {
 	private Timestamp modDate; //수정일
 	private String fileId; // 파일FK
 	private String fileAttYn; // 파일 업로드 여부
-
 }

@@ -135,8 +135,8 @@ public class UserService {
 		}
 	}
 
-	public List<GameListDto> selectGameList_admin() throws Exception {
-		PageHelper.startPage(1, 10);
+	public List<GameListDto> selectGameList_admin(int pageNum) throws Exception {
+		PageHelper.startPage(pageNum, 10);
 		return userRepository.selectGameList_admin();
 	}
 
