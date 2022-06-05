@@ -38,8 +38,8 @@ public class UserRepository {
 		return userMapper.InsertUserAuthMapping(userNo);
 	}
 	
-	public List<GameListDto> selectGameList_admin() throws Exception {
-		return userMapper.selectGameList_admin();
+	public List<GameListDto> selectGameList_admin(GameListDto gameListDTO) throws Exception {
+		return userMapper.selectGameList_admin(gameListDTO);
 	}
 	
 }

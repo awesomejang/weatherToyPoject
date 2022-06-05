@@ -20,5 +20,5 @@ public interface UserMapper {
 	
 	int InsertUserAuthMapping(Long userNo);
 	
-	List<GameListDto> selectGameList_admin();
+	List<GameListDto> selectGameList_admin(GameListDto gameListDTO);
 }

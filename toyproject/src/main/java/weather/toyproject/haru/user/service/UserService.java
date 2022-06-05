@@ -135,9 +135,9 @@ public class UserService {
 		}
 	}
 
-	public List<GameListDto> selectGameList_admin(int pageNum) throws Exception {
+	public List<GameListDto> selectGameList_admin(int pageNum, GameListDto gameListDTO) throws Exception {
 		PageHelper.startPage(pageNum, 10);
-		return userRepository.selectGameList_admin();
+		return userRepository.selectGameList_admin(gameListDTO);
 	}
 
 	public boolean StringEmptyCheck(String str) {

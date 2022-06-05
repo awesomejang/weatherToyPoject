@@ -98,10 +98,11 @@
 				  FROM AUTH_T 
 				  WHERE AUTH_NAME = 'ROLE_USER' 
 		        , #{userNo}
-		)
+		       )
 	</insert>
 	
 	
+	<!-- parameterType="weather.toyproject.haru.user.domain.GameListDto" -->
 	<select id="selectGameList_admin" resultMap="GameListDto">
 	/** selectGameList_admin */
 		SELECT 
@@ -115,5 +116,9 @@
 			, FILE_ID
 			, FILE_ATT_YN 
 		FROM GAME_LIST
+		WHERE 1=1
+		<if test='gameName != null and !"".equals(gameName)'>
+			AND GAME_NAME = #{gameName}
+		</if>
 	</select>
 </mapper>

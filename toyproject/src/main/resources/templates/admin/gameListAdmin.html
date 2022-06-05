@@ -8,6 +8,19 @@
 		<!-- Page Heading -->
 		<h1 class="h3 mb-2 text-gray-800" th:text = "게임목록관리"></h1>
 		
+		<!-- Topbar Search -->
+        <form id="gameForm" action="/admin/gameList" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" id="gameName" name="gameName" class="form-control border-0 small" placeholder="게임이름" aria-label="Search" aria-describedby="basic-addon2" th:value="${search.gameName}" style="background-color:#ffffff;">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Topbar Navbar -->
+		
 		<div style="margin-top: 40px; padding-bottom: 2px;">
 		    <a href="/admin/game/regist"><button type="button" class="btn btn-primary">게임 등록</button></a>
 			<!--<button type="button" class="btn btn-primary">게임 등록</button>  -->
@@ -36,17 +49,17 @@
 		</table>
 		
 		<!-- 페이징 -->
-		<nav aria-label="Page navigation example">
+		<nav aria-label="Page navigation example" th:with="numberToggle=${games.pageNum}">
 		  <ul class="pagination">
 		  	<span th:text="${navigatepageNums}"></span>
 		    <li class="page-item" th:classappend="${games.prePage == 0} ? 'disabled'">
-		    	<a class="page-link" th:href="@{/admin/gameList(pageNum=${games.getPrePage()})}">Previous</a>
+		    	<a class="page-link" th:href="@{/admin/gameList(pageNum=${games.getPrePage()}, gameName=${search.gameName})}">Previous</a>
 		    </li>
-		    <li class="page-item" th:each="pageNum : ${#numbers.sequence(games.navigateFirstPage, games.navigateLastPage)}"> <!-- https://ifuwanna.tistory.com/200 -->
-		    	<a class="page-link" th:href="@{/admin/gameList(pageNum=${pageNum})}" th:text="${pageNum}">1</a>
+		    <li class="page-item" th:classappend="${numberToggle == pageNum} ? active : ''" th:each="pageNum : ${#numbers.sequence(games.navigateFirstPage, games.navigateLastPage)}"> <!-- https://ifuwanna.tistory.com/200 -->
+		    	<a class="page-link" th:href="@{/admin/gameList(pageNum=${pageNum}, gameName=${search.gameName})}" th:text="${pageNum}">1</a>
 		    </li>
 		    <li class="page-item" th:classappend="${games.nextPage == 0} ? 'disabled'">
-		    	<a class="page-link" th:href="@{/admin/gameList(pageNum=${games.getNextPage()})}">Next</a>
+		    	<a class="page-link" th:href="@{/admin/gameList(pageNum=${games.getNextPage()}, gameName=${search.gameName})}">Next</a>
 		    </li>
 		  </ul>
 		</nav>
