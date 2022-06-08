@@ -78,11 +78,9 @@ public class GameController {
 		Boolean result = gameService.gameUpload(files.getMultipartFile(), gameListVO);
 		
 		if(result) {
-			//redirectAttribute.addfl addAttribute("msg", "게임업로드에 성공했습니다.");
 			redirectAttribute.addFlashAttribute("message", "게임업로드에 성공했습니다.");
 			return "redirect:/admin/gameList";
 		}
-		//redirectAttribute.addAttribute("msg", "게임업로드에 실패했습니다.");
 		redirectAttribute.addFlashAttribute("msg", "게임업로드에 실패했습니다.");
 		return "redirect:/admin/game/gameRegist";
 	}

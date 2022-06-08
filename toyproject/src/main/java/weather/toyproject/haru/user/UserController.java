@@ -36,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 import weather.toyproject.haru.user.domain.CustomUserDetails;
 import weather.toyproject.haru.user.domain.GameListDto;
 import weather.toyproject.haru.user.domain.UserVO;
+import weather.toyproject.haru.user.domain.form.UserUpdateForm;
 import weather.toyproject.haru.user.service.UserService;
 
 @PropertySource(value = "classpath:/com/message.properties", encoding = "UTF-8")
@@ -107,21 +108,28 @@ public class UserController {
 		return result;
 	}
 	
+	/**
+	 * 관리자 게임관리 페이지 컨트롤러
+	 * @param gameListDto
+	 * @param pageNum
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
 	@GetMapping("/admin/gameList")
-	public String adminPage(GameListDto gameListDto, @RequestParam(defaultValue = "1") int pageNum
-			                , @RequestParam(required = false) String msg, Model model) throws Exception {
+	public String adminGamePage(GameListDto gameListDto, @RequestParam(defaultValue = "1") int pageNum, Model model) throws Exception {
 		PageInfo<GameListDto> games = new PageInfo<GameListDto>(userService.selectGameList_admin(pageNum, gameListDto));
 		model.addAttribute("games", games);
 		model.addAttribute("search", gameListDto);
 		return "admin/gameListAdmin";
 	}
 	
-	
-	@ResponseBody
-	@GetMapping("/admin/gameList/test")
-	public PageInfo<GameListDto> adminPage2(GameListDto gameListDto, @RequestParam(required = false) String msg, Model model) throws Exception {
-		PageInfo<GameListDto> p = new PageInfo<GameListDto>(userService.selectGameList_admin(1, gameListDto), 10);
-		return p;
+	/**
+	 * 관리자 회원관리 페이지 컨트롤러
+	 * @return String 
+	 */
+	@GetMapping("/admin/userList")
+	public String adminUserpage(UserUpdateForm userUpdateForm) {
+		return "admin/adminUserPage";
 	}
-	
 }
