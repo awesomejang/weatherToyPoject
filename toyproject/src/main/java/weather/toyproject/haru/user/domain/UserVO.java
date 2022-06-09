@@ -36,6 +36,8 @@ public class UserVO {
 	
 	private String locked;
 	
+	//private AuthVO authVO;
+	
 	private List<AuthVO> AuthList;
 	
 	// Date컬럼을 위한 속성
