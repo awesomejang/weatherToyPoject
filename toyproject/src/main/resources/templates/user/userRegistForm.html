@@ -48,25 +48,30 @@
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user" id="userId" name="userId" placeholder="아이디" th:value="${userVO.userId}" style="width: 70%; float: left; margin-right: 22px;"/>
 										<a href="javascript:void(0)" class="btn btn-primary btn-user btn-block" id="btn-CheckDupId" onclick="useridDupliCheck()" style="width: 25%; display: inline-block;">중복확인</a>
-										<span th:text="${valid_userId}" style="color: red;"></span>
+										<span th:errors="*{userId}" style="color: red;"></span>
+										<!--<span th:text="${valid_userId}" style="color: red;"></span>  -->
 									</div>
 									<!--<span th:if="${not #strings.isEmpty(errors)}" th:text="${errors['id']}"  style="color: red;"></span> -->
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="비밀번호" th:value="${userVO.password}"/>
-									<span th:text="${valid_password}"  style="color: red;"></span>
+									<span th:errors="*{password}" style="color: red;"></span>
+									<!--  <span th:text="${valid_password}"  style="color: red;"></span>-->
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="secondPassword" name="secondPassword" placeholder="비밀번호_확인"/>
-									<span th:text="${valid_secondPassword}"  style="color: red;"></span>
+									<span th:errors="*{secondPassword}" style="color: red;"></span>
+									<!--<span th:text="${valid_secondPassword}"  style="color: red;"></span>  -->
 								</div>
 								<div class="form-group">
 									<input type="email" class="form-control form-control-user" id="email" name="email" placeholder="이메일" th:value="${userVO.email}"/>
-									<span th:text="${valid_email}"  style="color: red;"></span>
+									<span th:errors="*{email}" style="color: red;"></span>
+									<!--  <span th:text="${valid_email}"  style="color: red;"></span>-->
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="userName" name="userName" placeholder="닉네임" th:value="${userVO.userName}"/>
-									<span th:text="${valid_userName}"  style="color: red;"></span>
+									<span th:errors="*{userName}" style="color: red;"></span>
+									<!-- <span th:text="${valid_userName}"  style="color: red;"></span> -->
 								</div>
 								<div class="status-div" style="word-break:break-all;">
 									<span th:text="${#request.getAttribute('message')}" >message here</span>

@@ -18,18 +18,19 @@ public class UserVO {
 
 	private Long userNo; 
 	
-	@NotBlank(message = "아이디를 입력해주세요.")
+	@NotBlank
 	private String userId;
 	
-	@NotBlank(message = "비밀번호를 입력해주세요.")
+	@NotBlank
 	private String password;
 	
+	@NotBlank
 	private String secondPassword;
 	
-	@NotBlank(message = "닉네임을 입력해주세요.")
+	@NotBlank
 	private String userName;
 	
-	@NotBlank(message = "이메일을 입력해주세요.")
+	@NotBlank
 	private String email;
 	
 	private String verified;
