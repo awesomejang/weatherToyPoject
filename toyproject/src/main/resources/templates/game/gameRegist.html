@@ -10,21 +10,20 @@
 
 		<div class="" style="margin-top: 24px; width: 800px;">
 			<!-- margin:auto; -->
-			<form id="gameForm" method="POST" th:action="@{/admin/game/regist}" enctype="multipart/form-data">
+			<form id="gameForm" th:object="${gameListVO}" method="POST" th:action="@{/admin/game/regist}" enctype="multipart/form-data" >
 				<h5>
 					<label for="gameName">게임명</label>
 				</h5>
-				
 				<div class="form-group">
-					<input type="text" class="form-control form-control-user"
-						id="gameName" name="gameName" />
+					<input type="text" class="form-control form-control-user" th:field="*{gameName}"/>
 				</div>
-				<span th:if="${validResult} != null" th:text="${validResult['valid_gameName']}"></span>
+				<span th:errors="*{gameName}" style="color: red;"></span>
+				<!--<span th:if="${validResult} != null" th:text="${validResult['valid_gameName']}"></span>  -->
 				<div class="form-group">
 					<h5>
 						<label for="delYn">사용여부</label>
 					</h5>
-					<select class="form-control" id="delYn" name="delYn">
+					<select class="form-control" id="delYn" name="delYn" >
 						<!--<option value=""></option>  -->
 						<option value="Y">사용</option>
 						<option value="N">미사용</option>

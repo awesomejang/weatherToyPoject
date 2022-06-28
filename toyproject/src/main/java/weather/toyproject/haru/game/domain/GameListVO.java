@@ -16,7 +16,7 @@ import weather.toyproject.com.file.FileVO;
 public class GameListVO {
 
 	private Long gameCode; // PK
-	@NotBlank(message = "게임이름을 입력해주세요.")
+	@NotBlank
 	private String gameName; // 게임이름
 	private String userId; //등록자 계정명
 	private String modUserId; // 수정자 계정명

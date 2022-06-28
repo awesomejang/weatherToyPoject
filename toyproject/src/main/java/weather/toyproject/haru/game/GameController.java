@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,13 +49,15 @@ import weather.toyproject.haru.user.domain.UserVO;
 public class GameController {
 	
 	private final GameService gameService;
+	
+	private final MessageSource ms;
 
 	/**
 	 * 관리자 게임등록페이지 Controller
 	 * @return String
 	 */
 	@GetMapping("/admin/game/regist")
-	public String gameRegistPage(HttpServletRequest reqeust, Model model, Map<String, String> validResult) {
+	public String gameRegistPage(@ModelAttribute GameListVO gameListVO, HttpServletRequest reqeust, Model model, Map<String, String> validResult) {
 		model.addAttribute("validResult", validResult.get("validMap")); 
 		return "game/gameRegist";
 	}
@@ -66,23 +69,26 @@ public class GameController {
 	//@ResponseBody
 	@PostMapping("/admin/game/regist")
 	public String gameRegist(HttpServletRequest reqeust, HttpServletResponse reponse , @ModelAttribute FileVO files, 
-			@Valid GameListVO gameListVO, BindingResult bindingResult
-			, Errors errors , Model model, RedirectAttributes redirectAttribute) throws IOException {
+			@Valid @ModelAttribute GameListVO gameListVO, BindingResult bindingResult
+			, Model model, RedirectAttributes redirectAttribute) throws IOException {
 		
 		if(bindingResult.hasErrors()) {
-			Map<String, String> validResult = this.GameValidHandle(errors);
-			redirectAttribute.addFlashAttribute("validMap", validResult);
-			return "redirect:/admin/game/regist";
+			/*
+			 * Map<String, String> validResult = this.GameValidHandle(errors);
+			 * redirectAttribute.addFlashAttribute("validMap", validResult);
+			 */
+			return "game/gameRegist";
+			//return "redirect:/admin/game/regist";
 		} 
 		
 		Boolean result = gameService.gameUpload(files.getMultipartFile(), gameListVO);
 		
 		if(result) {
-			redirectAttribute.addFlashAttribute("message", "게임업로드에 성공했습니다.");
+			redirectAttribute.addFlashAttribute("msg", ms.getMessage("succ.regist.game", null, null));
 			return "redirect:/admin/gameList";
 		}
-		redirectAttribute.addFlashAttribute("msg", "게임업로드에 실패했습니다.");
-		return "redirect:/admin/game/gameRegist";
+		redirectAttribute.addFlashAttribute("msg", ms.getMessage("fail.regist.game", null, null)); 
+		return "redirect:/admin/game/regist";
 	}
 	
 	//==게임상세페이지==//
